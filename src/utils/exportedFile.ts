@@ -2,7 +2,10 @@
 // used in another file 
 // Export keyword or form should be 
 // used to use the class 
-export class exportedFile { 
+export class exportedFile {
+loadAllDistrict(): { value: string; code: string; }[] {
+throw new Error('Method not implemented.');
+} 
 
 	// Class method which prints the 
 	// user called in another file 
@@ -10,6 +13,17 @@ export class exportedFile {
 		return "Hello " + user+ "!"; 
 	} 
 
+	loadAllProvince(){
+		return this.loadAll()
+	}
+
+	loadDistrictByProvince(pid:any){
+		let array = this.loadAll();
+		let data= array.filter(function (object) {
+			return object['code'] === pid;
+		});
+		return data.districts
+	}
 
 	loadAll(){
 		return [

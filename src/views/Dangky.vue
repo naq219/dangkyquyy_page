@@ -11,11 +11,11 @@
             action="https://script.google.com/macros/s/AKfycbz7SCj8X8RHyS1XLxRY8nXuZ0o4LXk9jrbHP-9YLAVgXQNd_3b6cHK9aPTxqE2Us6Y/exec"
             :model="form" label-width="120px">
             <el-form-item label="Họ và tên">
-              <el-input hin v-model="form.name" />
+              <el-input name="name" hin v-model="form.name" />
             </el-form-item>
 
             <el-form-item label="Năm Sinh">
-              <el-input hin v-model="form.name" />
+              <el-input name="email" hin v-model="form.namsinh" />
             </el-form-item>
 
             <el-form-item label="Giới tính">
@@ -26,23 +26,36 @@
             </el-form-item>
 
             <el-form-item label="Số điện thoại">
-              <el-input type="tel" hin v-model="form.name" />
+              <el-input name ="Họ và tên" type="tel" hin v-model="form.date2" />
             </el-form-item>
 
-            <el-form-item label="Tỉnh/TP">
-              <el-autocomplete v-model="state1" :fetch-suggestions="querySearch" clearable class="inline-input w-50"
-              placeholder="Please Input" @select="handleSelect"> </el-autocomplete>
+            <el-form-item label="Tỉnh/Thành Phố">
+              <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
+                class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
             </el-form-item>
 
+            <el-form-item label="Quận / Huyện">
+              <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
+                class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
+            </el-form-item>
+
+            <el-form-item label="Phường/Xã/Thị Trấn">
+              <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
+                @select="handleSelectW"> </el-autocomplete>
+            </el-form-item>
+
+
+            <p>selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
 
             <el-form-item>
               <button class="el-button" type="submit" @click="onSubmit">Đăng Ký</button>
               <el-button @click="onSubmit">Hủy</el-button>
             </el-form-item>
 
-            
+
 
           </form>
+
         </div>
       </div>
     </div>
@@ -51,9 +64,9 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive,ref } from 'vue'
-import { exportedFile } from "../utils/exportedFile"; 
-
+import { onMounted, reactive, ref, watch } from 'vue'
+import { exportedFile } from "../utils/exportedFile";
+const exportedFile0 = new exportedFile()
 
 
 // do not use same name with ref
@@ -66,116 +79,175 @@ const form = reactive({
   type: [],
   resource: '',
   desc: '',
+  namsinh:''
 })
 
 interface provinceItem {
   value: string
   code: string
+  districts: provinceItem
+  wards: provinceItem
 }
-const state1 = ref('')
+const modelProvince = ref('')
 const provinces = ref<provinceItem[]>([])
-const querySearch = (queryString: string, cb: any) => {
+const querySearchP = (queryString: string, cb: any) => {
   const results = queryString
     ? provinces.value.filter(createFilter(queryString))
     : provinces.value
   // call callback function to return suggestions
   cb(results)
 }
+
+watch(modelProvince, async (newQuestion, oldQuestion) => {
+  if (oldQuestion.indexOf(selectedP.value) > -1 && newQuestion.indexOf(selectedP.value) == -1) {
+    modelDistrict.value = ''
+    modelWard.value = ''
+    districts.value = ref('')
+    wards.value = ref('')
+    og('clear for province')
+    selectedP.value = ref('')
+  }
+
+})
+
+
+
+
+
+const modelDistrict = ref('')
+const districts = ref<provinceItem[]>([])
+const querySearchD = (queryString: string, cb: any) => {
+  const results = queryString
+    ? districts.value.filter(createFilter(queryString))
+    : districts.value
+  // call callback function to return suggestions
+  cb(results)
+}
+watch(modelDistrict, async (newQuestion, oldQuestion) => {
+  if (oldQuestion.indexOf(selectedD.value) > -1 && newQuestion.indexOf(selectedD.value) == -1) {
+    modelWard.value = ''
+    wards.value = ref('')
+    og('clear for District')
+    selectedD.value = ref('')
+  }
+
+})
+
+
+
+const modelWard = ref('')
+const wards = ref<provinceItem[]>([])
+const querySearchW = (queryString: string, cb: any) => {
+  const results = queryString
+    ? wards.value.filter(createFilter(queryString))
+    : wards.value
+  // call callback function to return suggestions
+  cb(results)
+}
+watch(modelWard, async (newQuestion, oldQuestion) => {
+  if (oldQuestion.indexOf(selectedD.value) > -1 && newQuestion.indexOf(selectedD.value) == -1) {
+    modelWard.value = ''
+    wards.value = ref('')
+    og('clear for District')
+    selectedW.value = ref('')
+  }
+
+})
+
+
 const createFilter = (queryString: string) => {
   return (province: provinceItem) => {
     return (
-      //province.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-	 // province.value.toLowerCase().includes(queryString.toLowerCase())
-
-	   removeVietnameseTones(province.value).includes(removeVietnameseTones(queryString))
+      removeVietnameseTones(province.value).includes(removeVietnameseTones(queryString))
     )
   }
 }
 
+const selectedP = ref('');
 const handleSelect = (item: provinceItem) => {
-  console.log(item)
+  selectedP.value = item.value
+  districts.value = item.districts
+  og(item)
+}
+const selectedD = ref('');
+const handleSelectD = (item: provinceItem) => {
+  og(item.wards)
+  selectedD.value = item.value
+  wards.value = item.wards
+}
+
+const selectedW = ref('')
+const handleSelectW = (item: provinceItem) => {
+  //districts.value = item.districts
+  selectedW.value = item.value
+}
+
+watch(selectedD, async (newQuestion, oldQuestion) => {
+  if (selectedD.value.length<2) {
+    selectedW.value = ref('')
+  }
+
+})
+watch(selectedP, async (newQuestion, oldQuestion) => {
+  if (selectedP.value.length==0) {
+   
+    selectedD.value = ref('')
+    selectedW.value = ref('')
+  }
+
+})
+
+
+
+function og(str: any) {
+  console.log(str);
 }
 
 
-const loadAll2 = () => {
-  return [
-    { value: 'vue', link: 'https://github.com/vuejs/vue' },
-    { value: 'element', link: 'https://github.com/ElemeFE/element' },
-    { value: 'cooking', link: 'https://github.com/ElemeFE/cooking' },
-    { value: 'mint-ui', link: 'https://github.com/ElemeFE/mint-ui' },
-    { value: 'vuex', link: 'https://github.com/vuejs/vuex' },
-    { value: 'vue-router', link: 'https://github.com/vuejs/vue-router' },
-    { value: 'babel', link: 'https://github.com/babel/babel' },
-  ]
-}
 
-const loadAll = () => {
-  
-  return new exportedFile().loadAll()
-}
 
-function removeVietnameseTones(str:string) {
-    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
-    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
-    str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
-    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
-    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
-    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
-    str = str.replace(/đ/g,"d");
-    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-    str = str.replace(/Đ/g, "D");
-    // Some system encode vietnamese combining accent as individual utf-8 characters
-    // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
-    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
-    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
-    // Remove extra spaces
-    // Bỏ các khoảng trắng liền nhau
-    str = str.replace(/ + /g," ");
-    str = str.trim();
-    // Remove punctuations
-    // Bỏ dấu câu, kí tự đặc biệt
-    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
-    return str.toLowerCase();
+function removeVietnameseTones(str: string) {
+  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+  str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+  str = str.replace(/đ/g, "d");
+  str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+  str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+  str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+  str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+  str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+  str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+  str = str.replace(/Đ/g, "D");
+  // Some system encode vietnamese combining accent as individual utf-8 characters
+  // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+  str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+  str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+  // Remove extra spaces
+  // Bỏ các khoảng trắng liền nhau
+  str = str.replace(/ + /g, " ");
+  str = str.trim();
+  // Remove punctuations
+  // Bỏ dấu câu, kí tự đặc biệt
+  str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
+  return str.toLowerCase();
 }
 
 
 
 const onSubmit = () => {
   console.log('submit!')
-  
-  
-}
 
-const loadAll22 = () => {
-  return [
-  {
-    "name": "Thành phố Hà Nội",
-    "code": 1,
-    "division_type": "thành phố trung ương",
-    "codename": "thanh_pho_ha_noi",
-    "phone_code": 24,
-    "districts": []
-  },
-  {
-    "name": "Tỉnh Hà Giang",
-    "code": 2,
-    "division_type": "tỉnh",
-    "codename": "tinh_ha_giang",
-    "phone_code": 219,
-    "districts": []
-  }
-]
 
 }
+
+
 
 
 onMounted(() => {
-  provinces.value = loadAll()
+  provinces.value = new exportedFile().loadAllProvince()
 })
 
 </script>
