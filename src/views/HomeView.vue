@@ -1,20 +1,7 @@
 <template>
-  <el-row class="demo-autocomplete">
-    <el-col :span="12">
-      <div class="sub-title my-2 text-sm text-gray-600">
-        list suggestions when activated
-      </div>
-      <el-autocomplete v-model="state1" :fetch-suggestions="querySearch" clearable class="inline-input w-50"
-        placeholder="Please Input" @select="handleSelect" />
-    </el-col>
-    <el-col :span="12">
-      <div class="sub-title my-2 text-sm text-gray-600">
-        list suggestions on input
-      </div>
-      <el-autocomplete v-model="state2" :fetch-suggestions="querySearch" :trigger-on-focus="false" clearable
-        class="inline-input w-50" placeholder="Please Input" @select="handleSelect" />
-    </el-col>
-  </el-row>
+  <div>
+    <h2>ssda123</h2>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -87,62 +74,14 @@ async function initJson() {
 
 const provincesOj = JSON.parse(provinces);
  var new_array = provincesOj.map(function (obj: { name: any; code: any; }) {
-    return { 'name': obj.name, 'code': obj.code, 'deep':1,parent:'0' };
+    return { 'name': obj.name, 'code': obj.code };
   });
 
-og(new_array[0].parent)
+  const myJSON = JSON.stringify(provincesOj);
 
-const mySchema = {
-    version: 0,
-    primaryKey: 'id',
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string',
-            maxLength: 100 // <- the primary key must have set maxLength
-        },
-        name: {
-            type: 'string'
-        },
-        deep: {
-            type: 'number'
-        },
-        code: {
-            type: 'string'
-        },
-        parent: {
-          type:'string'
-        }
-    },
-    required: ['id', 'name']
-}
 
-// create a database
-const db = await createRxDatabase({
-    name: 'heroesdb', // the name of the database
-    storage: getRxStorageDexie()
-});
+og(myJSON)
 
-// add collections
-await db.addCollections({
-  heroes: {
-    schema: mySchema
-  }
-});
-
-db.destroy()
-
-db.importJSON(new_array).then(()=>og('import xong'));
-
-const aliveHeroes = await db.heroes.find({
-  selector: {
-    id: {
-      $gt: 0
-    }
-  }
-}).exec(); // the exec() returns the result once
-
-og(aliveHeroes.length)
 
 
 
