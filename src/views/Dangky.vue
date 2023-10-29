@@ -102,7 +102,68 @@
                   </el-form-item>
 
                   <el-input name="email" hin v-model="form.namsinh" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
+                </div>
 
+                <div class="group1 ">
+                  <p class="p_titlegroup">Đã tham gia sinh hoạt Đạo Tràng, CTN chưa?</p>
+                  <el-radio-group v-model="form.resource2">
+                    <el-radio label="Chưa tham gia" />
+                    <el-radio label="Đã tham gia" />
+                  </el-radio-group>
+                  <el-input class="margintop1em" name="email" hin v-model="form.namsinh" placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
+
+                </div>
+
+                <div class="group1 ">
+                  <p class="p_titlegroup ">Người giới thiệu - Tổ sinh hoạt - Số điện thoại?</p>
+                  <p class="ss">VD: Hòa Lý Anh - Tổ Vinh - CTN Nghệ An -  0338 699 484</p>
+                  <el-input class="margintop1em" name="email" hin v-model="form.namsinh" placeholder="" />
+                </div>
+
+                <div class="group1 ">
+                  <p class="p_titlegroup">Thắc mắc, ghi chú</p>
+                  <el-input class="margintop1em" name="email" hin v-model="form.namsinh" placeholder="" />
+                </div>
+
+                <div class="group1 ">
+                  <p class="p_titlegroup">Liên hệ nhận Lá Phái: <br>
+                    Tâm Huy Pháp:  0383 668 927<br>
+                    Hoà Lý Anh: 0338.699.484</p>
+                  
+                </div>
+
+                <div class="group1 ">
+                  <p class="p_titlegroup">TRƯỜNG HỢP PHẬT TỬ KHÔNG THAM DỰ ĐƯỢC LỄ:</p>
+                  <p class="">
+                    Thường mỗi tháng sẽ có 1 buổi lễ Quy Y ạ, Quý Phật tử vui lòng hoan hỷ đăng ký vào lễ sau nếu tham dự được nhé ạ.<br>
+
+Thông tin lễ Quy Y được đăng tải trên trang: Chúng Thanh Niên Phật Tử Phật Quang Nghệ An<br>
+<a href="https://www.facebook.com/ctnpqnghean">https://www.facebook.com/ctnpqnghean</a>
+<br>
+
+Mọi thắc mắc về Lễ Quy Y xin vui lòng liên hệ:<br>Tâm Huy Pháp: 0383 668 927</p>
+                  
+                </div>
+
+                <div class="group1 ">
+                  <p class="p_titlegroup ">QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI:</p>
+                  <p class=" smalltext">
+                    1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua link hoặc qua bàn Thư Ký tại Chùa Viên Quang vào hôm tổ chức lễ.<br>- Quý Phật tử đã đăng ký trên link vui lòng qua Bàn thư ký nhận SỐ PHIẾU LẤY LÁ PHÁI.<br>
+
+2. Xác nhận thông tin<br>Quý Phật tử đã đăng ký trên link trước đó sẽ được ban thư ký gọi điện xác nhận lại thông tin và phát số phiếu nhận lá phái khi về chùa ạ.<br>
+
+3. Tham dự lễ Quy Y<br>- Quý Phật tử cố gắng tham dự lễ theo thời gian, địa điểm ghi trên bài thông báo ạ.<br>
+
+4. Nhận Lá Phái<br>- Quý Phật tử vui lòng GIỮ SỐ PHIẾU và mang lên lúc dự Lễ để nhận Lá Phái.<br>- Sau khi hết Lễ, Quý Phật tử vui lòng lắng nghe thông báo và nán lại nơi dự lễ để nhận lá phái quy y ạ<br>- Quý Phật tử kiểm tra lại thông tin khi nhận lá phái và báo lại ngay cho thư ký khi thông tin bị sai hoặc thiếu ạ.<br>
+
+5. Sau Lễ Quy Y<br>- Quý Phật tử đăng ký sát giờ hoặc đăng ký sau khi đã dự lễ mà chưa kịp có lá phái trước khi ra về sẽ được ban thư ký gọi thông báo về việc nhận lá phái.<br>- Đối với những trường hợp này ban thư ký sẽ gửi lá phái về phụ trách ĐT, CTN hoặc gửi về nhà nếu Quý Phật tử có yêu cầu ạ.<br>
+
+
+Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nhỡ hoặc tin nhắn xin xác nhận thông tin quy y của chúng con nhé ạ
+                  
+                  
+                  </p>
+                  
                 </div>
 
 
@@ -349,7 +410,13 @@ body {
   font-size: 16px;
   
 }
+.margintop1em{
+  margin-top: 1em;
+}
 
+.smalltext{
+  font-size: 12px;
+}
 
 
 .form_wrapper {
