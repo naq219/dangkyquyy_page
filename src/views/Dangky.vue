@@ -1,13 +1,11 @@
 <template >
-
-
   <el-row style="margin: 0 auto; ">
     <el-col :span="1"></el-col>
     <el-col :span="22">
-      <div class="form_wrapper"  >
+      <div class="form_wrapper">
         <div class="form_container">
           <div class="title_container">
-            <h2 style="color:#f39f5a; text-align: center;">Đăng Ký Quy Y Tam Bảo <br>Chùa Viên Quang</h2>
+            <h2 style="color:#f39f5a; text-align: center;">Đăng Ký Quy Y Tam Bảo <br>CHÙA VIÊN QUANG</h2>
             <h2> .</h2>
           </div>
           <div class="row clearfix">
@@ -16,30 +14,38 @@
                 action="https://script.google.com/macros/s/AKfycbz7SCj8X8RHyS1XLxRY8nXuZ0o4LXk9jrbHP-9YLAVgXQNd_3b6cHK9aPTxqE2Us6Y/exec"
                 :model="form" label-width="120px">
                 <el-form-item>
-                  <p style="background-image: url('asets/bg.jpg');" >Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu Phật, Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
+                  <p style="background-image: url('asets/bg.jpg');">Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu Phật,
+                    Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
                     luôn nhận được sự gia hộ của Đức Phật, huynh đệ có thêm ý chí vượt qua mọi khó khăn trong cuộc sống,
                     tinh tấn tu tập, siêng năng làm phước và sẽ gặp được nhiều may mắn, phúc lành trong cuộc sống.
                     <br>
                     "Quy Y Phật rồi không đọa địa ngục <br>
                     Quy Y Pháp rồi không đọa ngạ quỷ <br>
-                    Quy Y Tăng rồi không đọa bàng sinh" <br></p>
+                    Quy Y Tăng rồi không đọa bàng sinh" <br>
+                  </p>
                 </el-form-item>
-                <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự lễ Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
-                <el-form-item >
-                  <el-radio-group v-model="form.resource">
-                    <el-radio label="Chắn chắn tham gia" />
-                    <el-radio label="Không tham gia được" />
-                  </el-radio-group>
-                </el-form-item>
+
+                <div class="group1 ep-bg-purple-dark">
+                  <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự lễ
+                    Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
+                  <el-form-item>
+                    <el-radio-group v-model="form.resource">
+                      <el-radio label="Chắn chắn tham gia" />
+                      <el-radio label="Không tham gia được" />
+                    </el-radio-group>
+                  </el-form-item>
+                </div>
+
 
 
                 <el-form-item label="Họ và tên">
-                  <el-input name="name" hin v-model="form.name" />
+                  <el-input name="name" hin v-model="form.name" placeholder="     Vui lòng viết hoa chữ cái đầu tiên" />
                 </el-form-item>
 
 
                 <el-form-item label="Năm Sinh">
-                  <el-input name="email" hin v-model="form.namsinh" />
+                  <el-input name="email" hin v-model="form.namsinh" placeholder="     Chỉ nhập năm sinh, ví dụ 2020" />
+
                 </el-form-item>
 
                 <el-form-item label="Giới tính">
@@ -50,23 +56,54 @@
                 </el-form-item>
 
                 <el-form-item label="Số điện thoại">
-                  <el-input name="Họ và tên" type="tel" hin v-model="form.date2" />
+                  <el-input name="Họ và tên" type="tel" hin v-model="form.date2" maxlength="10" minlength="10"  />
                 </el-form-item>
 
-                <el-form-item label="Tỉnh/Thành Phố">
-                  <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
-                    class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
-                </el-form-item>
+                <div class="group1">
+                  <p class="p_titlegroup">Địa chỉ thường trú*</p>
+                  <p>Là địa chỉ trong Căn cước công dân hoặc Chứng Minh Nhân Dân hoặc trên Giấy Khai sinh</p>
+                  <el-form-item label="Tỉnh/Thành Phố">
+                    <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
+                      class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
+                  </el-form-item>
 
-                <el-form-item label="Quận / Huyện">
-                  <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
-                    class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
-                </el-form-item>
+                  <el-form-item label="Quận / Huyện">
+                    <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
+                      class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
+                  </el-form-item>
 
-                <el-form-item label="Phường/Xã/Thị Trấn">
-                  <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
-                    @select="handleSelectW"> </el-autocomplete>
-                </el-form-item>
+                  <el-form-item label="Phường/Xã/Thị Trấn">
+                    <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
+                      @select="handleSelectW"> </el-autocomplete>
+                  </el-form-item>
+
+                  <el-input name="email" hin v-model="form.namsinh" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
+
+                </div>
+
+                
+
+                <div class="group1 ">
+                  <p class="p_titlegroup">Nơi ở hiện tại*</p>
+                  <el-checkbox v-model="checked1" label="Giống địa chỉ thường trú" size="large" />
+                  <el-form-item label="Tỉnh/Thành Phố">
+                    <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
+                      class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
+                  </el-form-item>
+
+                  <el-form-item label="Quận / Huyện">
+                    <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
+                      class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
+                  </el-form-item>
+
+                  <el-form-item label="Phường/Xã/Thị Trấn">
+                    <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
+                      @select="handleSelectW"> </el-autocomplete>
+                  </el-form-item>
+
+                  <el-input name="email" hin v-model="form.namsinh" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
+
+                </div>
 
 
                 <p>selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
@@ -287,12 +324,30 @@ onMounted(() => {
   margin: auto;
 }
 
+.group1 {
+  border-radius: 0.5em;
+  min-height: 36px;
+  background: #181A1B;
+  padding: 1em;
+  margin-top: 1em;
+}
 
 body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   background: #f2f2f2;
- 
+
+
+}
+
+.el-form-item {
+  margin-top: 1em;
+}
+
+.p_titlegroup{
+  color:#ffffff;
+  font-size: 16px;
+  
 }
 
 
@@ -459,201 +514,8 @@ body {
   }
 }
 
-.form_container {
-  .row {
-    .col_half.last {
-      border-left: 1px solid #cccccc;
-    }
-  }
-}
 
-.checkbox_option {
-  label {
-    margin-right: 1em;
-    position: relative;
 
-    &:before {
-      content: "";
-      display: inline-block;
-      width: 0.5em;
-      height: 0.5em;
-      margin-right: 0.5em;
-      vertical-align: -2px;
-      border: 2px solid #cccccc;
-      padding: 0.12em;
-      background-color: transparent;
-      background-clip: content-box;
-      transition: all 0.2s ease;
-    }
-
-    &:after {
-      border-right: 2px solid #000000;
-      border-top: 2px solid #000000;
-      content: "";
-      height: 20px;
-      left: 2px;
-      position: absolute;
-      top: 7px;
-      transform: scaleX(-1) rotate(135deg);
-      transform-origin: left top;
-      width: 7px;
-      display: none;
-    }
-  }
-
-  input {
-    &:hover+label:before {
-      border-color: #000000;
-    }
-
-    &:checked+label {
-      &:before {
-        border-color: #000000;
-      }
-
-      &:after {
-        -moz-animation: check 0.8s ease 0s running;
-        -webkit-animation: check 0.8s ease 0s running;
-        animation: check 0.8s ease 0s running;
-        display: block;
-        width: 7px;
-        height: 20px;
-        border-color: #000000;
-      }
-    }
-  }
-}
-
-.radio_option {
-  label {
-    margin-right: 1em;
-
-    &:before {
-      content: "";
-      display: inline-block;
-      width: 0.5em;
-      height: 0.5em;
-      margin-right: 0.5em;
-      border-radius: 100%;
-      vertical-align: -3px;
-      border: 2px solid #cccccc;
-      padding: 0.15em;
-      background-color: transparent;
-      background-clip: content-box;
-      transition: all 0.2s ease;
-    }
-  }
-
-  input {
-    &:hover+label:before {
-      border-color: #000000;
-    }
-
-    &:checked+label:before {
-      background-color: #000000;
-      border-color: #000000;
-    }
-  }
-}
-
-.select_option {
-  position: relative;
-  width: 100%;
-
-  select {
-    display: inline-block;
-    width: 100%;
-    height: 35px;
-    padding: 0px 15px;
-    cursor: pointer;
-    color: #7b7b7b;
-    border: 1px solid #cccccc;
-    border-radius: 0;
-    background: #fff;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    transition: all 0.2s ease;
-
-    &::-ms-expand {
-      display: none;
-    }
-
-    &:hover,
-    &:focus {
-      color: #000000;
-      background: #fafafa;
-      border-color: #000000;
-      outline: none;
-    }
-  }
-}
-
-.select_arrow {
-  position: absolute;
-  top: calc(50% - 4px);
-  right: 15px;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-  border-width: 8px 5px 0 5px;
-  border-style: solid;
-  border-color: #7b7b7b transparent transparent transparent;
-}
-
-.select_option select {
-
-  &:hover+.select_arrow,
-  &:focus+.select_arrow {
-    border-top-color: #000000;
-  }
-}
-
-.credit {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  padding: 15px;
-  color: #cccccc;
-
-  a {
-    color: darken(#cccccc, 7%);
-  }
-}
-
-@-webkit-keyframes check {
-  0% {
-    height: 0;
-    width: 0;
-  }
-
-  25% {
-    height: 0;
-    width: 7px;
-  }
-
-  50% {
-    height: 20px;
-    width: 7px;
-  }
-}
-
-@keyframes check {
-  0% {
-    height: 0;
-    width: 0;
-  }
-
-  25% {
-    height: 0;
-    width: 7px;
-  }
-
-  50% {
-    height: 20px;
-    width: 7px;
-  }
-}
 
 @-webkit-keyframes expand {
   0% {
@@ -678,115 +540,4 @@ body {
     opacity: 1;
   }
 }
-
-@keyframes expand {
-  0% {
-    -webkit-transform: scale3d(1, 0, 1);
-    transform: scale3d(1, 0, 1);
-    opacity: 0;
-  }
-
-  25% {
-    -webkit-transform: scale3d(1, 1.2, 1);
-    transform: scale3d(1, 1.2, 1);
-  }
-
-  50% {
-    -webkit-transform: scale3d(1, 0.85, 1);
-    transform: scale3d(1, 0.85, 1);
-  }
-
-  75% {
-    -webkit-transform: scale3d(1, 1.05, 1);
-    transform: scale3d(1, 1.05, 1);
-  }
-
-  100% {
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-    opacity: 1;
-  }
-}
-
-
-@-webkit-keyframes bounce {
-  0% {
-    -webkit-transform: translate3d(0, -25px, 0);
-    opacity: 0;
-  }
-
-  25% {
-    -webkit-transform: translate3d(0, 10px, 0);
-  }
-
-  50% {
-    -webkit-transform: translate3d(0, -6px, 0);
-  }
-
-  75% {
-    -webkit-transform: translate3d(0, 2px, 0);
-  }
-
-  100% {
-    -webkit-transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-}
-
-@keyframes bounce {
-  0% {
-    -webkit-transform: translate3d(0, -25px, 0);
-    transform: translate3d(0, -25px, 0);
-    opacity: 0;
-  }
-
-  25% {
-    -webkit-transform: translate3d(0, 10px, 0);
-    transform: translate3d(0, 10px, 0);
-  }
-
-  50% {
-    -webkit-transform: translate3d(0, -6px, 0);
-    transform: translate3d(0, -6px, 0);
-  }
-
-  75% {
-    -webkit-transform: translate3d(0, 2px, 0);
-    transform: translate3d(0, 2px, 0);
-  }
-
-  100% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-}
-
-@media (max-width: 600px) {
-  .form_wrapper {
-    .col_half {
-      width: 100%;
-      float: none;
-    }
-  }
-
-  .bottom_row {
-    .col_half {
-      width: 50%;
-      float: left;
-    }
-  }
-
-  .form_container {
-    .row {
-      .col_half.last {
-        border-left: none;
-      }
-    }
-  }
-
-  .remember_me {
-    padding-bottom: 20px;
-  }
-}
-</style>../utils/exportedFile
+</style>
