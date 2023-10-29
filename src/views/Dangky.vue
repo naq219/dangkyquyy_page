@@ -1,66 +1,93 @@
-<template>
-  <div class="form_wrapper">
-    <div class="form_container">
-      <div class="title_container">
-        <h2>Đăng Ký Quy Y</h2>
-        <h2> .</h2>
-      </div>
-      <div class="row clearfix">
-        <div class="parent d-flex justify-content-center">
-          <form method="POST"
-            action="https://script.google.com/macros/s/AKfycbz7SCj8X8RHyS1XLxRY8nXuZ0o4LXk9jrbHP-9YLAVgXQNd_3b6cHK9aPTxqE2Us6Y/exec"
-            :model="form" label-width="120px">
-            <el-form-item label="Họ và tên">
-              <el-input name="name" hin v-model="form.name" />
-            </el-form-item>
-
-            <el-form-item label="Năm Sinh">
-              <el-input name="email" hin v-model="form.namsinh" />
-            </el-form-item>
-
-            <el-form-item label="Giới tính">
-              <el-radio-group v-model="form.resource">
-                <el-radio label="Nam" />
-                <el-radio label="Nữ" />
-              </el-radio-group>
-            </el-form-item>
-
-            <el-form-item label="Số điện thoại">
-              <el-input name ="Họ và tên" type="tel" hin v-model="form.date2" />
-            </el-form-item>
-
-            <el-form-item label="Tỉnh/Thành Phố">
-              <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
-                class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
-            </el-form-item>
-
-            <el-form-item label="Quận / Huyện">
-              <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
-                class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
-            </el-form-item>
-
-            <el-form-item label="Phường/Xã/Thị Trấn">
-              <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
-                @select="handleSelectW"> </el-autocomplete>
-            </el-form-item>
+<template >
 
 
-            <p>selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
+  <el-row style="margin: 0 auto; ">
+    <el-col :span="1"></el-col>
+    <el-col :span="22">
+      <div class="form_wrapper"  >
+        <div class="form_container">
+          <div class="title_container">
+            <h2 style="color:#f39f5a; text-align: center;">Đăng Ký Quy Y Tam Bảo <br>Chùa Viên Quang</h2>
+            <h2> .</h2>
+          </div>
+          <div class="row clearfix">
+            <div class="parent d-flex justify-content-center">
+              <form method="POST"
+                action="https://script.google.com/macros/s/AKfycbz7SCj8X8RHyS1XLxRY8nXuZ0o4LXk9jrbHP-9YLAVgXQNd_3b6cHK9aPTxqE2Us6Y/exec"
+                :model="form" label-width="120px">
+                <el-form-item>
+                  <p style="background-image: url('asets/bg.jpg');" >Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu Phật, Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
+                    luôn nhận được sự gia hộ của Đức Phật, huynh đệ có thêm ý chí vượt qua mọi khó khăn trong cuộc sống,
+                    tinh tấn tu tập, siêng năng làm phước và sẽ gặp được nhiều may mắn, phúc lành trong cuộc sống.
+                    <br>
+                    "Quy Y Phật rồi không đọa địa ngục <br>
+                    Quy Y Pháp rồi không đọa ngạ quỷ <br>
+                    Quy Y Tăng rồi không đọa bàng sinh" <br></p>
+                </el-form-item>
+                <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự lễ Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
+                <el-form-item >
+                  <el-radio-group v-model="form.resource">
+                    <el-radio label="Chắn chắn tham gia" />
+                    <el-radio label="Không tham gia được" />
+                  </el-radio-group>
+                </el-form-item>
 
-            <el-form-item>
-              <button class="el-button" type="submit" @click="onSubmit">Đăng Ký</button>
-              <el-button @click="onSubmit">Hủy</el-button>
-            </el-form-item>
+
+                <el-form-item label="Họ và tên">
+                  <el-input name="name" hin v-model="form.name" />
+                </el-form-item>
+
+
+                <el-form-item label="Năm Sinh">
+                  <el-input name="email" hin v-model="form.namsinh" />
+                </el-form-item>
+
+                <el-form-item label="Giới tính">
+                  <el-radio-group v-model="form.resource">
+                    <el-radio label="Nam" />
+                    <el-radio label="Nữ" />
+                  </el-radio-group>
+                </el-form-item>
+
+                <el-form-item label="Số điện thoại">
+                  <el-input name="Họ và tên" type="tel" hin v-model="form.date2" />
+                </el-form-item>
+
+                <el-form-item label="Tỉnh/Thành Phố">
+                  <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
+                    class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
+                </el-form-item>
+
+                <el-form-item label="Quận / Huyện">
+                  <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
+                    class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
+                </el-form-item>
+
+                <el-form-item label="Phường/Xã/Thị Trấn">
+                  <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
+                    @select="handleSelectW"> </el-autocomplete>
+                </el-form-item>
+
+
+                <p>selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
+
+                <el-form-item>
+                  <button class="el-button" type="submit" @click="onSubmit">Đăng Ký</button>
+                  <el-button @click="onSubmit">Hủy</el-button>
+                </el-form-item>
 
 
 
-          </form>
+              </form>
 
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p>
+      <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p>
+    </el-col>
+    <el-col :span="1"></el-col>
+  </el-row>
 </template>
 
 <script lang="ts" setup>
@@ -79,7 +106,7 @@ const form = reactive({
   type: [],
   resource: '',
   desc: '',
-  namsinh:''
+  namsinh: ''
 })
 
 interface provinceItem {
@@ -183,14 +210,14 @@ const handleSelectW = (item: provinceItem) => {
 }
 
 watch(selectedD, async (newQuestion, oldQuestion) => {
-  if (selectedD.value.length<2) {
+  if (selectedD.value.length < 2) {
     selectedW.value = ref('')
   }
 
 })
 watch(selectedP, async (newQuestion, oldQuestion) => {
-  if (selectedP.value.length==0) {
-   
+  if (selectedP.value.length == 0) {
+
     selectedD.value = ref('')
     selectedW.value = ref('')
   }
@@ -265,21 +292,14 @@ body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
   background: #f2f2f2;
+ 
 }
 
-.clearfix {
-  &:after {
-    content: "";
-    display: block;
-    clear: both;
-    visibility: hidden;
-    height: 0;
-  }
-}
+
 
 .form_wrapper {
   background: #fff;
-  width: 400px;
+
   max-width: 100%;
   box-sizing: border-box;
   padding: 25px;
@@ -304,6 +324,7 @@ body {
     font-size: 1.5em;
     line-height: 1.5em;
     margin: 0;
+    color: red;
   }
 
   .title_container {
