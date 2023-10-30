@@ -1,12 +1,16 @@
 <template >
-  <el-row style="margin: 0 auto; ">
+ 
+
+  <div class="wrap1"  >
+    <div class="wrap2">
+    <el-row style="margin: 0 auto; ">
     <el-col :span="1"></el-col>
     <el-col :span="22">
       <div class="form_wrapper">
         <div class="form_container">
           <div class="title_container">
             <h2 style="color:#f39f5a; text-align: center;">Đăng Ký Quy Y Tam Bảo <br>CHÙA VIÊN QUANG</h2>
-            <h2> .</h2>
+            <h2> .3</h2>
           </div>
           <div class="row clearfix">
             <div class="parent d-flex justify-content-center">
@@ -167,7 +171,7 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
                 </div>
 
 
-                <p>selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
+                <p>2selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
 
                 <el-form-item>
                   <button class="el-button" type="submit" @click="onSubmit">Đăng Ký</button>
@@ -186,6 +190,10 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
     </el-col>
     <el-col :span="1"></el-col>
   </el-row>
+</div>
+  </div>
+
+
 </template>
 
 <script lang="ts" setup>
@@ -388,7 +396,7 @@ onMounted(() => {
 .group1 {
   border-radius: 0.5em;
   min-height: 36px;
-  background: #181A1B;
+  background: #181a1baf;
   padding: 1em;
   margin-top: 1em;
 }
@@ -396,9 +404,10 @@ onMounted(() => {
 body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
-  background: #f2f2f2;
-
-
+ 
+}
+.wrap2 {
+  background-image: linear-gradient(#175998, #9aecd4);
 }
 
 .el-form-item {
@@ -419,192 +428,24 @@ body {
 }
 
 
-.form_wrapper {
-  background: #fff;
 
+
+.form_wrapper {
+  
+  background-color: rgba(24, 26, 27, 0.904);
   max-width: 100%;
   box-sizing: border-box;
   padding: 25px;
   margin: 8% auto 0;
   position: relative;
   z-index: 1;
-  border-top: 5px solid #cccccc;
-  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-  -webkit-transform-origin: 50% 0%;
-  transform-origin: 50% 0%;
-  -webkit-transform: scale3d(1, 1, 1);
-  transform: scale3d(1, 1, 1);
-  -webkit-transition: none;
-  transition: none;
-  -webkit-animation: expand 0.8s 0.6s ease-out forwards;
-  animation: expand 0.8s 0.6s ease-out forwards;
-  opacity: 0;
+  border-top: 7px solid #0077ff;
 
-  h2 {
-    font-size: 1.5em;
-    line-height: 1.5em;
-    margin: 0;
-    color: red;
-  }
-
-  .title_container {
-    text-align: center;
-    padding-bottom: 15px;
-  }
-
-  h3 {
-    font-size: 1.1em;
-    font-weight: normal;
-    line-height: 1.5em;
-    margin: 0;
-  }
-
-  label {
-    font-size: 12px;
-  }
-
-  .row {
-    margin: 10px -15px;
-
-    >div {
-      padding: 0 15px;
-      box-sizing: border-box;
-    }
-  }
-
-  .col_half {
-    width: 50%;
-    float: left;
-  }
-
-  .input_field {
-    position: relative;
-    margin-bottom: 20px;
-    -webkit-animation: bounce 0.6s ease-out;
-    animation: bounce 0.6s ease-out;
-
-    >span {
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #333;
-      height: 100%;
-      border-right: 1px solid #cccccc;
-      text-align: center;
-      width: 30px;
-
-      >i {
-        padding-top: 10px;
-      }
-    }
-  }
-
-  .textarea_field {
-    >span {
-      >i {
-        padding-top: 10px;
-      }
-    }
-  }
-
-  input {
-
-    &[type="text"],
-    &[type="email"],
-    &[type="password"] {
-      width: 100%;
-      padding: 8px 10px 9px 35px;
-      height: 35px;
-      border: 1px solid #cccccc;
-      box-sizing: border-box;
-      outline: none;
-      -webkit-transition: all 0.30s ease-in-out;
-      -moz-transition: all 0.30s ease-in-out;
-      -ms-transition: all 0.30s ease-in-out;
-      transition: all 0.30s ease-in-out;
-    }
-
-    &[type="text"]:hover,
-    &[type="email"]:hover,
-    &[type="password"]:hover {
-      background: #fafafa;
-    }
-
-    &[type="text"]:focus,
-    &[type="email"]:focus,
-    &[type="password"]:focus {
-      -webkit-box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
-      -moz-box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
-      box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
-      border: 1px solid #cccccc;
-      background: #fafafa;
-    }
-
-    &[type="submit"] {
-      background: #cccccc;
-      height: 35px;
-      line-height: 35px;
-      width: 100%;
-      border: none;
-      outline: none;
-      cursor: pointer;
-      color: #fff;
-      font-size: 1.1em;
-      margin-bottom: 10px;
-      -webkit-transition: all 0.30s ease-in-out;
-      -moz-transition: all 0.30s ease-in-out;
-      -ms-transition: all 0.30s ease-in-out;
-      transition: all 0.30s ease-in-out;
-
-      &:hover {
-        background: darken(#cccccc, 7%);
-      }
-
-      &:focus {
-        background: darken(#cccccc, 7%);
-      }
-    }
-
-    &[type="checkbox"],
-    &[type="radio"] {
-      border: 0;
-      clip: rect(0 0 0 0);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
-    }
-  }
+  
+  
 }
 
 
 
 
-@-webkit-keyframes expand {
-  0% {
-    -webkit-transform: scale3d(1, 0, 1);
-    opacity: 0;
-  }
-
-  25% {
-    -webkit-transform: scale3d(1, 1.2, 1);
-  }
-
-  50% {
-    -webkit-transform: scale3d(1, 0.85, 1);
-  }
-
-  75% {
-    -webkit-transform: scale3d(1, 1.05, 1);
-  }
-
-  100% {
-    -webkit-transform: scale3d(1, 1, 1);
-    opacity: 1;
-  }
-}
 </style>
