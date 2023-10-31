@@ -4,8 +4,8 @@
   <div class="wrap1"  >
     <div class="wrap2">
     <el-row style="margin: 0 auto; ">
-    <el-col :span="0"></el-col>
-    <el-col :span="24">
+    <el-col :span="1"></el-col>
+    <el-col :span="22">
       <p style="color:#f39f5a; text-align: center; margin: 2%; font-size: 2em;">CHÙA VIÊN QUANG </p>
       <div class="form_in1">
       <div class="form_wrapper">
@@ -18,7 +18,7 @@
           <div class="row clearfix">
             <div class="parent d-flex justify-content-center">
               <form method="POST"
-                action="https://script.google.com/macros/s/AKfycbz7SCj8X8RHyS1XLxRY8nXuZ0o4LXk9jrbHP-9YLAVgXQNd_3b6cHK9aPTxqE2Us6Y/exec"
+                action="https://script.google.com/macros/s/AKfycbwGN0t5l9N32t3KItM8LeUD1HFc7mbZ5us1EDyLO3X4XVPPmdDCwnNVSdhnDjpsvXM/exec"
                 :model="form" label-width="120px">
                 <el-form-item>
                   <p style="background-image: url('asets/bg.jpg');">Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu Phật,
@@ -36,34 +36,36 @@
                   <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự lễ
                     Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
                   <el-form-item>
-                    <el-radio-group v-model="form.rdThamdu">
-                      <el-radio label="1" >Chắc chắn tham gia</el-radio>
-                      <el-radio label="0" >Không tham gia được</el-radio>
+                    <el-radio-group @change="rdThamDuChange"  v-model="form.rdThamdu">
+                      <el-radio name="dongythamgia" label="Chắc chắn tham gia" >Chắc chắn tham gia</el-radio>
+                      <el-radio  name="dongythamgia" label="Không tham gia được" >Không tham gia được</el-radio>
                     </el-radio-group>
+                    <el-input name="dongythamgia11" v-show=true v-model="form.dongythamgia"  />
                   </el-form-item>
+                  
                 </div>
 
 
 
                 <el-form-item label="Họ và tên">
-                  <el-input name="name" hin v-model="form.name" placeholder="     Vui lòng viết hoa chữ cái đầu tiên" />
+                  <el-input name="hovaten" hin v-model="form.name" placeholder="Vui lòng viết hoa chữ cái đầu tiên" />
                 </el-form-item>
 
 
                 <el-form-item label="Năm Sinh">
-                  <el-input name="email" hin v-model="form.namsinh" placeholder="     Chỉ nhập năm sinh, ví dụ 2020" />
+                  <el-input name="namsinh" hin v-model="form.namsinh" placeholder="Chỉ nhập năm sinh, ví dụ 2020" />
 
                 </el-form-item>
 
                 <el-form-item label="Giới tính">
                   <el-radio-group v-model="form.resource">
-                    <el-radio label="Nam" />
-                    <el-radio label="Nữ" />
+                    <el-radio name="gioitinh" label="Nam" />
+                    <el-radio name="gioitinh" label="Nữ" />
                   </el-radio-group>
                 </el-form-item>
 
                 <el-form-item label="Số điện thoại">
-                  <el-input name="Họ và tên" type="tel" hin v-model="form.date2" maxlength="10" minlength="10"  />
+                  <el-input name="sodienthoai" type="tel" hin v-model="form.sdt" maxlength="10" minlength="10"  />
                 </el-form-item>
 
                 <div class="group1">
@@ -71,7 +73,7 @@
                   <p>Là địa chỉ trong Căn cước công dân hoặc Chứng Minh Nhân Dân hoặc trên Giấy Khai sinh</p>
                   <el-form-item label="Tỉnh/Thành Phố">
                     <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
-                      class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
+                      class="inline-input w-50" @select="handleSelect" @change="handleChangePtt"> </el-autocomplete>
                   </el-form-item>
 
                   <el-form-item label="Quận / Huyện">
@@ -84,8 +86,8 @@
                       @select="handleSelectW"> </el-autocomplete>
                   </el-form-item>
 
-                  <el-input name="email" hin v-model="form.namsinh" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
-
+                  <el-input  hin v-model="form.namsinh" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
+                  <el-input  hin name="diachithuongtru" v-model="form.diachithuongtru" placeholder="gom thuong tru " />
                 </div>
 
                 
@@ -94,17 +96,17 @@
                   <p class="p_titlegroup">Nơi ở hiện tại*</p>
                   <el-checkbox v-model="checked1" label="Giống địa chỉ thường trú" size="large" />
                   <el-form-item label="Tỉnh/Thành Phố">
-                    <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
+                    <el-autocomplete v-model="modelProvince11" :fetch-suggestions="querySearchP" fit-input-width clearable
                       class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
                   </el-form-item>
 
                   <el-form-item label="Quận / Huyện">
-                    <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
+                    <el-autocomplete v-model="modelDistrict11" :fetch-suggestions="querySearchD" fit-input-width clearable
                       class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
                   </el-form-item>
 
                   <el-form-item label="Phường/Xã/Thị Trấn">
-                    <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
+                    <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW" fit-input-width clearable
                       @select="handleSelectW"> </el-autocomplete>
                   </el-form-item>
 
@@ -175,9 +177,9 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
 
 
                 <p>2selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
-
+                <p>ss {{ form }}</p>
                 <el-form-item>
-                  <button class="el-button" type="submit" @click="onSubmit">Đăng Ký</button>
+                  <button class="el-button" @click="dialogConfirmVisible = true">Đăng Ký</button>
                   <el-button @click="onSubmit">Hủy</el-button>
                 </el-form-item>
 
@@ -198,6 +200,14 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
   </div>
 
 
+  <el-dialog v-model="dialogConfirmVisible" title="Shipping address">
+    <el-table :data="gridData">
+      <el-table-column property="date" label="Date" width="150" />
+      <el-table-column property="name" label="Name" width="200" />
+      <el-table-column property="address" label="Address" />
+    </el-table>
+  </el-dialog>
+
 </template>
 
 <script lang="ts" setup>
@@ -205,9 +215,18 @@ import { onMounted, reactive, ref, watch } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
 const exportedFile0 = new exportedFile()
 
+///////////////////// dialog ////////////
+const dialogConfirmVisible=ref(false)
+
+
+
+
+//////////////////end dialog
 
 // do not use same name with ref
 const form = reactive({
+
+  dongythamgia:'',
   rdThamdu:-1,
   name: '',
   region: '',
@@ -217,7 +236,8 @@ const form = reactive({
   type: [],
   resource: '',
   desc: '',
-  namsinh: ''
+  namsinh: '',
+  diachithuongtru:''
 })
 
 interface provinceItem {
@@ -248,6 +268,10 @@ watch(modelProvince, async (newQuestion, oldQuestion) => {
 
 })
 
+function rdThamDuChange(value,number) {
+  if(form.rdThamdu==1) form.dongythamgia ='Chắc chắn tham gia'
+  else form.dongythamgia ='Không tham gia được '
+}
 
 
 
@@ -337,6 +361,9 @@ watch(selectedP, async (newQuestion, oldQuestion) => {
 
 
 
+
+
+
 function og(str: any) {
   console.log(str);
 }
@@ -412,11 +439,11 @@ body {
  
 }
 .wrap2 {
-  background-image: linear-gradient(#a1c4fdcb, #a1c4fdcb);
+  background-image: linear-gradient(#181818, #181818);
 }
 
 .form_in1{
-  background-image: linear-gradient(#a1c4fd, #a1c4fd);
+  background-image: linear-gradient(#202020, #181818);
 }
 p {
   color: #ffffff;
