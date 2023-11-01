@@ -95,35 +95,43 @@
 
                     <div class="group1 ">
                       <p class="p_titlegroup">Nơi ở hiện tại*</p>
-                      <el-checkbox v-model="checked1" label="Giống địa chỉ thường trú" size="large" />
+                      
+                      <el-checkbox v-model="checkedSameLocation" @change="onChangecheckboxSameLocation" label="Giống địa chỉ thường trú" size="large" />
                       <el-form-item label="Tỉnh/Thành Phố">
-                        <el-autocomplete v-model="modelProvince11" :fetch-suggestions="querySearchP" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelect" @change="handleChangeP">
+                        <el-autocomplete v-model="modelProvince11" :fetch-suggestions="querySearchP11" fit-input-width
+                          clearable class="inline-input w-50" @select="handleSelect11" @change="handleChangeP11">
                         </el-autocomplete>
                       </el-form-item>
 
-                      <el-form-item label="Quận / Huyện">
-                        <el-autocomplete v-model="modelDistrict11" :fetch-suggestions="querySearchD" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
+                      <el-form-item :label-position="Top" label="Quận / Huyện">
+                        <el-autocomplete v-model="modelDistrict11" :fetch-suggestions="querySearchD11" fit-input-width
+                          clearable class="inline-input w-50" @select="handleSelectD11"> </el-autocomplete>
                       </el-form-item>
 
                       <el-form-item label="Phường/Xã/Thị Trấn">
-                        <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW" fit-input-width clearable
-                          @select="handleSelectW"> </el-autocomplete>
+                        <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width clearable
+                          @select="handleSelectW11"> </el-autocomplete>
                       </el-form-item>
 
-                      <el-input name="email" hin v-model="form.namsinh"
+                      <el-input  hin v-model="form.sonhatt11"
                         placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
                     </div>
 
                     <div class="group1 ">
                       <p class="p_titlegroup">Đã tham gia sinh hoạt Đạo Tràng, Chúng Thanh Niên chưa?</p>
-                      <el-radio-group v-model="form.resource2">
-                        <el-radio label="Chưa tham gia" />
-                        <el-radio label="Đã tham gia" />
+                      <el-radio-group v-model="form.rdDathamGiaDaoTrang" @change="onChangeDathamgiaDTchua" >
+                        <el-radio  label=0 >Chưa Tham Gia</el-radio>
+                        <el-radio label=1 >Đã tham gia</el-radio>
                       </el-radio-group>
-                      <el-input class="margintop1em" name="email" hin v-model="form.namsinh"
+                      <el-input v-show="form.rdDathamGiaDaoTrang!=11" class="margintop1em" name="email" hin v-model="form.dasinhhoatdaotrang"
                         placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
+
+                        <p class="p_titlegroup">Quý Phật tử có mong muốn tham gia sinh hoạt Đạo tràng/CTN không ạ??</p>
+                      <el-radio-group v-model="form.rdMongMuonThamGiaDT" @change="onChangeDathamgiaDTchua" >
+                        <el-radio  label=0 >Muốn tham gia</el-radio>
+                        <el-radio label=1 >Không muốn tham gia</el-radio>
+                      </el-radio-group>
+
 
                     </div>
 
@@ -254,7 +262,10 @@
         </tr>
 
         <tr>
-          <td>Nơi ở hiện tại: #diachitamtru#</td>
+          <td>Nơi ở hiện tại: {{form.sonhatt11+', '+modelWard11+', '+modelDistrict11+', '+modelProvince11}}
+            <el-input name="diachitamtru" hin v-show="true" v-model="form_diachitamtru"  > </el-input>
+            <el-input name="tinhtamtru" hin v-show="true" v-model="modelProvince11"  > </el-input>
+          </td>
         </tr>
 
       </table>
@@ -268,22 +279,28 @@
 
   </el-dialog>
 </template>
-
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
 import { ClickOutside } from 'element-plus';
-const exportedFile0 = new exportedFile()
+//const exportedFile0 = new exportedFile()
 
 ///////////////////// dialog ////////////
 let dialogConfirmVisible = ref(false)
 
 function clickDangKy(event) {
   form_diachithuongtru.value= form.sonhatt+', '+modelWard.value+', '+modelDistrict.value+', '+modelProvince.value;
+  form_diachitamtru.value = form.sonhatt11+', '+modelWard11.value+', '+modelDistrict11.value+', '+modelProvince11.value;
   dialogConfirmVisible.value = true
 }
 
 const form_diachithuongtru = ref('');
+const form_diachitamtru = ref('');
 //////////////////end dialog
 
 // do not use same name with ref
@@ -295,6 +312,11 @@ const form = reactive({
   sodienthoai:'',
   sonhatt:'',
 
+
+  sonhatt11:'',
+  dasinhhoatdaotrang:'',
+  rdDathamGiaDaoTrang:-1,
+  rdMongMuonThamGiaDT:-1,
 
 
   rdThamdu: -1,
@@ -310,6 +332,10 @@ const form = reactive({
   diachithuongtru: ''
 })
 
+const checkedSameLocation =false; // checkbox cùng thường trú và tạm tru 
+
+
+
 interface provinceItem {
   value: string
   code: string
@@ -317,11 +343,12 @@ interface provinceItem {
   wards: provinceItem
 }
 const modelProvince = ref('')
-const provinces = ref<provinceItem[]>([])
+const provincesSource = ref<provinceItem[]>([])
+
 const querySearchP = (queryString: string, cb: any) => {
   const results = queryString
-    ? provinces.value.filter(createFilter(queryString))
-    : provinces.value
+    ? provincesSource.value.filter(createFilter(queryString))
+    : provincesSource.value
   // call callback function to return suggestions
   cb(results)
 }
@@ -430,6 +457,111 @@ watch(selectedP, async (newQuestion, oldQuestion) => {
 })
 
 
+////////////////////////////// tinh tp thu 2////////////////
+
+const modelProvince11 = ref('')
+const querySearchP11 = (queryString: string, cb: any) => {
+    const results = queryString
+      ? provincesSource.value.filter(createFilter(queryString))
+      : provincesSource.value
+    // call callback function to return suggestions
+    cb(results)
+  }
+
+
+  watch(modelProvince11, async (newQuestion, oldQuestion) => {
+    if (oldQuestion.indexOf(selectedP11.value) > -1 && newQuestion.indexOf(selectedP11.value) == -1) {
+      modelDistrict11.value = ''
+      modelWard11.value = ''
+      districts11.value = ref('')
+      wards11.value = ref('')
+      og('clear for province')
+      selectedP11.value = ref('')
+    }
+  
+  })
+
+
+  const modelDistrict11 = ref('')
+const districts11 = ref<provinceItem[]>([])
+const querySearchD11 = (queryString: string, cb: any) => {
+  const results = queryString
+    ? districts11.value.filter(createFilter(queryString))
+    : districts11.value
+  // call callback function to return suggestions
+  cb(results)
+}
+watch(modelDistrict11, async (newQuestion, oldQuestion) => {
+  if (oldQuestion.indexOf(selectedD11.value) > -1 && newQuestion.indexOf(selectedD11.value) == -1) {
+    modelWard11.value = ''
+    wards11.value = ref('')
+    og('clear for District')
+    selectedD11.value = ref('')
+  }
+
+})
+
+
+const modelWard11 = ref('')
+const wards11 = ref<provinceItem[]>([])
+const querySearchW11 = (queryString: string, cb: any) => {
+  const results = queryString
+    ? wards11.value.filter(createFilter(queryString))
+    : wards11.value
+  // call callback function to return suggestions
+  cb(results)
+}
+watch(modelWard11, async (newQuestion, oldQuestion) => {
+  if (oldQuestion.indexOf(selectedD11.value) > -1 && newQuestion.indexOf(selectedD11.value) == -1) {
+    modelWard11.value = ''
+    wards11.value = ref('')
+    og('clear for District')
+    selectedW11.value = ref('')
+  }
+
+})
+
+
+const selectedP11 = ref('');
+const handleSelect11 = (item: provinceItem) => {
+  selectedP11.value = item.value
+  districts11.value = item.districts
+  og(item)
+}
+const selectedD11 = ref('');
+const handleSelectD11 = (item: provinceItem) => {
+  og(item.wards)
+  selectedD11.value = item.value
+  wards11.value = item.wards
+}
+
+const selectedW11 = ref('')
+const handleSelectW11 = (item: provinceItem) => {
+  //districts.value = item.districts
+  selectedW11.value = item.value
+}
+
+watch(selectedD11, async (newQuestion, oldQuestion) => {
+  if (selectedD11.value.length < 2) {
+    selectedW11.value = ref('')
+  }
+
+})
+watch(selectedP11, async (newQuestion, oldQuestion) => {
+  if (selectedP11.value.length == 0) {
+
+    selectedD11.value = ref('')
+    selectedW11.value = ref('')
+  }
+
+})
+
+/////////////// en chon dia chi tam tru
+
+function onChangeDathamgiaDTchua(value:any){
+  og(value)
+}
+
 
 
 
@@ -482,7 +614,7 @@ const onSubmit = () => {
 
 
 onMounted(() => {
-  provinces.value = new exportedFile().loadAllProvince()
+  provincesSource.value = new exportedFile().loadAllProvince()
 })
 
 </script>

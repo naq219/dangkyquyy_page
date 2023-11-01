@@ -221,12 +221,13 @@ interface provinceItem {
   districts: provinceItem
   wards: provinceItem
 }
+
 const modelProvince = ref('')
-const provinces = ref<provinceItem[]>([])
+const provincesSource = ref<provinceItem[]>([])
 const querySearchP = (queryString: string, cb: any) => {
   const results = queryString
-    ? provinces.value.filter(createFilter(queryString))
-    : provinces.value
+    ? provincesSource.value.filter(createFilter(queryString))
+    : provincesSource.value
   // call callback function to return suggestions
   cb(results)
 }
@@ -380,7 +381,7 @@ const onSubmit = () => {
 
 
 onMounted(() => {
-  provinces.value = new exportedFile().loadAllProvince()
+  provincesSource.value = new exportedFile().loadAllProvince()
 })
 
 </script>
