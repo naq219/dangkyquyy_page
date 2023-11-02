@@ -18,7 +18,7 @@
                   <div class="parent d-flex justify-content-center">
 
                     <el-form-item>
-                      <p style="background-image: url('asets/bg.jpg');">Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
+                      <p>Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
                         Phật,
                         Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
                         luôn nhận được sự gia hộ của Đức Phật, huynh đệ có thêm ý chí vượt qua mọi khó khăn trong cuộc
@@ -48,7 +48,8 @@
 
 
                     <el-form-item label="Họ và tên">
-                      <el-input name="hovaten" hin v-model="form.hovaten" placeholder="Vui lòng viết hoa chữ cái đầu tiên" />
+                      <el-input name="hovaten" hin v-model="form.hovaten"
+                        placeholder="Vui lòng viết hoa chữ cái đầu tiên" />
                     </el-form-item>
 
 
@@ -65,7 +66,8 @@
                     </el-form-item>
 
                     <el-form-item label="Số điện thoại">
-                      <el-input name="sodienthoai" type="tel" hin v-model="form.sodienthoai" maxlength="10" minlength="10" />
+                      <el-input name="sodienthoai" type="tel" hin v-model="form.sodienthoai" maxlength="10"
+                        minlength="10" />
                     </el-form-item>
 
                     <div class="group1">
@@ -88,15 +90,16 @@
                       </el-form-item>
 
                       <el-input hin v-model="form.sonhatt" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
-                     
+
                     </div>
 
 
 
                     <div class="group1 ">
                       <p class="p_titlegroup">Nơi ở hiện tại*</p>
-                      
-                      <el-checkbox v-model="checkedSameLocation" @change="onChangecheckboxSameLocation" label="Giống địa chỉ thường trú" size="large" />
+
+                      <el-checkbox v-model="checkedSameLocation" @change="onChangecheckboxSameLocation"
+                        label="Giống địa chỉ thường trú" size="large" />
                       <el-form-item label="Tỉnh/Thành Phố">
                         <el-autocomplete v-model="modelProvince11" :fetch-suggestions="querySearchP11" fit-input-width
                           clearable class="inline-input w-50" @select="handleSelect11" @change="handleChangeP11">
@@ -109,28 +112,31 @@
                       </el-form-item>
 
                       <el-form-item label="Phường/Xã/Thị Trấn">
-                        <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width clearable
-                          @select="handleSelectW11"> </el-autocomplete>
+                        <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width
+                          clearable @select="handleSelectW11"> </el-autocomplete>
                       </el-form-item>
 
-                      <el-input  hin v-model="form.sonhatt11"
-                        placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
+                      <el-input hin v-model="form.sonhatt11" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
                     </div>
 
                     <div class="group1 ">
-                      <p class="p_titlegroup">Đã tham gia sinh hoạt Đạo Tràng, Chúng Thanh Niên chưa?</p>
-                      <el-radio-group v-model="form.rdDathamGiaDaoTrang" @change="onChangeDathamgiaDTchua" >
-                        <el-radio  label=0 >Chưa Tham Gia</el-radio>
-                        <el-radio label=1 >Đã tham gia</el-radio>
+                      <p class="p_titlegroup">Quý Phật tử Đã tham gia sinh hoạt Đạo Tràng, Chúng Thanh Niên chưa ạ?</p>
+                      <el-radio-group v-model="form._rdDathamGiaDaoTrang" @change="onChangeDathamgiaDTchua">
+                        <el-radio label=0>Chưa Tham Gia</el-radio>
+                        <el-radio label=1>Đã tham gia</el-radio>
                       </el-radio-group>
-                      <el-input v-show="form.rdDathamGiaDaoTrang!=11" class="margintop1em" name="email" hin v-model="form.dasinhhoatdaotrang"
-                        placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
-
-                        <p class="p_titlegroup">Quý Phật tử có mong muốn tham gia sinh hoạt Đạo tràng/CTN không ạ??</p>
-                      <el-radio-group v-model="form.rdMongMuonThamGiaDT" @change="onChangeDathamgiaDTchua" >
-                        <el-radio  label=0 >Muốn tham gia</el-radio>
-                        <el-radio label=1 >Không muốn tham gia</el-radio>
+                      <el-input v-show="form._rdDathamGiaDaoTrang == 1" class="margintop1em" name="email" hin
+                        v-model="form._tentochucdathamgia" placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
+                      
+                      <div v-if="form._rdDathamGiaDaoTrang == 0">
+                        <p class="p_titlegroup">Quý Phật tử có mong muốn tham gia sinh hoạt Đạo tràng/CTN không ạ?</p>
+                      <el-radio-group  v-model="form._rdMongMuonThamGiaDT"
+                       >
+                        <el-radio label='Có Muốn tham gia'>Có Muốn tham gia</el-radio>
+                        <el-radio label='Không muốn tham gia'>Không muốn tham gia</el-radio>
                       </el-radio-group>
+                      </div>
+                      
 
 
                     </div>
@@ -138,12 +144,12 @@
                     <div class="group1 ">
                       <p class="p_titlegroup ">Người giới thiệu - Tổ sinh hoạt - Số điện thoại?</p>
                       <p class="ss">VD: Hòa Lý Anh - Tổ Vinh - CTN Nghệ An - 0338 699 484</p>
-                      <el-input class="margintop1em" name="email" hin v-model="form.namsinh" placeholder="" />
+                      <el-input class="margintop1em"  hin v-model="form.nguoigioithieu" placeholder="" />
                     </div>
 
                     <div class="group1 ">
                       <p class="p_titlegroup">Thắc mắc, ghi chú</p>
-                      <el-input class="margintop1em" name="email" hin v-model="form.namsinh" placeholder="" />
+                      <el-input class="margintop1em"  hin v-model="form.ghichu" placeholder="" />
                     </div>
 
                     <div class="group1 ">
@@ -224,58 +230,63 @@
     </div>
   </div>
 
-  
+
   <el-dialog width="20%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
     <form method="POST"
       action="https://script.google.com/macros/s/AKfycbwGN0t5l9N32t3KItM8LeUD1HFc7mbZ5us1EDyLO3X4XVPPmdDCwnNVSdhnDjpsvXM/exec"
       :model="form" label-width="120px">
+      
+      <el-input name="ghichu" hin v-show="false" v-model="form.ghichu" />
+      <el-input name="dongythamgia" hin v-show="false" v-model="form.dongythamgia" />
+      <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
+      <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
 
       <table>
-        <el-input name="dongythamgia" hin v-show="false"  v-model="form.dongythamgia"/>
+        
         <tr>
-          <td>Họ tên: {{ form.hovaten }} 
-            <el-input name="hovaten" hin v-show="false"  v-model="form.hovaten"/>
+          <td>Họ tên: {{ form.hovaten }}
+            <el-input name="hovaten" hin v-show="false" v-model="form.hovaten" />
           </td>
 
         </tr>
 
         <tr>
-          <td>SĐT: {{form.sodienthoai}}</td>
-          <el-input name="sodienthoai" hin v-show="false"  v-model="form.sodienthoai"/>
+          <td>SĐT: {{ form.sodienthoai }}</td>
+          <el-input name="sodienthoai" hin v-show="false" v-model="form.sodienthoai" />
         </tr>
 
         <tr>
-          <td>Năm Sinh: {{form.namsinh}}</td>
-          <el-input name="namsinh" hin v-show="false"  v-model="form.namsinh"/>
+          <td>Năm Sinh: {{ form.namsinh }}</td>
+          <el-input name="namsinh" hin v-show="false" v-model="form.namsinh" />
         </tr>
 
         <tr>
-          <td>Giới Tính: {{form.gioitinh}}</td>
-          <el-input name="gioitinh" hin v-show="false"  v-model="form.gioitinh"/>
+          <td>Giới Tính: {{ form.gioitinh }}</td>
+          <el-input name="gioitinh" hin v-show="false" v-model="form.gioitinh" />
         </tr>
 
         <tr>
-          <td>ĐC Thường Trú: {{form.sonhatt+', '+modelWard+', '+modelDistrict+', '+modelProvince}}
-            <el-input name="diachithuongtru" hin v-show="true" v-model="form_diachithuongtru"  > </el-input>
+          <td>ĐC Thường Trú: {{ form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince }}
+            <el-input name="diachithuongtru" hin v-show="true" v-model="form_diachithuongtru"> </el-input>
           </td>
-          
+
         </tr>
 
         <tr>
-          <td>Nơi ở hiện tại: {{form.sonhatt11+', '+modelWard11+', '+modelDistrict11+', '+modelProvince11}}
-            <el-input name="diachitamtru" hin v-show="true" v-model="form_diachitamtru"  > </el-input>
-            <el-input name="tinhtamtru" hin v-show="true" v-model="modelProvince11"  > </el-input>
+          <td>Nơi ở hiện tại: {{ form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11 }}
+            <el-input name="diachitamtru" hin v-show="true" v-model="form_diachitamtru"> </el-input>
+            <el-input name="tinhtamtru" hin v-show="true" v-model="modelProvince11"> </el-input>
           </td>
         </tr>
 
       </table>
       <!-- <el-button type="primary" style="margin-top: 1em;">Xác nhận</el-button> -->
       <div style="margin-top: 1em;">
-        <button class="el-button el-button--primary" type="submit">Xác nhận </button>
-      
+        <button class="el-button el-button--primary" type="submit">Xác nhận</button>
+
       </div>
     </form>
-    <button style="margin-top: 1em;" class="el-button el-button--info" @click="dialogConfirmVisible=false"  >Hủy</button>
+    <button style="margin-top: 1em;" class="el-button el-button--info" @click="dialogConfirmVisible = false">Hủy</button>
 
   </el-dialog>
 </template>
@@ -294,8 +305,15 @@ import { ClickOutside } from 'element-plus';
 let dialogConfirmVisible = ref(false)
 
 function clickDangKy(event) {
-  form_diachithuongtru.value= form.sonhatt+', '+modelWard.value+', '+modelDistrict.value+', '+modelProvince.value;
-  form_diachitamtru.value = form.sonhatt11+', '+modelWard11.value+', '+modelDistrict11.value+', '+modelProvince11.value;
+  form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
+  form_diachitamtru.value = form.sonhatt11 + ', ' + modelWard11.value + ', ' + modelDistrict11.value + ', ' + modelProvince11.value;
+  
+  if (form._rdDathamGiaDaoTrang==0) {
+    form.dasinhhoatdaotrang= 'Chưa tham gia - '+form._rdMongMuonThamGiaDT
+  }
+  else form.dasinhhoatdaotrang= form._tentochucdathamgia; 
+  
+  
   dialogConfirmVisible.value = true
 }
 
@@ -307,32 +325,28 @@ const form_diachitamtru = ref('');
 const form = reactive({
 
   dongythamgia: '',
-  hovaten:'',
-  gioitinh:'',
-  sodienthoai:'',
-  sonhatt:'',
+  hovaten: '',
+  gioitinh: '',
+  sodienthoai: '',
+  sonhatt: '',
+  _tentochucdathamgia:'',
+  nguoigioithieu:'',
+  ghichu:'',
 
 
-  sonhatt11:'',
-  dasinhhoatdaotrang:'',
-  rdDathamGiaDaoTrang:-1,
-  rdMongMuonThamGiaDT:-1,
+  sonhatt11: '',
+  dasinhhoatdaotrang: '',
+  _rdDathamGiaDaoTrang: -1,
+  _rdMongMuonThamGiaDT: -1,
 
 
   rdThamdu: -1,
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+  
   namsinh: '',
   diachithuongtru: ''
 })
 
-const checkedSameLocation =false; // checkbox cùng thường trú và tạm tru 
+const checkedSameLocation = false; // checkbox cùng thường trú và tạm tru 
 
 
 
@@ -461,28 +475,28 @@ watch(selectedP, async (newQuestion, oldQuestion) => {
 
 const modelProvince11 = ref('')
 const querySearchP11 = (queryString: string, cb: any) => {
-    const results = queryString
-      ? provincesSource.value.filter(createFilter(queryString))
-      : provincesSource.value
-    // call callback function to return suggestions
-    cb(results)
+  const results = queryString
+    ? provincesSource.value.filter(createFilter(queryString))
+    : provincesSource.value
+  // call callback function to return suggestions
+  cb(results)
+}
+
+
+watch(modelProvince11, async (newQuestion, oldQuestion) => {
+  if (oldQuestion.indexOf(selectedP11.value) > -1 && newQuestion.indexOf(selectedP11.value) == -1) {
+    modelDistrict11.value = ''
+    modelWard11.value = ''
+    districts11.value = ref('')
+    wards11.value = ref('')
+    og('clear for province')
+    selectedP11.value = ref('')
   }
 
-
-  watch(modelProvince11, async (newQuestion, oldQuestion) => {
-    if (oldQuestion.indexOf(selectedP11.value) > -1 && newQuestion.indexOf(selectedP11.value) == -1) {
-      modelDistrict11.value = ''
-      modelWard11.value = ''
-      districts11.value = ref('')
-      wards11.value = ref('')
-      og('clear for province')
-      selectedP11.value = ref('')
-    }
-  
-  })
+})
 
 
-  const modelDistrict11 = ref('')
+const modelDistrict11 = ref('')
 const districts11 = ref<provinceItem[]>([])
 const querySearchD11 = (queryString: string, cb: any) => {
   const results = queryString
@@ -558,7 +572,7 @@ watch(selectedP11, async (newQuestion, oldQuestion) => {
 
 /////////////// en chon dia chi tam tru
 
-function onChangeDathamgiaDTchua(value:any){
+function onChangeDathamgiaDTchua(value: any) {
   og(value)
 }
 
@@ -689,10 +703,10 @@ p {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
-td, th {
+
+td,
+th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
-}
-
-</style>
+}</style>
