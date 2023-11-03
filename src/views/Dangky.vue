@@ -1,205 +1,59 @@
-<template >
- 
+<template>
+  <div class="form_wrapper">
+    <div class="form_container">
+      <div class="title_container">
+        <h2>Đăng Ký Quy Y</h2>
+        <h2> .</h2>
+      </div>
+      <div class="row clearfix">
+        <div class="parent d-flex justify-content-center">
+          <form method="POST"
+            action="https://script.google.com/macros/s/AKfycbz7SCj8X8RHyS1XLxRY8nXuZ0o4LXk9jrbHP-9YLAVgXQNd_3b6cHK9aPTxqE2Us6Y/exec"
+            :model="form" label-width="120px">
+            <el-form-item label="Họ và tên">
+              <el-input hin v-model="form.name" />
+            </el-form-item>
 
-  <div class="wrap1"  >
-    <div class="wrap2">
-    <el-row style="margin: 0 auto; ">
-    <el-col :span="1"></el-col>
-    <el-col :span="22">
-      <div class="form_wrapper">
-        <div class="form_container">
-          <div class="title_container">
-            <h2 style="color:#f39f5a; text-align: center;">Đăng Ký Quy Y Tam Bảo <br>CHÙA VIÊN QUANG</h2>
-            <h2> .3</h2>
-          </div>
-          <div class="row clearfix">
-            <div class="parent d-flex justify-content-center">
-              <form method="POST"
-                action="https://script.google.com/macros/s/AKfycbz7SCj8X8RHyS1XLxRY8nXuZ0o4LXk9jrbHP-9YLAVgXQNd_3b6cHK9aPTxqE2Us6Y/exec"
-                :model="form" label-width="120px">
-                <el-form-item>
-                  <p style="background-image: url('asets/bg.jpg');">Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu Phật,
-                    Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
-                    luôn nhận được sự gia hộ của Đức Phật, huynh đệ có thêm ý chí vượt qua mọi khó khăn trong cuộc sống,
-                    tinh tấn tu tập, siêng năng làm phước và sẽ gặp được nhiều may mắn, phúc lành trong cuộc sống.
-                    <br>
-                    "Quy Y Phật rồi không đọa địa ngục <br>
-                    Quy Y Pháp rồi không đọa ngạ quỷ <br>
-                    Quy Y Tăng rồi không đọa bàng sinh" <br>
-                  </p>
-                </el-form-item>
+            <el-form-item label="Năm Sinh">
+              <el-input hin v-model="form.name" />
+            </el-form-item>
 
-                <div class="group1 ep-bg-purple-dark">
-                  <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự lễ
-                    Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
-                  <el-form-item>
-                    <el-radio-group v-model="form.resource">
-                      <el-radio label="Chắn chắn tham gia" />
-                      <el-radio label="Không tham gia được" />
-                    </el-radio-group>
-                  </el-form-item>
-                </div>
+            <el-form-item label="Giới tính">
+              <el-radio-group v-model="form.resource">
+                <el-radio label="Nam" />
+                <el-radio label="Nữ" />
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form-item label="Số điện thoại">
+              <el-input type="tel" hin v-model="form.name" />
+            </el-form-item>
+
+            <el-form-item label="Tỉnh/TP">
+              <el-autocomplete v-model="state1" :fetch-suggestions="querySearch" clearable class="inline-input w-50"
+              placeholder="Please Input" @select="handleSelect"> </el-autocomplete>
+            </el-form-item>
 
 
+            <el-form-item>
+              <button class="el-button" type="submit" @click="onSubmit">Đăng Ký</button>
+              <el-button @click="onSubmit">Hủy</el-button>
+            </el-form-item>
 
-                <el-form-item label="Họ và tên">
-                  <el-input name="name" hin v-model="form.name" placeholder="     Vui lòng viết hoa chữ cái đầu tiên" />
-                </el-form-item>
+            
 
-
-                <el-form-item label="Năm Sinh">
-                  <el-input name="email" hin v-model="form.namsinh" placeholder="     Chỉ nhập năm sinh, ví dụ 2020" />
-
-                </el-form-item>
-
-                <el-form-item label="Giới tính">
-                  <el-radio-group v-model="form.resource">
-                    <el-radio label="Nam" />
-                    <el-radio label="Nữ" />
-                  </el-radio-group>
-                </el-form-item>
-
-                <el-form-item label="Số điện thoại">
-                  <el-input name="Họ và tên" type="tel" hin v-model="form.date2" maxlength="10" minlength="10"  />
-                </el-form-item>
-
-                <div class="group1">
-                  <p class="p_titlegroup">Địa chỉ thường trú*</p>
-                  <p>Là địa chỉ trong Căn cước công dân hoặc Chứng Minh Nhân Dân hoặc trên Giấy Khai sinh</p>
-                  <el-form-item label="Tỉnh/Thành Phố">
-                    <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
-                      class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
-                  </el-form-item>
-
-                  <el-form-item label="Quận / Huyện">
-                    <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
-                      class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
-                  </el-form-item>
-
-                  <el-form-item label="Phường/Xã/Thị Trấn">
-                    <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
-                      @select="handleSelectW"> </el-autocomplete>
-                  </el-form-item>
-
-                  <el-input name="email" hin v-model="form.namsinh" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
-
-                </div>
-
-                
-
-                <div class="group1 ">
-                  <p class="p_titlegroup">Nơi ở hiện tại*</p>
-                  <el-checkbox v-model="checked1" label="Giống địa chỉ thường trú" size="large" />
-                  <el-form-item label="Tỉnh/Thành Phố">
-                    <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
-                      class="inline-input w-50" @select="handleSelect" @change="handleChangeP"> </el-autocomplete>
-                  </el-form-item>
-
-                  <el-form-item label="Quận / Huyện">
-                    <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
-                      class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
-                  </el-form-item>
-
-                  <el-form-item label="Phường/Xã/Thị Trấn">
-                    <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
-                      @select="handleSelectW"> </el-autocomplete>
-                  </el-form-item>
-
-                  <el-input name="email" hin v-model="form.namsinh" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
-                </div>
-
-                <div class="group1 ">
-                  <p class="p_titlegroup">Đã tham gia sinh hoạt Đạo Tràng, CTN chưa?</p>
-                  <el-radio-group v-model="form.resource2">
-                    <el-radio label="Chưa tham gia" />
-                    <el-radio label="Đã tham gia" />
-                  </el-radio-group>
-                  <el-input class="margintop1em" name="email" hin v-model="form.namsinh" placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
-
-                </div>
-
-                <div class="group1 ">
-                  <p class="p_titlegroup ">Người giới thiệu - Tổ sinh hoạt - Số điện thoại?</p>
-                  <p class="ss">VD: Hòa Lý Anh - Tổ Vinh - CTN Nghệ An -  0338 699 484</p>
-                  <el-input class="margintop1em" name="email" hin v-model="form.namsinh" placeholder="" />
-                </div>
-
-                <div class="group1 ">
-                  <p class="p_titlegroup">Thắc mắc, ghi chú</p>
-                  <el-input class="margintop1em" name="email" hin v-model="form.namsinh" placeholder="" />
-                </div>
-
-                <div class="group1 ">
-                  <p class="p_titlegroup">Liên hệ nhận Lá Phái: <br>
-                    Tâm Huy Pháp:  0383 668 927<br>
-                    Hoà Lý Anh: 0338.699.484</p>
-                  
-                </div>
-
-                <div class="group1 ">
-                  <p class="p_titlegroup">TRƯỜNG HỢP PHẬT TỬ KHÔNG THAM DỰ ĐƯỢC LỄ:</p>
-                  <p class="">
-                    Thường mỗi tháng sẽ có 1 buổi lễ Quy Y ạ, Quý Phật tử vui lòng hoan hỷ đăng ký vào lễ sau nếu tham dự được nhé ạ.<br>
-
-Thông tin lễ Quy Y được đăng tải trên trang: Chúng Thanh Niên Phật Tử Phật Quang Nghệ An<br>
-<a href="https://www.facebook.com/ctnpqnghean">https://www.facebook.com/ctnpqnghean</a>
-<br>
-
-Mọi thắc mắc về Lễ Quy Y xin vui lòng liên hệ:<br>Tâm Huy Pháp: 0383 668 927</p>
-                  
-                </div>
-
-                <div class="group1 ">
-                  <p class="p_titlegroup ">QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI:</p>
-                  <p class=" smalltext">
-                    1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua link hoặc qua bàn Thư Ký tại Chùa Viên Quang vào hôm tổ chức lễ.<br>- Quý Phật tử đã đăng ký trên link vui lòng qua Bàn thư ký nhận SỐ PHIẾU LẤY LÁ PHÁI.<br>
-
-2. Xác nhận thông tin<br>Quý Phật tử đã đăng ký trên link trước đó sẽ được ban thư ký gọi điện xác nhận lại thông tin và phát số phiếu nhận lá phái khi về chùa ạ.<br>
-
-3. Tham dự lễ Quy Y<br>- Quý Phật tử cố gắng tham dự lễ theo thời gian, địa điểm ghi trên bài thông báo ạ.<br>
-
-4. Nhận Lá Phái<br>- Quý Phật tử vui lòng GIỮ SỐ PHIẾU và mang lên lúc dự Lễ để nhận Lá Phái.<br>- Sau khi hết Lễ, Quý Phật tử vui lòng lắng nghe thông báo và nán lại nơi dự lễ để nhận lá phái quy y ạ<br>- Quý Phật tử kiểm tra lại thông tin khi nhận lá phái và báo lại ngay cho thư ký khi thông tin bị sai hoặc thiếu ạ.<br>
-
-5. Sau Lễ Quy Y<br>- Quý Phật tử đăng ký sát giờ hoặc đăng ký sau khi đã dự lễ mà chưa kịp có lá phái trước khi ra về sẽ được ban thư ký gọi thông báo về việc nhận lá phái.<br>- Đối với những trường hợp này ban thư ký sẽ gửi lá phái về phụ trách ĐT, CTN hoặc gửi về nhà nếu Quý Phật tử có yêu cầu ạ.<br>
-
-
-Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nhỡ hoặc tin nhắn xin xác nhận thông tin quy y của chúng con nhé ạ
-                  
-                  
-                  </p>
-                  
-                </div>
-
-
-                <p>2selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
-
-                <el-form-item>
-                  <button class="el-button" type="submit" @click="onSubmit">Đăng Ký</button>
-                  <el-button @click="onSubmit">Hủy</el-button>
-                </el-form-item>
-
-
-
-              </form>
-
-            </div>
-          </div>
+          </form>
         </div>
       </div>
-      <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p>
-    </el-col>
-    <el-col :span="1"></el-col>
-  </el-row>
-</div>
+    </div>
   </div>
-
-
+  <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
-import { exportedFile } from "../utils/exportedFile";
-const exportedFile0 = new exportedFile()
+import { onMounted, reactive,ref } from 'vue'
+import { exportedFile } from "../utils/exportedFile"; 
+
 
 
 // do not use same name with ref
@@ -212,176 +66,116 @@ const form = reactive({
   type: [],
   resource: '',
   desc: '',
-  namsinh: ''
 })
 
 interface provinceItem {
   value: string
   code: string
-  districts: provinceItem
-  wards: provinceItem
 }
-
-const modelProvince = ref('')
-const provincesSource = ref<provinceItem[]>([])
-const querySearchP = (queryString: string, cb: any) => {
+const state1 = ref('')
+const provinces = ref<provinceItem[]>([])
+const querySearch = (queryString: string, cb: any) => {
   const results = queryString
-    ? provincesSource.value.filter(createFilter(queryString))
-    : provincesSource.value
+    ? provinces.value.filter(createFilter(queryString))
+    : provinces.value
   // call callback function to return suggestions
   cb(results)
 }
-
-watch(modelProvince, async (newQuestion, oldQuestion) => {
-  if (oldQuestion.indexOf(selectedP.value) > -1 && newQuestion.indexOf(selectedP.value) == -1) {
-    modelDistrict.value = ''
-    modelWard.value = ''
-    districts.value = ref('')
-    wards.value = ref('')
-    og('clear for province')
-    selectedP.value = ref('')
-  }
-
-})
-
-
-
-
-
-const modelDistrict = ref('')
-const districts = ref<provinceItem[]>([])
-const querySearchD = (queryString: string, cb: any) => {
-  const results = queryString
-    ? districts.value.filter(createFilter(queryString))
-    : districts.value
-  // call callback function to return suggestions
-  cb(results)
-}
-watch(modelDistrict, async (newQuestion, oldQuestion) => {
-  if (oldQuestion.indexOf(selectedD.value) > -1 && newQuestion.indexOf(selectedD.value) == -1) {
-    modelWard.value = ''
-    wards.value = ref('')
-    og('clear for District')
-    selectedD.value = ref('')
-  }
-
-})
-
-
-
-const modelWard = ref('')
-const wards = ref<provinceItem[]>([])
-const querySearchW = (queryString: string, cb: any) => {
-  const results = queryString
-    ? wards.value.filter(createFilter(queryString))
-    : wards.value
-  // call callback function to return suggestions
-  cb(results)
-}
-watch(modelWard, async (newQuestion, oldQuestion) => {
-  if (oldQuestion.indexOf(selectedD.value) > -1 && newQuestion.indexOf(selectedD.value) == -1) {
-    modelWard.value = ''
-    wards.value = ref('')
-    og('clear for District')
-    selectedW.value = ref('')
-  }
-
-})
-
-
 const createFilter = (queryString: string) => {
   return (province: provinceItem) => {
     return (
-      removeVietnameseTones(province.value).includes(removeVietnameseTones(queryString))
+      //province.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+	 // province.value.toLowerCase().includes(queryString.toLowerCase())
+
+	   removeVietnameseTones(province.value).includes(removeVietnameseTones(queryString))
     )
   }
 }
 
-const selectedP = ref('');
 const handleSelect = (item: provinceItem) => {
-  selectedP.value = item.value
-  districts.value = item.districts
-  og(item)
-}
-const selectedD = ref('');
-const handleSelectD = (item: provinceItem) => {
-  og(item.wards)
-  selectedD.value = item.value
-  wards.value = item.wards
-}
-
-const selectedW = ref('')
-const handleSelectW = (item: provinceItem) => {
-  //districts.value = item.districts
-  selectedW.value = item.value
-}
-
-watch(selectedD, async (newQuestion, oldQuestion) => {
-  if (selectedD.value.length < 2) {
-    selectedW.value = ref('')
-  }
-
-})
-watch(selectedP, async (newQuestion, oldQuestion) => {
-  if (selectedP.value.length == 0) {
-
-    selectedD.value = ref('')
-    selectedW.value = ref('')
-  }
-
-})
-
-
-
-function og(str: any) {
-  console.log(str);
+  console.log(item)
 }
 
 
+const loadAll2 = () => {
+  return [
+    { value: 'vue', link: 'https://github.com/vuejs/vue' },
+    { value: 'element', link: 'https://github.com/ElemeFE/element' },
+    { value: 'cooking', link: 'https://github.com/ElemeFE/cooking' },
+    { value: 'mint-ui', link: 'https://github.com/ElemeFE/mint-ui' },
+    { value: 'vuex', link: 'https://github.com/vuejs/vuex' },
+    { value: 'vue-router', link: 'https://github.com/vuejs/vue-router' },
+    { value: 'babel', link: 'https://github.com/babel/babel' },
+  ]
+}
 
+const loadAll = () => {
+  
+  return new exportedFile().loadAll()
+}
 
-function removeVietnameseTones(str: string) {
-  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-  str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-  str = str.replace(/đ/g, "d");
-  str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-  str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-  str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-  str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-  str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-  str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-  str = str.replace(/Đ/g, "D");
-  // Some system encode vietnamese combining accent as individual utf-8 characters
-  // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
-  str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
-  str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
-  // Remove extra spaces
-  // Bỏ các khoảng trắng liền nhau
-  str = str.replace(/ + /g, " ");
-  str = str.trim();
-  // Remove punctuations
-  // Bỏ dấu câu, kí tự đặc biệt
-  str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
-  return str.toLowerCase();
+function removeVietnameseTones(str:string) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a"); 
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e"); 
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i"); 
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o"); 
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u"); 
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y"); 
+    str = str.replace(/đ/g,"d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    // Some system encode vietnamese combining accent as individual utf-8 characters
+    // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+    // Remove extra spaces
+    // Bỏ các khoảng trắng liền nhau
+    str = str.replace(/ + /g," ");
+    str = str.trim();
+    // Remove punctuations
+    // Bỏ dấu câu, kí tự đặc biệt
+    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g," ");
+    return str.toLowerCase();
 }
 
 
 
 const onSubmit = () => {
   console.log('submit!')
+  
+  
+}
 
+const loadAll22 = () => {
+  return [
+  {
+    "name": "Thành phố Hà Nội",
+    "code": 1,
+    "division_type": "thành phố trung ương",
+    "codename": "thanh_pho_ha_noi",
+    "phone_code": 24,
+    "districts": []
+  },
+  {
+    "name": "Tỉnh Hà Giang",
+    "code": 2,
+    "division_type": "tỉnh",
+    "codename": "tinh_ha_giang",
+    "phone_code": 219,
+    "districts": []
+  }
+]
 
 }
 
 
-
-
 onMounted(() => {
-  provincesSource.value = new exportedFile().loadAllProvince()
+  provinces.value = loadAll()
 })
 
 </script>
@@ -394,59 +188,512 @@ onMounted(() => {
   margin: auto;
 }
 
-.group1 {
-  border-radius: 0.5em;
-  min-height: 36px;
-  background: #181a1baf;
-  padding: 1em;
-  margin-top: 1em;
-}
 
 body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
- 
-}
-.wrap2 {
-  background-image: linear-gradient(#175998, #9aecd4);
+  background: #f2f2f2;
 }
 
-.el-form-item {
-  margin-top: 1em;
+.clearfix {
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0;
+  }
 }
-
-.p_titlegroup{
-  color:#ffffff;
-  font-size: 16px;
-  
-}
-.margintop1em{
-  margin-top: 1em;
-}
-
-.smalltext{
-  font-size: 12px;
-}
-
-
-
 
 .form_wrapper {
-  
-  background-color: rgba(24, 26, 27, 0.904);
+  background: #fff;
+  width: 400px;
   max-width: 100%;
   box-sizing: border-box;
   padding: 25px;
   margin: 8% auto 0;
   position: relative;
   z-index: 1;
-  border-top: 7px solid #0077ff;
+  border-top: 5px solid #cccccc;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+  -webkit-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+  -webkit-transition: none;
+  transition: none;
+  -webkit-animation: expand 0.8s 0.6s ease-out forwards;
+  animation: expand 0.8s 0.6s ease-out forwards;
+  opacity: 0;
 
-  
-  
+  h2 {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    margin: 0;
+  }
+
+  .title_container {
+    text-align: center;
+    padding-bottom: 15px;
+  }
+
+  h3 {
+    font-size: 1.1em;
+    font-weight: normal;
+    line-height: 1.5em;
+    margin: 0;
+  }
+
+  label {
+    font-size: 12px;
+  }
+
+  .row {
+    margin: 10px -15px;
+
+    >div {
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+  }
+
+  .col_half {
+    width: 50%;
+    float: left;
+  }
+
+  .input_field {
+    position: relative;
+    margin-bottom: 20px;
+    -webkit-animation: bounce 0.6s ease-out;
+    animation: bounce 0.6s ease-out;
+
+    >span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #333;
+      height: 100%;
+      border-right: 1px solid #cccccc;
+      text-align: center;
+      width: 30px;
+
+      >i {
+        padding-top: 10px;
+      }
+    }
+  }
+
+  .textarea_field {
+    >span {
+      >i {
+        padding-top: 10px;
+      }
+    }
+  }
+
+  input {
+
+    &[type="text"],
+    &[type="email"],
+    &[type="password"] {
+      width: 100%;
+      padding: 8px 10px 9px 35px;
+      height: 35px;
+      border: 1px solid #cccccc;
+      box-sizing: border-box;
+      outline: none;
+      -webkit-transition: all 0.30s ease-in-out;
+      -moz-transition: all 0.30s ease-in-out;
+      -ms-transition: all 0.30s ease-in-out;
+      transition: all 0.30s ease-in-out;
+    }
+
+    &[type="text"]:hover,
+    &[type="email"]:hover,
+    &[type="password"]:hover {
+      background: #fafafa;
+    }
+
+    &[type="text"]:focus,
+    &[type="email"]:focus,
+    &[type="password"]:focus {
+      -webkit-box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
+      -moz-box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
+      box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
+      border: 1px solid #cccccc;
+      background: #fafafa;
+    }
+
+    &[type="submit"] {
+      background: #cccccc;
+      height: 35px;
+      line-height: 35px;
+      width: 100%;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 1.1em;
+      margin-bottom: 10px;
+      -webkit-transition: all 0.30s ease-in-out;
+      -moz-transition: all 0.30s ease-in-out;
+      -ms-transition: all 0.30s ease-in-out;
+      transition: all 0.30s ease-in-out;
+
+      &:hover {
+        background: darken(#cccccc, 7%);
+      }
+
+      &:focus {
+        background: darken(#cccccc, 7%);
+      }
+    }
+
+    &[type="checkbox"],
+    &[type="radio"] {
+      border: 0;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+  }
+}
+
+.form_container {
+  .row {
+    .col_half.last {
+      border-left: 1px solid #cccccc;
+    }
+  }
+}
+
+.checkbox_option {
+  label {
+    margin-right: 1em;
+    position: relative;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      margin-right: 0.5em;
+      vertical-align: -2px;
+      border: 2px solid #cccccc;
+      padding: 0.12em;
+      background-color: transparent;
+      background-clip: content-box;
+      transition: all 0.2s ease;
+    }
+
+    &:after {
+      border-right: 2px solid #000000;
+      border-top: 2px solid #000000;
+      content: "";
+      height: 20px;
+      left: 2px;
+      position: absolute;
+      top: 7px;
+      transform: scaleX(-1) rotate(135deg);
+      transform-origin: left top;
+      width: 7px;
+      display: none;
+    }
+  }
+
+  input {
+    &:hover+label:before {
+      border-color: #000000;
+    }
+
+    &:checked+label {
+      &:before {
+        border-color: #000000;
+      }
+
+      &:after {
+        -moz-animation: check 0.8s ease 0s running;
+        -webkit-animation: check 0.8s ease 0s running;
+        animation: check 0.8s ease 0s running;
+        display: block;
+        width: 7px;
+        height: 20px;
+        border-color: #000000;
+      }
+    }
+  }
+}
+
+.radio_option {
+  label {
+    margin-right: 1em;
+
+    &:before {
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      margin-right: 0.5em;
+      border-radius: 100%;
+      vertical-align: -3px;
+      border: 2px solid #cccccc;
+      padding: 0.15em;
+      background-color: transparent;
+      background-clip: content-box;
+      transition: all 0.2s ease;
+    }
+  }
+
+  input {
+    &:hover+label:before {
+      border-color: #000000;
+    }
+
+    &:checked+label:before {
+      background-color: #000000;
+      border-color: #000000;
+    }
+  }
+}
+
+.select_option {
+  position: relative;
+  width: 100%;
+
+  select {
+    display: inline-block;
+    width: 100%;
+    height: 35px;
+    padding: 0px 15px;
+    cursor: pointer;
+    color: #7b7b7b;
+    border: 1px solid #cccccc;
+    border-radius: 0;
+    background: #fff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: all 0.2s ease;
+
+    &::-ms-expand {
+      display: none;
+    }
+
+    &:hover,
+    &:focus {
+      color: #000000;
+      background: #fafafa;
+      border-color: #000000;
+      outline: none;
+    }
+  }
+}
+
+.select_arrow {
+  position: absolute;
+  top: calc(50% - 4px);
+  right: 15px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-width: 8px 5px 0 5px;
+  border-style: solid;
+  border-color: #7b7b7b transparent transparent transparent;
+}
+
+.select_option select {
+
+  &:hover+.select_arrow,
+  &:focus+.select_arrow {
+    border-top-color: #000000;
+  }
+}
+
+.credit {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 15px;
+  color: #cccccc;
+
+  a {
+    color: darken(#cccccc, 7%);
+  }
+}
+
+@-webkit-keyframes check {
+  0% {
+    height: 0;
+    width: 0;
+  }
+
+  25% {
+    height: 0;
+    width: 7px;
+  }
+
+  50% {
+    height: 20px;
+    width: 7px;
+  }
+}
+
+@keyframes check {
+  0% {
+    height: 0;
+    width: 0;
+  }
+
+  25% {
+    height: 0;
+    width: 7px;
+  }
+
+  50% {
+    height: 20px;
+    width: 7px;
+  }
+}
+
+@-webkit-keyframes expand {
+  0% {
+    -webkit-transform: scale3d(1, 0, 1);
+    opacity: 0;
+  }
+
+  25% {
+    -webkit-transform: scale3d(1, 1.2, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1, 0.85, 1);
+  }
+
+  75% {
+    -webkit-transform: scale3d(1, 1.05, 1);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes expand {
+  0% {
+    -webkit-transform: scale3d(1, 0, 1);
+    transform: scale3d(1, 0, 1);
+    opacity: 0;
+  }
+
+  25% {
+    -webkit-transform: scale3d(1, 1.2, 1);
+    transform: scale3d(1, 1.2, 1);
+  }
+
+  50% {
+    -webkit-transform: scale3d(1, 0.85, 1);
+    transform: scale3d(1, 0.85, 1);
+  }
+
+  75% {
+    -webkit-transform: scale3d(1, 1.05, 1);
+    transform: scale3d(1, 1.05, 1);
+  }
+
+  100% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    opacity: 1;
+  }
 }
 
 
+@-webkit-keyframes bounce {
+  0% {
+    -webkit-transform: translate3d(0, -25px, 0);
+    opacity: 0;
+  }
 
+  25% {
+    -webkit-transform: translate3d(0, 10px, 0);
+  }
 
-</style>
+  50% {
+    -webkit-transform: translate3d(0, -6px, 0);
+  }
+
+  75% {
+    -webkit-transform: translate3d(0, 2px, 0);
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    -webkit-transform: translate3d(0, -25px, 0);
+    transform: translate3d(0, -25px, 0);
+    opacity: 0;
+  }
+
+  25% {
+    -webkit-transform: translate3d(0, 10px, 0);
+    transform: translate3d(0, 10px, 0);
+  }
+
+  50% {
+    -webkit-transform: translate3d(0, -6px, 0);
+    transform: translate3d(0, -6px, 0);
+  }
+
+  75% {
+    -webkit-transform: translate3d(0, 2px, 0);
+    transform: translate3d(0, 2px, 0);
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .form_wrapper {
+    .col_half {
+      width: 100%;
+      float: none;
+    }
+  }
+
+  .bottom_row {
+    .col_half {
+      width: 50%;
+      float: left;
+    }
+  }
+
+  .form_container {
+    .row {
+      .col_half.last {
+        border-left: none;
+      }
+    }
+  }
+
+  .remember_me {
+    padding-bottom: 20px;
+  }
+}
+</style>../utils/exportedFile

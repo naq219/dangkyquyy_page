@@ -5,13 +5,13 @@
       <el-row style="margin: 0 auto; ">
         <el-col :span="1"></el-col>
         <el-col :span="22">
-          <p style="color:#f39f5a; text-align: center; margin: 2%; font-size: 2em;">CHÙA VIÊN QUANG </p>
+          <p style="color:#f60909; text-align: center; font-weight: bold ;font-style: initial; margin: 2%; font-size: 2em;"><strong>CHÙA VIÊN QUANG</strong> </p>
           <div class="form_in1">
             <div class="form_wrapper">
 
               <div class="form_container">
                 <div class="title_container">
-                  <h2 style="color:#f39f5a; text-align: center;">Đăng Ký Quy Y Tam Bảo <br><br></h2>
+                  <h2 style="color:#0087a5; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
 
                 </div>
                 <div class="row clearfix">
@@ -40,7 +40,7 @@
                           <el-radio name="dongythamgia" label="Chắc chắn tham gia">Chắc chắn tham gia</el-radio>
                           <el-radio name="dongythamgia" label="Không tham gia được">Không tham gia được</el-radio>
                         </el-radio-group>
-                        <el-input name="dongythamgia11" v-show=true v-model="form.dongythamgia" />
+                        
                       </el-form-item>
 
                     </div>
@@ -111,7 +111,7 @@
                           clearable class="inline-input w-50" @select="handleSelectD11"> </el-autocomplete>
                       </el-form-item>
 
-                      <el-form-item label="Phường/Xã/Thị Trấn">
+                      <el-form-item  label="Phường/Xã/Thị Trấn">
                         <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width
                           clearable @select="handleSelectW11"> </el-autocomplete>
                       </el-form-item>
@@ -155,8 +155,7 @@
                     <div class="group1 ">
                       <p class="p_titlegroup">Liên hệ nhận Lá Phái: <br>
                         Tâm Huy Pháp: 0383 668 927<br>
-                        Hoà Lý Anh: 0338.699.484</p>
-
+                       </p>
                     </div>
 
                     <div class="group1 ">
@@ -177,29 +176,17 @@
                     <div class="group1 ">
                       <p class="p_titlegroup ">QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI:</p>
                       <p class=" smalltext">
-                        1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua link hoặc qua bàn Thư Ký tại Chùa Viên Quang vào hôm
-                        tổ chức lễ.<br>- Quý Phật tử đã đăng ký trên link vui lòng qua Bàn thư ký nhận SỐ PHIẾU LẤY LÁ
-                        PHÁI.<br>
+                        QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI<br>1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua link hoặc qua bàn Thư Ký tại Chùa Viên Quang vào hôm tổ chức lễ.<br>
 
-                        2. Xác nhận thông tin<br>Quý Phật tử đã đăng ký trên link trước đó sẽ được ban thư ký gọi điện xác
-                        nhận lại thông tin và phát số phiếu nhận lá phái khi về chùa ạ.<br>
+2. Xác nhận thông tin<br>Quý Phật tử đã đăng ký trên link trước đó sẽ được ban thư ký gọi điện xác nhận lại thông tin và phát số phiếu nhận lá phái khi về chùa ạ.<br>
 
-                        3. Tham dự lễ Quy Y<br>- Quý Phật tử cố gắng tham dự lễ theo thời gian, địa điểm ghi trên bài
-                        thông báo ạ.<br>
+3. Tham dự lễ Quy Y<br>- Quý Phật tử cố gắng tham dự lễ theo thời gian, địa điểm ghi trên bài thông báo ạ.<br>
 
-                        4. Nhận Lá Phái<br>- Quý Phật tử vui lòng GIỮ SỐ PHIẾU và mang lên lúc dự Lễ để nhận Lá Phái.<br>-
-                        Sau khi hết Lễ, Quý Phật tử vui lòng lắng nghe thông báo và nán lại nơi dự lễ để nhận lá phái quy
-                        y ạ<br>- Quý Phật tử kiểm tra lại thông tin khi nhận lá phái và báo lại ngay cho thư ký khi thông
-                        tin bị sai hoặc thiếu ạ.<br>
+4. Nhận Lá Phái<br>- Sau khi hết Lễ, Quý Phật tử vui lòng lắng nghe thông báo và nán lại nơi dự lễ để nhận lá phái quy y ạ<br>- Quý Phật tử kiểm tra lại thông tin khi nhận lá phái và báo lại ngay cho thư ký khi thông tin bị sai hoặc thiếu ạ.<br>
 
-                        5. Sau Lễ Quy Y<br>- Quý Phật tử đăng ký sát giờ hoặc đăng ký sau khi đã dự lễ mà chưa kịp có lá
-                        phái trước khi ra về sẽ được ban thư ký gọi thông báo về việc nhận lá phái.<br>- Đối với những
-                        trường hợp này ban thư ký sẽ gửi lá phái về phụ trách ĐT, CTN hoặc gửi về nhà nếu Quý Phật tử có
-                        yêu cầu ạ.<br>
+5. Sau Lễ Quy Y<br>- Quý Phật tử đăng ký sát giờ hoặc đăng ký sau khi đã dự lễ mà chưa kịp có lá phái trước khi ra về sẽ được ban thư ký gọi thông báo về việc nhận lá phái.<br>- Đối với những trường hợp này ban thư ký sẽ gửi lá phái về phụ trách ĐT, CTN hoặc gửi về nhà nếu Quý Phật tử có yêu cầu ạ.<br>
 
-
-                        Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nhỡ hoặc tin nhắn xin xác nhận thông tin
-                        quy y của chúng con nhé ạ
+Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nhỡ hoặc tin nhắn xin xác nhận thông tin quy y của chúng con nhé ạ. Ngoài ra, Quý Phật tử cố gắng kiểm tra lại SĐT khi đăng ký, tránh tình trạng SĐT bị sai, thiếu/thừa số nhé ạ.
 
 
                       </p>
@@ -231,7 +218,7 @@
   </div>
 
 
-  <el-dialog width="20%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
+  <el-dialog  width="90%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
     <form method="POST"
       action="https://script.google.com/macros/s/AKfycbwGN0t5l9N32t3KItM8LeUD1HFc7mbZ5us1EDyLO3X4XVPPmdDCwnNVSdhnDjpsvXM/exec"
       :model="form" label-width="120px">
@@ -246,8 +233,9 @@
         <tr>
           <td>Họ tên: {{ form.hovaten }}
             <el-input name="hovaten" hin v-show="false" v-model="form.hovaten" />
+            
           </td>
-
+         
         </tr>
 
         <tr>
@@ -267,15 +255,15 @@
 
         <tr>
           <td>ĐC Thường Trú: {{ form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince }}
-            <el-input name="diachithuongtru" hin v-show="true" v-model="form_diachithuongtru"> </el-input>
+            <el-input name="diachithuongtru" hin v-show="false" v-model="form_diachithuongtru"> </el-input>
           </td>
 
         </tr>
 
         <tr>
           <td>Nơi ở hiện tại: {{ form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11 }}
-            <el-input name="diachitamtru" hin v-show="true" v-model="form_diachitamtru"> </el-input>
-            <el-input name="tinhtamtru" hin v-show="true" v-model="modelProvince11"> </el-input>
+            <el-input name="diachitamtru" hin v-show="false" v-model="form_diachitamtru"> </el-input>
+            <el-input name="tinhtamtru" hin v-show="false" v-model="modelProvince11"> </el-input>
           </td>
         </tr>
 
@@ -324,7 +312,7 @@ const form_diachitamtru = ref('');
 // do not use same name with ref
 const form = reactive({
 
-  dongythamgia: '',
+  dongythamgia: 'novalue',
   hovaten: '',
   gioitinh: '',
   sodienthoai: '',
@@ -644,9 +632,11 @@ onMounted(() => {
 .group1 {
   border-radius: 0.5em;
   min-height: 36px;
-  background: #181a1b4d;
+  border-style: solid;
   padding: 1em;
   margin-top: 1em;
+ 
+  border-color: #ffdcf6b0;
 }
 
 body {
@@ -656,15 +646,15 @@ body {
 }
 
 .wrap2 {
-  background-image: linear-gradient(#181818, #181818);
+  background-image: linear-gradient(#ffdcf6, #ffdcf6);
 }
 
 .form_in1 {
-  background-image: linear-gradient(#202020, #181818);
+  background-image: linear-gradient(#ffffff, #ffffff);
 }
 
 p {
-  color: #ffffff;
+  color: #222121;
 }
 
 .el-form-item {
@@ -672,8 +662,9 @@ p {
 }
 
 .p_titlegroup {
-  color: #ffffff;
+  color: #000000b3;
   font-size: 16px;
+  font-weight: bold;
 
 }
 
@@ -700,7 +691,11 @@ p {
   border-top: 5px solid #0077ff93;
 }
 
-tr:nth-child(even) {
+td {
+  padding: 8px;
+}
+
+/* tr:nth-child(even) {
   background-color: #dddddd;
 }
 
@@ -709,4 +704,6 @@ th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
-}</style>
+} */
+
+</style>
