@@ -11,7 +11,7 @@
           <div class="form_in1">
             <div class="form_wrapper">
 
-              <el-form :rules="rules">
+             
                 <div class="form_container">
                 <div class="title_container">
                   <h2 style="color:#0087a5; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
@@ -124,7 +124,7 @@
 
                     <div class="group1 ">
                       <p class="p_titlegroup">Quý Phật tử Đã tham gia sinh hoạt Đạo Tràng, Chúng Thanh Niên chưa ạ?</p>
-                      <el-radio-group v-model="form._rdDathamGiaDaoTrang" @change="onChangeDathamgiaDTchua">
+                      <el-radio-group v-model="form._rdDathamGiaDaoTrang">
                         <el-radio label=0>Chưa Tham Gia</el-radio>
                         <el-radio label=1>Đã tham gia</el-radio>
                       </el-radio-group>
@@ -209,9 +209,9 @@
                     <p>223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
                     <p>ss {{ form }}</p>
                     <div class="margintop1em">
-                      <el-text style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
+                      <el-text  v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
                         border-style: solid;" class="mx-1"  @click="clickDangKy" type="primary">Đăng ký</el-text>
-                      <button v-if="false" class="el-button" @click="clickDangKy">Đăng Ký</button>
+                      <button class="el-button" @click="clickDangKy">Đăng Ký</button>
                       <el-button @click="onSubmit">Hủy</el-button>
                     </div>
 
@@ -221,7 +221,7 @@
                   </div>
                 </div>
               </div>
-              </el-form>
+             
             </div>
           </div>
           <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p>
@@ -300,13 +300,18 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
+import { myUtils } from "../utils/myUtils";
 import   type { FormInstance, FormRules }  from 'element-plus';
-//const exportedFile0 = new exportedFile()
+const myUtils0= new myUtils()
+
 
 ///////////////////// dialog ////////////
 let dialogConfirmVisible = ref(false)
 
 function clickDangKy(event) {
+
+
+
   form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
   form_diachitamtru.value = form.sonhatt11 + ', ' + modelWard11.value + ', ' + modelDistrict11.value + ', ' + modelProvince11.value;
 
@@ -369,17 +374,20 @@ const querySearchP = (queryString: string, cb: any) => {
   cb(results)
 }
 
-watch(modelProvince, async (newQuestion, oldQuestion) => {
-  if (oldQuestion.indexOf(selectedP.value) > -1 && newQuestion.indexOf(selectedP.value) == -1) {
-    modelDistrict.value = ''
-    modelWard.value = ''
-    districts.value = ref('')
-    wards.value = ref('')
-    og('clear for province')
-    selectedP.value = ref('')
-  }
 
-})
+
+
+// watch(modelProvince, async (newQuestion, oldQuestion) => {
+//   if (oldQuestion.indexOf(selectedP.value) > -1 && newQuestion.indexOf(selectedP.value) == -1) {
+//     modelDistrict.value = ''
+//     modelWard.value = ''
+//     districts.value = ref('')
+//     wards.value = ref('')
+//     og('clear for province')
+//     selectedP.value = ref('')
+//   }
+
+// })
 
 function rdThamDuChange(value, number) {
   if (form.rdThamdu == 1) form.dongythamgia = 'Chắc chắn tham gia'
@@ -433,7 +441,7 @@ watch(modelWard, async (newQuestion, oldQuestion) => {
 const createFilter = (queryString: string) => {
   return (province: provinceItem) => {
     return (
-      removeVietnameseTones(province.value).includes(removeVietnameseTones(queryString))
+      myUtils0.removeVietnameseTones(province.value).includes(myUtils0.removeVietnameseTones(queryString))
     )
   }
 }
@@ -572,12 +580,6 @@ watch(selectedP11, async (newQuestion, oldQuestion) => {
 
 })
 
-/////////////// en chon dia chi tam tru
-
-function onChangeDathamgiaDTchua(value: any) {
-  og(value)
-}
-
 
 
 
@@ -586,37 +588,10 @@ function og(str: any) {
   console.log(str);
 }
 
+myUtils0.watchLocation(modelProvince,modelDistrict,modelWard,districts,wards,selectedP);
 
 
 
-function removeVietnameseTones(str: string) {
-  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-  str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-  str = str.replace(/đ/g, "d");
-  str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-  str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-  str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-  str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-  str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-  str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-  str = str.replace(/Đ/g, "D");
-  // Some system encode vietnamese combining accent as individual utf-8 characters
-  // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
-  str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
-  str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
-  // Remove extra spaces
-  // Bỏ các khoảng trắng liền nhau
-  str = str.replace(/ + /g, " ");
-  str = str.trim();
-  // Remove punctuations
-  // Bỏ dấu câu, kí tự đặc biệt
-  str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
-  return str.toLowerCase();
-}
 
 // const rules = reactive<FormRules<RuleForm>>({
 //   name: [
@@ -650,7 +625,15 @@ onMounted(() => {
 
 </script>
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 <style>
 .parent {
