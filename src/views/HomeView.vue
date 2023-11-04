@@ -48,7 +48,7 @@
 
 
                     <el-form-item label="Họ và tên">
-                      <el-input name="hovaten" hin v-model="form.hovaten"
+                      <el-input hin v-model="modelHovaten"
                         placeholder="Vui lòng viết hoa chữ cái đầu tiên" />
                     </el-form-item>
 
@@ -231,8 +231,8 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
       <table>
         
         <tr>
-          <td>Họ tên: {{ form.hovaten }}
-            <el-input name="hovaten" hin v-show="false" v-model="form.hovaten" />
+          <td>Họ tên: {{ modelHovaten }}
+            <el-input name="hovaten" hin v-show="false" v-model="modelHovaten" />
             
           </td>
          
@@ -287,7 +287,7 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
 import { onMounted, reactive, ref, watch } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
 import { ClickOutside } from 'element-plus';
-//const exportedFile0 = new exportedFile()
+
 
 ///////////////////// dialog ////////////
 let dialogConfirmVisible = ref(false)
@@ -301,6 +301,7 @@ function clickDangKy(event) {
   }
   else form.dasinhhoatdaotrang= form._tentochucdathamgia; 
   
+  modelHovaten.value = new exportedFile().vietHoaHoTen(modelHovaten.value);
   
   dialogConfirmVisible.value = true
 }
@@ -310,10 +311,11 @@ const form_diachitamtru = ref('');
 //////////////////end dialog
 
 // do not use same name with ref
+let modelHovaten =ref('')
 const form = reactive({
 
   dongythamgia: 'novalue',
-  hovaten: '',
+ 
   gioitinh: '',
   sodienthoai: '',
   sonhatt: '',
@@ -503,6 +505,11 @@ watch(modelDistrict11, async (newQuestion, oldQuestion) => {
 
 })
 
+// watch(modelHovaten, async (newQuestion, oldQuestion) => {
+//   if(newQuestion.)
+
+// })
+
 
 const modelWard11 = ref('')
 const wards11 = ref<provinceItem[]>([])
@@ -617,6 +624,7 @@ const onSubmit = () => {
 
 onMounted(() => {
   provincesSource.value = new exportedFile().loadAllProvince()
+  
 })
 
 </script>
