@@ -5,11 +5,14 @@
       <el-row style="margin: 0 auto; ">
         <el-col :span="1"></el-col>
         <el-col :span="22">
-          <p style="color:#f60909; text-align: center; font-weight: bold ;font-style: initial; margin: 2%; font-size: 2em;"><strong>CHÙA VIÊN QUANG</strong> </p>
+          <p
+            style="color:#f60909; text-align: center; font-weight: bold ;font-style: initial; margin: 2%; font-size: 2em;">
+            <strong>CHÙA VIÊN QUANG</strong> </p>
           <div class="form_in1">
             <div class="form_wrapper">
 
-              <div class="form_container">
+              <el-form :rules="rules">
+                <div class="form_container">
                 <div class="title_container">
                   <h2 style="color:#0087a5; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
 
@@ -40,7 +43,7 @@
                           <el-radio name="dongythamgia" label="Chắc chắn tham gia">Chắc chắn tham gia</el-radio>
                           <el-radio name="dongythamgia" label="Không tham gia được">Không tham gia được</el-radio>
                         </el-radio-group>
-                        
+
                       </el-form-item>
 
                     </div>
@@ -111,7 +114,7 @@
                           clearable class="inline-input w-50" @select="handleSelectD11"> </el-autocomplete>
                       </el-form-item>
 
-                      <el-form-item  label="Phường/Xã/Thị Trấn">
+                      <el-form-item label="Phường/Xã/Thị Trấn">
                         <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width
                           clearable @select="handleSelectW11"> </el-autocomplete>
                       </el-form-item>
@@ -127,16 +130,15 @@
                       </el-radio-group>
                       <el-input v-show="form._rdDathamGiaDaoTrang == 1" class="margintop1em" name="email" hin
                         v-model="form._tentochucdathamgia" placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
-                      
+
                       <div v-if="form._rdDathamGiaDaoTrang == 0">
                         <p class="p_titlegroup">Quý Phật tử có mong muốn tham gia sinh hoạt Đạo tràng/CTN không ạ?</p>
-                      <el-radio-group  v-model="form._rdMongMuonThamGiaDT"
-                       >
-                        <el-radio label='Có Muốn tham gia'>Có Muốn tham gia</el-radio>
-                        <el-radio label='Không muốn tham gia'>Không muốn tham gia</el-radio>
-                      </el-radio-group>
+                        <el-radio-group v-model="form._rdMongMuonThamGiaDT">
+                          <el-radio label='Có Muốn tham gia'>Có Muốn tham gia</el-radio>
+                          <el-radio label='Không muốn tham gia'>Không muốn tham gia</el-radio>
+                        </el-radio-group>
                       </div>
-                      
+
 
 
                     </div>
@@ -144,18 +146,18 @@
                     <div class="group1 ">
                       <p class="p_titlegroup ">Người giới thiệu - Tổ sinh hoạt - Số điện thoại?</p>
                       <p class="ss">VD: Hòa Lý Anh - Tổ Vinh - CTN Nghệ An - 0338 699 484</p>
-                      <el-input class="margintop1em"  hin v-model="form.nguoigioithieu" placeholder="" />
+                      <el-input class="margintop1em" hin v-model="form.nguoigioithieu" placeholder="" />
                     </div>
 
                     <div class="group1 ">
                       <p class="p_titlegroup">Thắc mắc, ghi chú</p>
-                      <el-input class="margintop1em"  hin v-model="form.ghichu" placeholder="" />
+                      <el-input class="margintop1em" hin v-model="form.ghichu" placeholder="" />
                     </div>
 
                     <div class="group1 ">
                       <p class="p_titlegroup">Liên hệ nhận Lá Phái: <br>
                         Tâm Huy Pháp: 0383 668 927<br>
-                       </p>
+                      </p>
                     </div>
 
                     <div class="group1 ">
@@ -176,17 +178,27 @@
                     <div class="group1 ">
                       <p class="p_titlegroup ">QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI:</p>
                       <p class=" smalltext">
-                        QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI<br>1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua link hoặc qua bàn Thư Ký tại Chùa Viên Quang vào hôm tổ chức lễ.<br>
+                        QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI<br>1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua
+                        link hoặc qua bàn Thư Ký tại Chùa Viên Quang vào hôm tổ chức lễ.<br>
 
-2. Xác nhận thông tin<br>Quý Phật tử đã đăng ký trên link trước đó sẽ được ban thư ký gọi điện xác nhận lại thông tin và phát số phiếu nhận lá phái khi về chùa ạ.<br>
+                        2. Xác nhận thông tin<br>Quý Phật tử đã đăng ký trên link trước đó sẽ được ban thư ký gọi điện xác
+                        nhận lại thông tin và phát số phiếu nhận lá phái khi về chùa ạ.<br>
 
-3. Tham dự lễ Quy Y<br>- Quý Phật tử cố gắng tham dự lễ theo thời gian, địa điểm ghi trên bài thông báo ạ.<br>
+                        3. Tham dự lễ Quy Y<br>- Quý Phật tử cố gắng tham dự lễ theo thời gian, địa điểm ghi trên bài
+                        thông báo ạ.<br>
 
-4. Nhận Lá Phái<br>- Sau khi hết Lễ, Quý Phật tử vui lòng lắng nghe thông báo và nán lại nơi dự lễ để nhận lá phái quy y ạ<br>- Quý Phật tử kiểm tra lại thông tin khi nhận lá phái và báo lại ngay cho thư ký khi thông tin bị sai hoặc thiếu ạ.<br>
+                        4. Nhận Lá Phái<br>- Sau khi hết Lễ, Quý Phật tử vui lòng lắng nghe thông báo và nán lại nơi dự lễ
+                        để nhận lá phái quy y ạ<br>- Quý Phật tử kiểm tra lại thông tin khi nhận lá phái và báo lại ngay
+                        cho thư ký khi thông tin bị sai hoặc thiếu ạ.<br>
 
-5. Sau Lễ Quy Y<br>- Quý Phật tử đăng ký sát giờ hoặc đăng ký sau khi đã dự lễ mà chưa kịp có lá phái trước khi ra về sẽ được ban thư ký gọi thông báo về việc nhận lá phái.<br>- Đối với những trường hợp này ban thư ký sẽ gửi lá phái về phụ trách ĐT, CTN hoặc gửi về nhà nếu Quý Phật tử có yêu cầu ạ.<br>
+                        5. Sau Lễ Quy Y<br>- Quý Phật tử đăng ký sát giờ hoặc đăng ký sau khi đã dự lễ mà chưa kịp có lá
+                        phái trước khi ra về sẽ được ban thư ký gọi thông báo về việc nhận lá phái.<br>- Đối với những
+                        trường hợp này ban thư ký sẽ gửi lá phái về phụ trách ĐT, CTN hoặc gửi về nhà nếu Quý Phật tử có
+                        yêu cầu ạ.<br>
 
-Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nhỡ hoặc tin nhắn xin xác nhận thông tin quy y của chúng con nhé ạ. Ngoài ra, Quý Phật tử cố gắng kiểm tra lại SĐT khi đăng ký, tránh tình trạng SĐT bị sai, thiếu/thừa số nhé ạ.
+                        Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nhỡ hoặc tin nhắn xin xác nhận thông tin
+                        quy y của chúng con nhé ạ. Ngoài ra, Quý Phật tử cố gắng kiểm tra lại SĐT khi đăng ký, tránh tình
+                        trạng SĐT bị sai, thiếu/thừa số nhé ạ.
 
 
                       </p>
@@ -196,11 +208,12 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
 
                     <p>223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
                     <p>ss {{ form }}</p>
-                    <el-form-item>
-                      <button class="el-button" @click="clickDangKy">Đăng Ký</button>
+                    <div class="margintop1em">
+                      <el-text style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
+                        border-style: solid;" class="mx-1"  @click="clickDangKy" type="primary">Đăng ký</el-text>
+                      <button v-if="false" class="el-button" @click="clickDangKy">Đăng Ký</button>
                       <el-button @click="onSubmit">Hủy</el-button>
-                    </el-form-item>
-
+                    </div>
 
 
 
@@ -208,6 +221,7 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
                   </div>
                 </div>
               </div>
+              </el-form>
             </div>
           </div>
           <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p>
@@ -218,24 +232,24 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
   </div>
 
 
-  <el-dialog  width="90%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
+  <el-dialog width="90%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
     <form method="POST"
       action="https://script.google.com/macros/s/AKfycbwGN0t5l9N32t3KItM8LeUD1HFc7mbZ5us1EDyLO3X4XVPPmdDCwnNVSdhnDjpsvXM/exec"
       :model="form" label-width="120px">
-      
+
       <el-input name="ghichu" hin v-show="false" v-model="form.ghichu" />
       <el-input name="dongythamgia" hin v-show="false" v-model="form.dongythamgia" />
       <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
       <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
 
       <table>
-        
+
         <tr>
           <td>Họ tên: {{ form.hovaten }}
             <el-input name="hovaten" hin v-show="false" v-model="form.hovaten" />
-            
+
           </td>
-         
+
         </tr>
 
         <tr>
@@ -286,7 +300,7 @@ Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nh
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
-import { ClickOutside } from 'element-plus';
+import   type { FormInstance, FormRules }  from 'element-plus';
 //const exportedFile0 = new exportedFile()
 
 ///////////////////// dialog ////////////
@@ -295,13 +309,13 @@ let dialogConfirmVisible = ref(false)
 function clickDangKy(event) {
   form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
   form_diachitamtru.value = form.sonhatt11 + ', ' + modelWard11.value + ', ' + modelDistrict11.value + ', ' + modelProvince11.value;
-  
-  if (form._rdDathamGiaDaoTrang==0) {
-    form.dasinhhoatdaotrang= 'Chưa tham gia - '+form._rdMongMuonThamGiaDT
+
+  if (form._rdDathamGiaDaoTrang == 0) {
+    form.dasinhhoatdaotrang = 'Chưa tham gia - ' + form._rdMongMuonThamGiaDT
   }
-  else form.dasinhhoatdaotrang= form._tentochucdathamgia; 
-  
-  
+  else form.dasinhhoatdaotrang = form._tentochucdathamgia;
+
+
   dialogConfirmVisible.value = true
 }
 
@@ -317,9 +331,9 @@ const form = reactive({
   gioitinh: '',
   sodienthoai: '',
   sonhatt: '',
-  _tentochucdathamgia:'',
-  nguoigioithieu:'',
-  ghichu:'',
+  _tentochucdathamgia: '',
+  nguoigioithieu: '',
+  ghichu: '',
 
 
   sonhatt11: '',
@@ -329,7 +343,7 @@ const form = reactive({
 
 
   rdThamdu: -1,
-  
+
   namsinh: '',
   diachithuongtru: ''
 })
@@ -604,6 +618,21 @@ function removeVietnameseTones(str: string) {
   return str.toLowerCase();
 }
 
+// const rules = reactive<FormRules<RuleForm>>({
+//   name: [
+//     { required: true, message: 'Please input Activity name', trigger: 'blur' },
+//     { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+//   ],
+//   region: [
+//     {
+//       required: true,
+//       message: 'Please select Activity zone',
+//       trigger: 'change',
+//     },
+//   ],
+ 
+// })
+
 
 
 const onSubmit = () => {
@@ -635,7 +664,7 @@ onMounted(() => {
   border-style: solid;
   padding: 1em;
   margin-top: 1em;
- 
+
   border-color: #ffdcf6b0;
 }
 
@@ -704,6 +733,4 @@ th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
-} */
-
-</style>
+} */</style>

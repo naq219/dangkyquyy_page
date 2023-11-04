@@ -1,13 +1,9 @@
 <template>
   <meta http-equiv="refresh" content="1; URL=/dangky" />
 
-  <body style="align-items: center;">
-
-    <h2>Đang tải trang</h2>
-
-    <div class="loader"></div>
-
-  </body>
+  <el-table v-loading="true" style="width: 100%">
+    
+  </el-table>
 </template>
 
 <style>
