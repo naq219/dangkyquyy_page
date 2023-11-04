@@ -5,33 +5,124 @@
 
 import { onMounted, reactive, ref, watch } from 'vue'
 export class myUtils {
-	
 
-	watchLocation(modelProvince,modelDistrict,modelWard,districts,wards,selectedP){
+
+	watchLocation(modelProvince, modelDistrict, modelWard, districts, wards, selectedP, selectedD11, selectedW11, selectedP11, selectedD, selectedW, modelProvince11, modelDistrict11, modelWard11, districts11, wards11) {
 		watch(modelProvince, async (newQuestion, oldQuestion) => {
 			if (oldQuestion.indexOf(selectedP.value) > -1 && newQuestion.indexOf(selectedP.value) == -1) {
-			  modelDistrict.value = ''
-			  modelWard.value = ''
-			  districts.value = ref('')
-			  wards.value = ref('')
-			  this.og('clear for province')
-			  selectedP.value = ref('')
+				modelDistrict.value = ''
+				modelWard.value = ''
+				districts.value = ref('')
+				wards.value = ref('')
+				this.og('clear for province')
+				selectedP.value = ref('')
 			}
-		  
-		  })
+
+		})
+
+
+
+		watch(selectedD11, async (newQuestion, oldQuestion) => {
+			if (selectedD11.value.length < 2) {
+				selectedW11.value = ref('')
+			}
+
+		})
+		watch(selectedP11, async (newQuestion, oldQuestion) => {
+			if (selectedP11.value.length == 0) {
+
+				selectedD11.value = ref('')
+				selectedW11.value = ref('')
+			}
+
+		})
+
+		watch(modelDistrict, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedD.value) > -1 && newQuestion.indexOf(selectedD.value) == -1) {
+				modelWard.value = ''
+				wards.value = ref('')
+
+				selectedD.value = ref('')
+			}
+
+		})
+
+
+		watch(modelWard, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedD.value) > -1 && newQuestion.indexOf(selectedD.value) == -1) {
+				modelWard.value = ''
+				wards.value = ref('')
+
+				selectedW.value = ref('')
+			}
+
+		})
+
+
+		watch(selectedD, async (newQuestion, oldQuestion) => {
+			if (selectedD.value.length < 2) {
+				selectedW.value = ref('')
+			}
+
+		})
+		watch(selectedP, async (newQuestion, oldQuestion) => {
+			if (selectedP.value.length == 0) {
+
+				selectedD.value = ref('')
+				selectedW.value = ref('')
+			}
+
+		})
+
+
+
+		watch(modelProvince11, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedP11.value) > -1 && newQuestion.indexOf(selectedP11.value) == -1) {
+				modelDistrict11.value = ''
+				modelWard11.value = ''
+				districts11.value = ref('')
+				wards11.value = ref('')
+
+				selectedP11.value = ref('')
+			}
+
+		})
+
+		watch(modelDistrict11, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedD11.value) > -1 && newQuestion.indexOf(selectedD11.value) == -1) {
+				modelWard11.value = ''
+				wards11.value = ref('')
+
+				selectedD11.value = ref('')
+			}
+
+		})
+
+		watch(modelWard11, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedD11.value) > -1 && newQuestion.indexOf(selectedD11.value) == -1) {
+				modelWard11.value = ''
+				wards11.value = ref('')
+
+				selectedW11.value = ref('')
+			}
+
+		})
+
+
+
 
 
 	}
 
-	
- og(str: any) {
-	console.log(str);
-  }
+
+	og(str: any) {
+		console.log(str);
+	}
 
 
-	sayHello2(user){ 
-		return "Hello " + user+ "!"; 
-	} 
+	sayHello2(user) {
+		return "Hello " + user + "!";
+	}
 
 	removeVietnameseTones(str: string) {
 		str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -60,9 +151,9 @@ export class myUtils {
 		// Bỏ dấu câu, kí tự đặc biệt
 		str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, " ");
 		return str.toLowerCase();
-	  } 
+	}
 
 
-	
-	
+
+
 } 
