@@ -6,15 +6,16 @@
         <el-col :span="1"></el-col>
         <el-col :span="22">
           <p
-            style="color:#f60909; text-align: center; font-weight: bold ;font-style: initial; margin: 2%; font-size: 2em;">
-            <strong>CHÙA VIÊN QUANG</strong> </p>
+            style="color:#f9f9f9; text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold ; margin: 2%; font-size: 2em;">
+            <strong>CHÙA VIÊN QUANG</strong>
+          </p>
           <div class="form_in1">
             <div class="form_wrapper">
 
-             
-                <div class="form_container">
+
+              <div class="form_container">
                 <div class="title_container">
-                  <h2 style="color:#0087a5; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
+                  <h2 style="color:#005c70; font-stretch: expanded; font-weight: 545  ; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
 
                 </div>
                 <div class="row clearfix">
@@ -33,7 +34,7 @@
                         Quy Y Tăng rồi không đọa bàng sinh" <br>
                       </p>
                     </el-form-item>
-
+                    
                     <div class="group1 ep-bg-purple-dark">
                       <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự
                         lễ
@@ -78,7 +79,7 @@
                       <p>Là địa chỉ trong Căn cước công dân hoặc Chứng Minh Nhân Dân hoặc trên Giấy Khai sinh</p>
                       <el-form-item label="Tỉnh/Thành Phố">
                         <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelect" >
+                          clearable class="inline-input w-50" @select="handleSelect">
                         </el-autocomplete>
                       </el-form-item>
 
@@ -91,27 +92,32 @@
                         <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
                           @select="handleSelectW"> </el-autocomplete>
                       </el-form-item>
-                      <el-text v-show="form.sonhatt.length>0" class="ketqua">đc đầy đủ:</el-text> 
-                      <el-text v-show="form.sonhatt.length>0"  v-text="form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince"  class="ketqua"></el-text>
-                      <el-input @change="onChangeSonhaTT" hin v-model="form.sonhatt" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
-                      
+                      <el-text v-show="form.sonhatt.length > 0" class="ketqua">đc đầy đủ:</el-text>
+                      <el-text v-show="form.sonhatt.length > 0"
+                        v-text="form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince"
+                        class="ketqua"></el-text>
+                      <el-input @change="onChangeSonhaTT" hin v-model="form.sonhatt"
+                        placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
+
                     </div>
-                      <!-- @@dctt -->
+                    <!-- @@dctt -->
 
 
                     <div class="group1 ">
                       <p class="p_titlegroup">Nơi ở hiện tại*</p>
-                     
+
                       <el-link @click="clickCopyDiaChi" style=" padding: 0.2em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
-                        border-style: solid;" class="mx-1"   type="primary"> <el-icon><Download /></el-icon> . Lấy từ địa chỉ thường trú</el-link>
-                      
+                        border-style: solid;" class="mx-1" type="primary"> <el-icon>
+                          <Download />
+                        </el-icon> . Lấy từ địa chỉ thường trú</el-link>
+
                       <el-form-item label="Tỉnh/Thành Phố">
                         <el-autocomplete v-model="modelProvince11" :fetch-suggestions="querySearchP11" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelect11" >
+                          clearable class="inline-input w-50" @select="handleSelect11">
                         </el-autocomplete>
                       </el-form-item>
 
-                      <el-form-item  label="Quận / Huyện">
+                      <el-form-item label="Quận / Huyện">
                         <el-autocomplete v-model="modelDistrict11" :fetch-suggestions="querySearchD11" fit-input-width
                           clearable class="inline-input w-50" @select="handleSelectD11"> </el-autocomplete>
                       </el-form-item>
@@ -120,8 +126,10 @@
                         <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width
                           clearable @select="handleSelectW11"> </el-autocomplete>
                       </el-form-item>
-                      <el-text v-show="form.sonhatt11.length>0" class="ketqua">đc đầy đủ:</el-text> 
-                      <el-text v-show="form.sonhatt11.length>0"  v-text="form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11"  class="ketqua"></el-text>
+                      <el-text v-show="form.sonhatt11.length > 0" class="ketqua">đc đầy đủ:</el-text>
+                      <el-text v-show="form.sonhatt11.length > 0"
+                        v-text="form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11"
+                        class="ketqua"></el-text>
                       <el-input hin v-model="form.sonhatt11" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
                     </div>
 
@@ -207,15 +215,19 @@
                       </p>
 
                     </div>
+                      
+                    <div v-if="false" class="group1">
+                      <el-form-item style=""><p style="color:#df1919 " class="credit ">Nếu web lỗi vui lòng liên hệ Tâm Huy Pháp:     <a style="color:#df1919 " href="tel:0383 668 927" target="_blank">0983838619</a></p></el-form-item>
 
+                    </div>
 
-                    <p>223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
-                    <p>ss {{ form }}</p>
+                    <p v-if="false">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
+                    <p v-if="false">ss {{ form }}</p>
                     <div class="margintop1em">
-                      <el-text  v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
-                        border-style: solid;" class="mx-1"  @click="clickDangKy" type="primary">Đăng ký</el-text>
+                      <el-text v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
+                        border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
                       <button class="el-button" @click="clickDangKy">Đăng Ký</button>
-                      <el-button >Hủy</el-button>
+                      <el-button>Hủy</el-button>
                     </div>
 
 
@@ -224,31 +236,34 @@
                   </div>
                 </div>
               </div>
-             
+
             </div>
           </div>
-          <p class="credit">Developed by <a href="http://www.designtheway.com" target="_blank">Design the way</a></p>
+          
         </el-col>
         <el-col :span="1"></el-col>
       </el-row>
+      <p >version 2</p>
     </div>
+   
   </div>
 
 
   <el-dialog width="90%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
     <form method="POST"
-      action="https://script.google.com/macros/s/AKfycbwGN0t5l9N32t3KItM8LeUD1HFc7mbZ5us1EDyLO3X4XVPPmdDCwnNVSdhnDjpsvXM/exec"
+      :action="urlScriptGoogle"
       :model="form" label-width="120px">
 
       <el-input name="ghichu" hin v-show="false" v-model="form.ghichu" />
       <el-input name="dongythamgia" hin v-show="false" v-model="form.dongythamgia" />
       <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
       <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
+      <el-input name="dauthoigian" hin v-show="false" v-model="form.dauthoigian" />
 
       <table>
 
-        <tr>
-          <td>Họ tên: {{ form.hovaten }}
+        <tr valign="top">
+          <td style="">Họ tên: <strong>{{ form.hovaten }}</strong>
             <el-input name="hovaten" hin v-show="false" v-model="form.hovaten" />
 
           </td>
@@ -272,10 +287,17 @@
 
         <tr>
           <td>ĐC Thường Trú: {{ form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince }}
-            <el-input name="diachithuongtru" hin v-show="false" v-model="form_diachithuongtru"> </el-input>
+            <el-input name="diachithuongtru" hin v-show="true" v-model="form_diachithuongtru"> </el-input>
           </td>
-
         </tr>
+
+        <tr>
+          <td>
+            <el-input name="diachithuongtru_short" hin v-show="true" v-model="form_diachithuongtru_short"> </el-input>
+          </td>
+        </tr>
+
+
 
         <tr>
           <td>Nơi ở hiện tại: {{ form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11 }}
@@ -294,14 +316,8 @@
     <button style="margin-top: 1em;" class="el-button el-button--info" @click="dialogConfirmVisible = false">Hủy</button>
 
   </el-dialog>
-
-  <el-drawer
-    v-model="drawer" :with-header="false"
-    title="I am the title"
-   
-    
-  ><span>{{ messageDrawer }}</span></el-drawer>
-
+  
+  <el-drawer v-model="drawer" :with-header="false" title="I am the title"><span>{{ messageDrawer }}</span></el-drawer>
 </template>
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
@@ -312,68 +328,79 @@
 import { onMounted, reactive, ref, watch } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
 import { myUtils } from "../utils/myUtils";
-import   type { FormInstance, FormRules }  from 'element-plus';
-import {useRoute} from "vue-router";
+import type { FormInstance, FormRules } from 'element-plus';
+import { useRoute } from "vue-router";
 import { h } from 'vue'
 import { ElMessage } from 'element-plus'
+// import * as dayjs from 'dayjs'
+// dayjs().format()
+// import 'dayjs/locale/vi'
+// dayjs.locale('vi') // use locale
+// var now = dayjs()
 
-const myUtils0= new myUtils()
-const validateLevel= ref(1)
-if(useRoute().query.validate) validateLevel.value=useRoute().query.validate
-og('validate='+validateLevel.value)
+
+const myUtils0 = new myUtils()
+const validateLevel = ref(1)
+if (useRoute().query.validate) validateLevel.value = useRoute().query.validate
+og('validate=' + validateLevel.value)
 ///////////////////// dialog ////////////
 let dialogConfirmVisible = ref(false)
+// do not use same name with ref
+const form = reactive({
+
+dongythamgia: 'novalue',
+hovaten: '',
+gioitinh: '',
+sodienthoai: '',
+sonhatt: '',
+_tentochucdathamgia: '',
+nguoigioithieu: '',
+ghichu: '',
+dauthoigian:'',
+
+sonhatt11: '',
+dasinhhoatdaotrang: '',
+_rdDathamGiaDaoTrang: -1,
+_rdMongMuonThamGiaDT: -1,
+
+
+rdThamdu: -1,
+
+namsinh: '',
+diachithuongtru: ''
+})
+
 
 const drawer = ref(false)
-const messageDrawer= ref('')
+const messageDrawer = ref('')
+
+const urlScriptGoogle= ref('')
+urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbwgh4-OgXtEn0pm3fhgqFLqsmXjWQz5Lr7-YU0eYqD7hAqr3ERF0GtbyPzPkh5oij0/exec?phone1='
 
 function clickDangKy(event) {
+   //form.dauthoigian= now.daysInMonth()+"/"+(now.month()+1)+"/"+now.year()+" "+now.hour()+":"+now.minute()+":"+now.second();
+ // form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
+ const dateNow=new Date();
+ form.dauthoigian = dateNow.getDate()+"/"+(dateNow.getMonth()+1)+"/"+dateNow.getFullYear() +" "+ dateNow.getHours()+":"+dateNow.getMinutes()+":"+dateNow.getSeconds(); 
+ urlScriptGoogle.value+=form.sodienthoai
+  og(urlScriptGoogle.value)
+  form_diachithuongtru_short.value = modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
+  form_diachithuongtru.value=form.sonhatt + ', ' + form_diachithuongtru_short.value  
 
-  
-
-  form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
   form_diachitamtru.value = form.sonhatt11 + ', ' + modelWard11.value + ', ' + modelDistrict11.value + ', ' + modelProvince11.value;
-
+  
   if (form._rdDathamGiaDaoTrang == 0) {
     form.dasinhhoatdaotrang = 'Chưa tham gia - ' + form._rdMongMuonThamGiaDT
   }
   else form.dasinhhoatdaotrang = form._tentochucdathamgia;
 
-
   dialogConfirmVisible.value = true
 }
 
 const form_diachithuongtru = ref('');
+const form_diachithuongtru_short = ref('')
 const form_diachitamtru = ref('');
 //////////////////end dialog
-
-// do not use same name with ref
-const form = reactive({
-
-  dongythamgia: 'novalue',
-  hovaten: '',
-  gioitinh: '',
-  sodienthoai: '',
-  sonhatt: '',
-  _tentochucdathamgia: '',
-  nguoigioithieu: '',
-  ghichu: '',
-
-
-  sonhatt11: '',
-  dasinhhoatdaotrang: '',
-  _rdDathamGiaDaoTrang: -1,
-  _rdMongMuonThamGiaDT: -1,
-
-
-  rdThamdu: -1,
-
-  namsinh: '',
-  diachithuongtru: ''
-})
-
-const checkedSameLocation = false; // checkbox cùng thường trú và tạm tru 
-
 
 
 interface provinceItem {
@@ -394,15 +421,10 @@ const querySearchP = (queryString: string, cb: any) => {
 }
 
 
-
-
-
 function rdThamDuChange(value, number) {
   if (form.rdThamdu == 1) form.dongythamgia = 'Chắc chắn tham gia'
   else form.dongythamgia = 'Không tham gia được '
 }
-
-
 
 
 const modelDistrict = ref('')
@@ -523,19 +545,19 @@ function og(str: any) {
 
 myUtils0.watchLocation(modelProvince, modelDistrict, modelWard, districts, wards, selectedP, selectedD11, selectedW11, selectedP11, selectedD, selectedW, modelProvince11, modelDistrict11, modelWard11, districts11, wards11);
 
-function clickCopyDiaChi(){
- 
-   modelProvince11.value= modelProvince.value
-   modelDistrict11.value= modelDistrict.value
-   modelWard11.value= modelWard.value
-   
-   selectedP11.value=selectedP.value
-   selectedD11.value= selectedD.value
-   selectedW11.value= selectedW.value
-  
-   wards11.value=wards.value
-   districts11.value= districts.value
-   form.sonhatt11= form.sonhatt
+function clickCopyDiaChi() {
+
+  modelProvince11.value = modelProvince.value
+  modelDistrict11.value = modelDistrict.value
+  modelWard11.value = modelWard.value
+
+  selectedP11.value = selectedP.value
+  selectedD11.value = selectedD.value
+  selectedW11.value = selectedW.value
+
+  wards11.value = wards.value
+  districts11.value = districts.value
+  form.sonhatt11 = form.sonhatt
 
 }
 
@@ -544,20 +566,20 @@ function clickCopyDiaChi(){
 //   if(new1.sonhatt!==old1.sonhatt){
 
 //     if(selectedW.value.length==0){
-        
+
 //         showError('Hãy chọn Tỉnh, Huyện, xã trước')
 //     }
 //   }
 // })
 //showError('Hãy chọn Tỉnh, Huyện, xã trước')
-function onChangeSonhaTT(str){
+function onChangeSonhaTT(str) {
   showError('Hãy chọn Tỉnh, Huyện, xã trước')
 }
 
-function showError(str){
+function showError(str) {
   ElMessage({
     message: h('p', null, [
-     
+
       h('i', { style: 'color: teal' }, str),
     ]),
   })
@@ -593,7 +615,7 @@ onMounted(() => {
   padding: 1em;
   margin-top: 1em;
 
-  border-color: #ffdcf6b0;
+  border-color: #25497e18;
 }
 
 body {
@@ -603,7 +625,7 @@ body {
 }
 
 .wrap2 {
-  background-image: linear-gradient(#ffdcf6, #ffdcf6);
+  background-image: linear-gradient(#25497e, #25497e);
 }
 
 .form_in1 {
@@ -650,13 +672,18 @@ p {
 
 td {
   padding: 8px;
+  white-space: nowrap;
+  font-weight: bold;
 }
 
-.ketqua{
+.ketqua {
   font-style: italic;
   font-size: 0.8em;
   color: #161616;
   margin-left: 1em;
 }
 
+.dl_content {
+  color: coral;
+}
 </style>
