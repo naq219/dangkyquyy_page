@@ -3,7 +3,7 @@
   <div class="wrap1">
     <div class="wrap2">
       <el-row style="margin: 0 auto; ">
-        <el-col :span="1"></el-col>
+        <el-col :span="1"></el-col> 
         <el-col :span="22">
           <p
             style="color:#f9f9f9; text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold ; margin: 2%; font-size: 2em;">
@@ -375,9 +375,22 @@ const drawer = ref(false)
 const messageDrawer = ref('')
 
 const urlScriptGoogle= ref('')
-urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbwgh4-OgXtEn0pm3fhgqFLqsmXjWQz5Lr7-YU0eYqD7hAqr3ERF0GtbyPzPkh5oij0/exec?phone1='
+urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbwpNHYydKbG3nxcIXpdMWRHZ2aqEYhm19mF3WwklQy4AMiQWZodzfsffCqdydIHqxE/exec?phone1='
+
+function validate(){
+  let checkErr=''
+  if(form.namsinh.length!=4) checkErr+='Năm sinh là 4 chữ số, không bao gồm ngày/tháng \n '
+  return false;
+}
 
 function clickDangKy(event) {
+
+  if(!validate()){
+
+    return ;
+  }
+
+
    //form.dauthoigian= now.daysInMonth()+"/"+(now.month()+1)+"/"+now.year()+" "+now.hour()+":"+now.minute()+":"+now.second();
  // form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
  const dateNow=new Date();
