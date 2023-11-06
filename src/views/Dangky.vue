@@ -328,10 +328,11 @@
 import { onMounted, reactive, ref, watch } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
 import { myUtils } from "../utils/myUtils";
-import type { FormInstance, FormRules } from 'element-plus';
+import type { FormInstance, FormRules,Action } from 'element-plus';
 import { useRoute } from "vue-router";
 import { h } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
+
 // import * as dayjs from 'dayjs'
 // dayjs().format()
 // import 'dayjs/locale/vi'
@@ -379,14 +380,18 @@ urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbwpNHYydKbG3nxcIX
 
 function validate(){
   let checkErr=''
-  if(form.namsinh.length!=4) checkErr+='Năm sinh là 4 chữ số, không bao gồm ngày/tháng \n '
-  return false;
+  if(form.namsinh.length!=4) checkErr+='Năm sinh là 4 chữ số, không bao gồm ngày/tháng \n <br> '
+
+  if(selectedD.value.length==0) checkErr+='Địa chỉ thường trú chưa chọn Tỉnh/TP \n '
+
+  return checkErr;
+
 }
 
 function clickDangKy(event) {
 
-  if(!validate()){
-
+  if(validate().length>0){
+    showError(validate())
     return ;
   }
 
@@ -590,12 +595,22 @@ function onChangeSonhaTT(str) {
 }
 
 function showError(str) {
-  ElMessage({
-    message: h('p', null, [
+  // ElMessage({
+  //   message: h('p', null, [
 
-      h('i', { style: 'color: teal' }, str),
-    ]),
+  //     h('i', { style: 'color: teal' }, str),
+  //   ]),
+  // })
+
+  ElMessageBox.alert(str, 'Nhập dữ liệu chưa đúng', {
+    // if you want to disable its autofocus
+    // autofocus: false,
+    confirmButtonText: 'OK',
+    callback: (action: Action) => {
+      ElMessage.error(str);
+    },
   })
+
 }
 
 
