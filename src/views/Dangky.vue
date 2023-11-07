@@ -20,7 +20,10 @@
                 </div>
                 <div class="row clearfix">
                   <div class="parent d-flex justify-content-center">
-
+                    <el-form
+                      ref="ruleFormRef"
+                      :model="ruleForm"
+                      :rules="rules">
                     <el-form-item>
                       <p>Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
                         Phật,
@@ -96,7 +99,7 @@
                       <el-text v-show="form.sonhatt.length > 0"
                         v-text="form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince"
                         class="ketqua"></el-text>
-                      <el-input @change="onChangeSonhaTT" hin v-model="form.sonhatt"
+                      <el-input  hin v-model="form.sonhatt"
                         placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
 
                     </div>
@@ -228,12 +231,17 @@
                         border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
                       <button class="el-button" @click="clickDangKy">Đăng Ký</button>
                       <el-button>Hủy</el-button>
+                      <el-link @click="submitForm(ruleFormRef)">
+                          Create11
+                        </el-link>
                     </div>
 
-
+                  </el-form>
 
 
                   </div>
+
+                   
                 </div>
               </div>
 
@@ -396,6 +404,19 @@ function lengthEqual0(str){
   // }
   if(str.length==0) return true
   return false 
+}
+
+const submitForm = async (formEl: FormInstance | undefined) => {
+  og('subm')
+  if (!formEl) return
+  og('sm2')
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log('submit!')
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
 }
 
 function clickDangKy(event) {
@@ -590,20 +611,93 @@ function clickCopyDiaChi() {
 
 }
 
-
-// watch(form,async(new1,old1) =>{
-//   if(new1.sonhatt!==old1.sonhatt){
-
-//     if(selectedW.value.length==0){
-
-//         showError('Hãy chọn Tỉnh, Huyện, xã trước')
-//     }
-//   }
-// })
-//showError('Hãy chọn Tỉnh, Huyện, xã trước')
-function onChangeSonhaTT(str) {
-  
+///// validate/////
+const ruleFormRef = ref<FormInstance>()
+  interface RuleForm {
+  name: string
+  region: string
+  count: string
+  date1: string
+  date2: string
+  delivery: boolean
+  type: string[]
+  resource: string
+  desc: string
 }
+
+
+const ruleForm = reactive<RuleForm>({
+  name: 'Hello111',
+  region: '',
+  count: '',
+  date1: '',
+  date2: '',
+  delivery: false,
+  type: [],
+  resource: '',
+  desc: '',
+})
+
+
+const rules = reactive<FormRules<RuleForm>>({
+  name: [
+    { required: true, message: 'Please input Activity name', trigger: 'blur' },
+    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+  ],
+  region: [
+    {
+      required: true,
+      message: 'Please select Activity zone',
+      trigger: 'change',
+    },
+  ],
+  count: [
+    {
+      required: true,
+      message: 'Please select Activity count',
+      trigger: 'change',
+    },
+  ],
+  date1: [
+    {
+      type: 'date',
+      required: true,
+      message: 'Please pick a date',
+      trigger: 'change',
+    },
+  ],
+  date2: [
+    {
+      type: 'date',
+      required: true,
+      message: 'Please pick a time',
+      trigger: 'change',
+    },
+  ],
+  type: [
+    {
+      type: 'array',
+      required: true,
+      message: 'Please select at least one activity type',
+      trigger: 'change',
+    },
+  ],
+  resource: [
+    {
+      required: true,
+      message: 'Please select activity resource',
+      trigger: 'change',
+    },
+  ],
+  desc: [
+    { required: true, message: 'Please input activity form', trigger: 'blur' },
+  ],
+})
+
+
+///////////
+
+
 
 function showError(str) {
   // ElMessage({
