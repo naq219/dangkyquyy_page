@@ -382,10 +382,20 @@ function validate(){
   let checkErr=''
   if(form.namsinh.length!=4) checkErr+='Năm sinh là 4 chữ số, không bao gồm ngày/tháng \n <br> '
 
-  if(selectedD.value.length==0) checkErr+='Địa chỉ thường trú chưa chọn Tỉnh/TP \n '
+  //if(selectedD.value.length==0) checkErr+='Địa chỉ thường trú chưa chọn Tỉnh/TP \n '
+
+  
 
   return checkErr;
 
+}
+function lengthEqual0(str){
+  // for (let index = 0; index < str.length; index++) {
+  //   const element = str[index];
+  //   if(element.length==0) retur
+  // }
+  if(str.length==0) return true
+  return false 
 }
 
 function clickDangKy(event) {
@@ -395,6 +405,7 @@ function clickDangKy(event) {
     return ;
   }
 
+  form.hovaten = myUtils0.vietHoaHoTen(form.hovaten);
 
    //form.dauthoigian= now.daysInMonth()+"/"+(now.month()+1)+"/"+now.year()+" "+now.hour()+":"+now.minute()+":"+now.second();
  // form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
@@ -591,7 +602,7 @@ function clickCopyDiaChi() {
 // })
 //showError('Hãy chọn Tỉnh, Huyện, xã trước')
 function onChangeSonhaTT(str) {
-  showError('Hãy chọn Tỉnh, Huyện, xã trước')
+  
 }
 
 function showError(str) {
