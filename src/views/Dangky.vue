@@ -41,7 +41,7 @@
                         lễ
                         Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
                       <el-form-item>
-                        <el-radio-group @change="rdThamDuChange" v-model="form.rdThamdu">
+                        <el-radio-group  v-model="form.rdThamdu">
                           <el-radio name="dongythamgia" label="Chắc chắn tham gia">Chắc chắn tham gia</el-radio>
                           <el-radio name="dongythamgia" label="Không tham gia được">Không tham gia được</el-radio>
                         </el-radio-group>
@@ -244,7 +244,7 @@
         </el-col>
         <el-col :span="1"></el-col>
       </el-row>
-      <p >version 2</p>
+      <p >version 4</p>
     </div>
    
   </div>
@@ -256,7 +256,7 @@
       :model="form" label-width="120px">
 
       <el-input name="ghichu" hin v-show="false" v-model="form.ghichu" />
-      <el-input name="dongythamgia" hin v-show="false" v-model="form.dongythamgia" />
+      <el-input name="dongythamgia" hin v-show="false" v-model="form.rdThamdu" />
       <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
       <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
       <el-input name="dauthoigian" hin v-show="false" v-model="form.dauthoigian" />
@@ -332,7 +332,8 @@ import { myUtils } from "../utils/myUtils";
 import type { FormInstance, FormRules } from 'element-plus';
 import { useRoute } from "vue-router";
 import { h } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox  } from 'element-plus'
+import type { Action } from 'element-plus'
 // import * as dayjs from 'dayjs'
 // dayjs().format()
 // import 'dayjs/locale/vi'
@@ -349,7 +350,7 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-dongythamgia: 'novalue',
+
 hovaten: '',
 gioitinh: '',
 sodienthoai: '',
@@ -365,7 +366,7 @@ _rdDathamGiaDaoTrang: -1,
 _rdMongMuonThamGiaDT: -1,
 
 
-rdThamdu: -1,
+rdThamdu: 'novalue',
 
 namsinh: '',
 diachithuongtru: ''
@@ -376,15 +377,35 @@ const drawer = ref(false)
 const messageDrawer = ref('')
 
 const urlScriptGoogle= ref('')
-urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbwgh4-OgXtEn0pm3fhgqFLqsmXjWQz5Lr7-YU0eYqD7hAqr3ERF0GtbyPzPkh5oij0/exec?phone1='
+
 
 function clickDangKy(event) {
+  let msgErr=''
+  if(form.hovaten.indexOf(' ')==-1) msgErr+='* Vui lòng nhập đủ họ tên.<br>'
+  if(form.sodienthoai.length!=10) msgErr+='* Số điện thoại phải đủ 10 số.<br>'
+  if(form.gioitinh.length==0) msgErr+='* Vui lòng chọn giới tính.<br>'
+  if(form.namsinh.trim().length!=4) msgErr+='* Năm sinh là 4 chữ số , ví dụ 1998.<br>'
+  if(form.sonhatt.trim().length==0) msgErr+='* ĐC Thường trú: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
+  if(form.sonhatt11.trim().length==0) msgErr+='* Nơi ở hiện tại: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
+
+  if(msgErr.length>0){
+    showError(msgErr)
+    return ;
+  }
+
+  form.hovaten= myUtils0.vietHoaHoTen(form.hovaten)
+
+  urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbwgh4-OgXtEn0pm3fhgqFLqsmXjWQz5Lr7-YU0eYqD7hAqr3ERF0GtbyPzPkh5oij0/exec?phone1='+form.sodienthoai
    //form.dauthoigian= now.daysInMonth()+"/"+(now.month()+1)+"/"+now.year()+" "+now.hour()+":"+now.minute()+":"+now.second();
  // form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
  const dateNow=new Date();
  form.dauthoigian = dateNow.getDate()+"/"+(dateNow.getMonth()+1)+"/"+dateNow.getFullYear() +" "+ dateNow.getHours()+":"+dateNow.getMinutes()+":"+dateNow.getSeconds(); 
- urlScriptGoogle.value+=form.sodienthoai
-  og(urlScriptGoogle.value)
+
+  // if (form.rdThamdu == 1) form.dongythamgia = 'Chắc chắn tham gia'
+  // else form.dongythamgia = 'Không tham gia được '
+
+
+  
   form_diachithuongtru_short.value = modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
   form_diachithuongtru.value=form.sonhatt + ', ' + form_diachithuongtru_short.value  
 
@@ -422,10 +443,10 @@ const querySearchP = (queryString: string, cb: any) => {
 }
 
 
-function rdThamDuChange(value, number) {
-  if (form.rdThamdu == 1) form.dongythamgia = 'Chắc chắn tham gia'
-  else form.dongythamgia = 'Không tham gia được '
-}
+// function rdThamDuChange(value, number) {
+//   if (form.rdThamdu == 1) form.dongythamgia = 'Chắc chắn tham gia'
+//   else form.dongythamgia = 'Không tham gia được '
+// }
 
 
 const modelDistrict = ref('')
@@ -574,16 +595,22 @@ function clickCopyDiaChi() {
 // })
 //showError('Hãy chọn Tỉnh, Huyện, xã trước')
 function onChangeSonhaTT(str) {
-  showError('Hãy chọn Tỉnh, Huyện, xã trước')
+ 
 }
 
 function showError(str) {
-  ElMessage({
-    message: h('p', null, [
+  ElMessageBox.alert(str,
+    {
+      dangerouslyUseHTMLString: true,
+    }
+  )
 
-      h('i', { style: 'color: teal' }, str),
-    ]),
-  })
+  // ElMessage({
+  //   message: h('p', null, [
+
+  //     h('i', { style: 'color: teal' }, str),
+  //   ]),
+  // })
 }
 
 
