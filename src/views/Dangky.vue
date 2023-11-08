@@ -225,7 +225,7 @@
                     <p v-if="false">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
                     <p v-if="false">ss {{ form }}</p>
                     <div class="margintop1em">
-                      <el-text v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
+                      <el-text v-if="false"  style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
                         border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
                       <button class="el-button" @click="clickDangKy">Đăng Ký</button>
                       <el-button>Hủy</el-button>
