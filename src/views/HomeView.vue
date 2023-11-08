@@ -4,6 +4,8 @@
   <el-table v-loading="true" style="width: 100%">
     
   </el-table>
+
+ 
 </template>
 
 <style>

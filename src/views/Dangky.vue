@@ -1,5 +1,6 @@
 
 <template >
+  
   <div class="wrap1">
     <div class="wrap2">
       <el-row style="margin: 0 auto; ">
@@ -287,13 +288,13 @@
 
         <tr>
           <td>ĐC Thường Trú: {{ form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince }}
-            <el-input name="diachithuongtru" hin v-show="true" v-model="form_diachithuongtru"> </el-input>
+            <el-input name="diachithuongtru" hin v-show="false" v-model="form_diachithuongtru"> </el-input>
           </td>
         </tr>
 
         <tr>
           <td>
-            <el-input name="diachithuongtru_short" hin v-show="true" v-model="form_diachithuongtru_short"> </el-input>
+            <el-input name="diachithuongtru_short" hin v-show="false" v-model="form_diachithuongtru_short"> </el-input>
           </td>
         </tr>
 
