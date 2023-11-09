@@ -1,13 +1,34 @@
 
 <template >
   
-  <div class="wrap1">
+  
     <div class="wrap2">
-      <el-row style="margin: 0 auto; ">
-        <el-col :span="1"></el-col>
-        <el-col :span="22">
+      
+      <svg  id="radar-circle">
+        
+        <circle cx="50%" cy="30%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
+          <animate attributeName="r" from="300" to="915" dur="20s" repeatCount="indefinite" />
+          <animate attributeName="stroke-opacity" from="1" to="0" dur="30s" repeatCount="indefinite"></animate>
+        </circle>
+        
+        <circle cx="50%" cy="30%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
+          <animate attributeName="r" from="0" to="915" dur="13s" repeatCount="indefinite" begin="0.75s" />
+          <animate attributeName="stroke-opacity" from="1" to="0" dur="33s" repeatCount="indefinite" begin="0.75s"></animate>
+        </circle>
+        
+        <circle cx="50%" cy="45%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
+          <animate attributeName="r" from="0" to="915" dur="23s" repeatCount="indefinite" begin="1.5s" />
+          <animate attributeName="stroke-opacity" from="1" to="0" dur="23s" repeatCount="indefinite" begin="1.5s"></animate>
+        </circle>
+        
+        
+      </svg>
+
+        
           <p
-            style="color:#f9f9f9; text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold ; margin: 2%; font-size: 2em;">
+            style="color:#ffffff; text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold ; margin: 2%; font-size: 2em;
+            text-shadow: 1px 1px 2px black, 0 0 25px rgb(255, 255, 255), 0 0 5px darkblue;
+            ">
             <strong>CHÙA VIÊN QUANG</strong>
           </p>
           <div class="form_in1">
@@ -16,12 +37,12 @@
 
               <div class="form_container">
                 <div class="title_container">
+                  
                   <h2 style="color:#005c70; font-stretch: expanded; font-weight: 545  ; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
-
-                </div>
+                           </div>
                 <div class="row clearfix">
                   <div class="parent d-flex justify-content-center">
-
+                    
                     <el-form-item>
                       <p>Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
                         Phật,
@@ -59,7 +80,7 @@
 
 
                     <el-form-item label="Năm Sinh">
-                      <el-input name="namsinh" hin v-model="form.namsinh" placeholder="Chỉ nhập năm sinh, ví dụ 2020" />
+                      <el-input type="number" name="namsinh" hin v-model="form.namsinh" placeholder="Chỉ nhập năm sinh, ví dụ 2020" />
 
                     </el-form-item>
 
@@ -89,7 +110,7 @@
                           clearable class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
                       </el-form-item>
 
-                      <el-form-item label="Phường/Xã/Thị Trấn">
+                      <el-form-item label="Phường/Xã/TT">
                         <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
                           @select="handleSelectW"> </el-autocomplete>
                       </el-form-item>
@@ -123,7 +144,7 @@
                           clearable class="inline-input w-50" @select="handleSelectD11"> </el-autocomplete>
                       </el-form-item>
 
-                      <el-form-item label="Phường/Xã/Thị Trấn">
+                      <el-form-item label="Phường/Xã/TT">
                         <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width
                           clearable @select="handleSelectW11"> </el-autocomplete>
                       </el-form-item>
@@ -241,13 +262,11 @@
             </div>
           </div>
           
-        </el-col>
-        <el-col :span="1"></el-col>
-      </el-row>
-      <p style="font-size: 0.7em; width: 100%; text-align: center; margin: 0.3em;"  >version 5 - contact 0983838619</p>
+        
+      <p style="font-size: 0.7em; width: 100%; text-align: center; margin: 0.3em;"  >version {{ form.webversion }} - contact 0983838619</p>
     </div>
    
-  </div>
+  
 
 
   <el-dialog width="90%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
@@ -260,6 +279,7 @@
       <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
       <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
       <el-input name="dauthoigian" hin v-show="false" v-model="form.dauthoigian" />
+      <el-input name="web_version" hin v-show="false" v-model="form.webversion" />
 
       <table>
 
@@ -350,7 +370,7 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-
+webversion:'ver8',
 hovaten: '',
 gioitinh: '',
 sodienthoai: '',
@@ -414,7 +434,7 @@ function clickDangKy() {
 
   form.hovaten= myUtils0.vietHoaHoTen(form.hovaten)
 
-  urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbwgh4-OgXtEn0pm3fhgqFLqsmXjWQz5Lr7-YU0eYqD7hAqr3ERF0GtbyPzPkh5oij0/exec?phone1='+form.sodienthoai
+  urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbxjTZIWY1jwUObSIqr3X8DIWhCLnLKUCZFMoMLw-fO9cElsFDuuPjLR8r2TlbiVBb0/exec?phone1='+form.sodienthoai
    //form.dauthoigian= now.daysInMonth()+"/"+(now.month()+1)+"/"+now.year()+" "+now.hour()+":"+now.minute()+":"+now.second();
  // form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
  const dateNow=new Date();
@@ -665,14 +685,26 @@ onMounted(() => {
   border-color: #25497e18;
 }
 
+
+svg {
+  
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  
+  top: 1000; bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
-
+    background-color: #25497e;
 }
 
 .wrap2 {
-  background-image: linear-gradient(#25497e, #25497e);
+  background-image: linear-gradient(#25497e, #25497e); margin-left: 0.7em; margin-right: 0.7em;
 }
 
 .form_in1 {
@@ -714,13 +746,14 @@ p {
   margin: 2% auto 0;
   position: relative;
   z-index: 1;
-  border-top: 5px solid #0077ff93;
+  border-top: 5px solid #f9004293;
 }
 
 td {
   padding: 8px;
-  white-space: nowrap;
+ 
   font-weight: bold;
+
 }
 
 .ketqua {
