@@ -71,8 +71,8 @@
                     </el-form-item>
 
                     <el-form-item label="Số điện thoại">
-                      <el-input name="sodienthoai" type="tel" hin v-model="form.sodienthoai" maxlength="10"
-                        minlength="10" />
+                      <el-input name="sodienthoai" type="tel" hin v-model="form.sodienthoai" 
+                         />
                     </el-form-item>
 
                     <div class="group1">
@@ -244,7 +244,7 @@
         </el-col>
         <el-col :span="1"></el-col>
       </el-row>
-      <p >version 4</p>
+      <p style="font-size: 0.7em; width: 100%; text-align: center; margin: 0.3em;"  >version 5 - contact 0983838619</p>
     </div>
    
   </div>
@@ -310,7 +310,7 @@
       </table>
       <!-- <el-button type="primary" style="margin-top: 1em;">Xác nhận</el-button> -->
       <div style="margin-top: 1em;">
-        <button class="el-button el-button--primary" type="submit">Xác nhận</button>
+        <button  class="el-button el-button--primary"  @click="submitDk()" type="submit">Xác nhận</button>
 
       </div>
     </form>
@@ -332,7 +332,7 @@ import { myUtils } from "../utils/myUtils";
 import type { FormInstance, FormRules } from 'element-plus';
 import { useRoute } from "vue-router";
 import { h } from 'vue'
-import { ElMessage, ElMessageBox  } from 'element-plus'
+import { ElMessage, ElMessageBox,ElLoading   } from 'element-plus'
 import type { Action } from 'element-plus'
 // import * as dayjs from 'dayjs'
 // dayjs().format()
@@ -378,12 +378,31 @@ const messageDrawer = ref('')
 
 const urlScriptGoogle= ref('')
 
+const openFullScreen2 = () => {
+  const loading = ElLoading.service({
+    lock: true,
+    text: 'Quý PT vui lòng chờ để đăng ký ạ!',
+    background: 'rgba(0, 0, 0, 0.7)',
+  })
+  setTimeout(() => {
+    loading.close()
+  }, 20000)
+}
 
-function clickDangKy(event) {
+
+function submitDk(){
+  
+  dialogConfirmVisible.value = false
+  openFullScreen2();
+}
+
+
+
+function clickDangKy() {
   let msgErr=''
   if(form.hovaten.indexOf(' ')==-1) msgErr+='* Vui lòng nhập đủ họ tên.<br>'
-  if(form.sodienthoai.length!=10) msgErr+='* Số điện thoại phải đủ 10 số.<br>'
-  if(form.gioitinh.length==0) msgErr+='* Vui lòng chọn giới tính.<br>'
+  if(form.sodienthoai.trim().length!=10) msgErr+='* Số điện thoại phải đủ 10 số.<br>'
+  if(form.gioitinh.trim().length==0) msgErr+='* Vui lòng chọn giới tính.<br>'
   if(form.namsinh.trim().length!=4) msgErr+='* Năm sinh là 4 chữ số , ví dụ 1998.<br>'
   if(form.sonhatt.trim().length==0) msgErr+='* ĐC Thường trú: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
   if(form.sonhatt11.trim().length==0) msgErr+='* Nơi ở hiện tại: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
