@@ -252,7 +252,7 @@
                       <el-button>Hủy</el-button>
                     </div>
 
-
+                      
 
 
                   </div>
@@ -346,19 +346,30 @@
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
-import { exportedFile } from "../utils/exportedFile";
+import { onMounted, reactive, ref } from 'vue'
+//import { exportedFile } from "../utils/exportedFile";
 import { myUtils } from "../utils/myUtils";
-import type { FormInstance, FormRules } from 'element-plus';
+
 import { useRoute } from "vue-router";
-import { h } from 'vue'
-import { ElMessage, ElMessageBox,ElLoading   } from 'element-plus'
-import type { Action } from 'element-plus'
-// import * as dayjs from 'dayjs'
-// dayjs().format()
-// import 'dayjs/locale/vi'
-// dayjs.locale('vi') // use locale
-// var now = dayjs()
+
+import {  ElMessageBox,ElLoading   } from 'element-plus'
+
+import { useScriptTag } from '@vueuse/core'
+
+
+
+// useScriptTag(
+//   'http://localhost:5173/exportedFile.js',
+//   // on script tag loaded.
+//   (el: HTMLScriptElement) => {
+//     // do something
+    
+//     console.log(LocationData.foo());
+//     provincesSource.value = LocationData.loadAll()
+//     console.log('done script');
+
+//   },
+// )
 
 
 const myUtils0 = new myUtils()
@@ -654,7 +665,10 @@ function showError(str) {
 
 
 onMounted(() => {
-  provincesSource.value = new exportedFile().loadAllProvince()
+  //provincesSource.value = new exportedFile().loadAllProvince()
+  
+
+
 })
 
 </script>

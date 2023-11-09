@@ -1,29 +1,8 @@
-// Exporting the class which will be 
-// used in another file 
-// Export keyword or form should be 
-// used to use the class 
-export class exportedFile {
-loadAllDistrict(): { value: string; code: string; }[] {
-throw new Error('Method not implemented.');
-} 
+var LocationData = {
+	foo () { console.log('foo222') },
+	bar () { console.log('bar') },
+	baz () { console.log('baz') },
 
-	// Class method which prints the 
-	// user called in another file 
-	sayHello(user){ 
-		return "Hello " + user+ "!"; 
-	} 
-
-	loadAllProvince(){
-		return this.loadAll()
-	}
-
-	loadDistrictByProvince(pid:any){
-		let array = this.loadAll();
-		let data= array.filter(function (object) {
-			return object['code'] === pid;
-		});
-		return data.districts
-	}
 
 	loadAll(){
 		return [
@@ -36427,9 +36406,4 @@ throw new Error('Method not implemented.');
 		  ]
 	}
 	
-	
-	  checkVietHoaHoTen(str){
-		//var convertToArray = str.split(' ');
-	  }
-	
-} 
+  }
