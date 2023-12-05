@@ -1,7 +1,7 @@
 
 <template >
   
-  <el-button v-if="clickSubmited" > ĐĂNG KÝ MỚI</el-button>
+  <el-button v-if="clickSubmited" @click="clickDangKyMoi" > ĐĂNG KÝ MỚI</el-button>
     <div v-if="!clickSubmited"  class="wrap2">
 
       
@@ -360,7 +360,7 @@ import { h } from 'vue'
 import { ElMessage, ElMessageBox,ElLoading   } from 'element-plus'
 import type { Action } from 'element-plus'
 import { randomInt } from 'crypto';
-import axios  from 'axios'
+import axios  from 'axios' 
 
 // import * as dayjs from 'dayjs'
 // dayjs().format()
@@ -393,7 +393,7 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-  webversion:'ver9',
+  webversion:'ver9.3',
   
   gioitinh: '',
   sodienthoai: '',
@@ -426,6 +426,7 @@ function reloadCookie(){
       }
 
 }
+reloadCookie()
 
 
 
@@ -442,13 +443,14 @@ const openFullScreen2 = () => {
   })
   setTimeout(() => {
     loading.close()
-  }, 20000)
+    reloadCookie();
+  }, 10000)
 }
 
 
 function submitDk(){
 
-  let url ="http://connect.lemyde.com/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"');        "
+  let url ="http://connectht.lemyde.com/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"');        "
       
       axios.get(url)
 
@@ -719,7 +721,7 @@ onMounted(() => {
 
 
 if(isDevEnviroment){
-  modelHovaten.value='Quảng An test '+ Math.floor(Math.random() * 30);
+  modelHovaten.value='Quảng An test '+ Math.floor(Math.random() * 30000);
   form.gioitinh='Nam'
   form.sodienthoai='0977310197'
   form.sonhatt='so nha 2'
@@ -736,6 +738,11 @@ if(isDevEnviroment){
   form.namsinh='2222'
   
 }
+
+function clickDangKyMoi(){
+  location.reload()
+}
+
 
 </script>
 
