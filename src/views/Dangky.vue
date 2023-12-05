@@ -1,7 +1,8 @@
 
 <template >
   
-  <el-button v-if="clickSubmited" @click="clickDangKyMoi" > ĐĂNG KÝ MỚI</el-button>
+  <el-button style="padding: 1em;" v-if="clickSubmited" @click="clickDangKyMoi" > ĐĂNG KÝ MỚI</el-button>
+  <p style="padding: 1em; color: #df1919;"  v-if="clickSubmited" > Quý PT vui lòng chờ để đăng ký ạ! </p>
     <div v-if="!clickSubmited"  class="wrap2">
 
       
@@ -393,7 +394,7 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-  webversion:'ver9.3',
+  webversion:'ver9.6',
   
   gioitinh: '',
   sodienthoai: '',
@@ -450,7 +451,7 @@ const openFullScreen2 = () => {
 
 function submitDk(){
 
-  let url ="http://connectht.lemyde.com/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"');        "
+  let url ="https://connecthtssl.vq.id.vn/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"');        "
       
       axios.get(url)
 
