@@ -392,7 +392,7 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-  webversion:'ver8',
+  webversion:'ver9',
   
   gioitinh: '',
   sodienthoai: '',
@@ -460,7 +460,7 @@ function submitDk(){
 
 function clickDangKy() {
 
-  this.$refs.abc1.innerText ='sdsd'
+
 
 
   let msgErr=''
