@@ -353,13 +353,14 @@
 import { onMounted, reactive, ref, watch } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
 import { myUtils } from "../utils/myUtils";
+import { axiosUtils } from "../utils/axiosUtils";
 import type { FormInstance, FormRules } from 'element-plus';
 import { useRoute } from "vue-router";
 import { h } from 'vue'
 import { ElMessage, ElMessageBox,ElLoading   } from 'element-plus'
 import type { Action } from 'element-plus'
 import { randomInt } from 'crypto';
-
+import axios  from 'axios'
 
 // import * as dayjs from 'dayjs'
 // dayjs().format()
@@ -446,6 +447,14 @@ const openFullScreen2 = () => {
 
 
 function submitDk(){
+
+  let url ="http://connect.lemyde.com/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"');        "
+      
+      axios.get(url)
+
+
+  
+
   clickSubmited.value=true
   useCookie.cookies.set('last_submit','11')
   

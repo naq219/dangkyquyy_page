@@ -8,7 +8,8 @@ import axios  from 'axios'
 export class axiosUtils {
 
     postDbRegister(){
-        let url ="http://connect.lemyde.com/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` (`created_at`, `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES ('2023-12-05 16:48:33', 'aa', 'que 2223', 'aa', 'ss', 'aa', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss');        "
+        let dauthoigian='dauttt123'
+        let url ="http://connect.lemyde.com/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES ( 'dauthoigian666', 'que 2223', 'aa', 'ss', 'aa', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss');        "
       
         axios.get(url)
     }
