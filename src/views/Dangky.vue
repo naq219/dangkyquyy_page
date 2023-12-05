@@ -1,8 +1,10 @@
 
 <template >
   
-  
-    <div class="wrap2">
+  <el-button v-if="clickSubmited" > ĐĂNG KÝ MỚI</el-button>
+    <div v-if="!clickSubmited"  class="wrap2">
+
+      
       
       <svg  id="radar-circle">
         
@@ -37,12 +39,14 @@
 
               <div class="form_container">
                 <div class="title_container">
-                  
+                 
                   <h2 style="color:#005c70; font-stretch: expanded; font-weight: 545  ; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
                            </div>
                 <div class="row clearfix">
                   <div class="parent d-flex justify-content-center">
                     
+                    
+
                     <el-form-item>
                       <p>Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
                         Phật,
@@ -74,7 +78,7 @@
 
 
                     <el-form-item label="Họ và tên">
-                      <el-input name="hovaten" hin v-model="form.hovaten"
+                      <el-input name="hovaten" hin v-model="modelHovaten"
                         placeholder="Vui lòng viết hoa chữ cái đầu tiên" />
                     </el-form-item>
 
@@ -243,8 +247,8 @@
 
                     </div>
 
-                    <p v-if="false">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
-                    <p v-if="false">ss {{ form }}</p>
+                    <p v-if="isDevEnviroment">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
+                    <p v-if="isDevEnviroment">ss {{ form }}</p>
                     <div class="margintop1em">
                       <el-text v-if="false"  style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
                         border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
@@ -263,7 +267,7 @@
           </div>
           
         
-      <p style="font-size: 0.7em; width: 100%; text-align: center; margin: 0.3em;"  >version {{ form.webversion }} - contact 0983838619</p>
+      <p style="font-size: 0.7em; color: rgb(141, 175, 175); width: 100%; text-align: center; margin: 0.3em;"  >version {{ form.webversion }} - contact 0983838619</p>
     </div>
    
   
@@ -274,7 +278,7 @@
       :action="urlScriptGoogle"
       :model="form" label-width="120px">
 
-      <el-input name="ghichu" hin v-show="false" v-model="form.ghichu" />
+      <el-input id="abc1" name="ghichu" hin v-show="false" v-model="form.ghichu" />
       <el-input name="dongythamgia" hin v-show="false" v-model="form.rdThamdu" />
       <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
       <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
@@ -284,8 +288,8 @@
       <table>
 
         <tr valign="top">
-          <td style="">Họ tên: <strong>{{ form.hovaten }}</strong>
-            <el-input name="hovaten" hin v-show="false" v-model="form.hovaten" />
+          <td style="">Họ tên: <strong>{{ modelHovaten }}</strong>
+            <el-input name="hovaten" hin v-show="false" v-model="modelHovaten" />
 
           </td>
 
@@ -354,11 +358,29 @@ import { useRoute } from "vue-router";
 import { h } from 'vue'
 import { ElMessage, ElMessageBox,ElLoading   } from 'element-plus'
 import type { Action } from 'element-plus'
+import { randomInt } from 'crypto';
+
+
 // import * as dayjs from 'dayjs'
 // dayjs().format()
 // import 'dayjs/locale/vi'
 // dayjs.locale('vi') // use locale
 // var now = dayjs()
+
+///dev
+var lastTimeSubmit=0;
+var isDevEnviroment=false;
+if(window.location.href.indexOf('localhost')!=-1)
+isDevEnviroment=true;
+og('url='+isDevEnviroment);
+
+//cookie
+import { useCookies } from "vue3-cookies";
+let useCookie= useCookies();
+//useCookie.cookies.set('last_submit','11');
+const clickSubmited = ref(false);
+og('cookie= '+useCookie.cookies.get('last_submit'))
+
 
 
 const myUtils0 = new myUtils()
@@ -370,27 +392,40 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-webversion:'ver8',
-hovaten: '',
-gioitinh: '',
-sodienthoai: '',
-sonhatt: '',
-_tentochucdathamgia: '',
-nguoigioithieu: '',
-ghichu: '',
-dauthoigian:'',
+  webversion:'ver8',
+  
+  gioitinh: '',
+  sodienthoai: '',
+  sonhatt: '',
+  _tentochucdathamgia: '',
+  nguoigioithieu: '',
+  ghichu: '',
+  dauthoigian:'',
 
-sonhatt11: '',
-dasinhhoatdaotrang: '',
-_rdDathamGiaDaoTrang: -1,
-_rdMongMuonThamGiaDT: -1,
+  sonhatt11: '',
+  dasinhhoatdaotrang: '',
+  _rdDathamGiaDaoTrang: -1,
+  _rdMongMuonThamGiaDT: -1,
 
 
-rdThamdu: 'novalue',
+  rdThamdu: 'novalue',
 
-namsinh: '',
-diachithuongtru: ''
+  namsinh: '',
+  diachithuongtru: ''
 })
+const modelHovaten = ref('')
+
+function reloadCookie(){
+  let cc1= useCookie.cookies.get('last_submit')
+  og('cookie last submit = '+cc1)
+			if(cc1==='11'){
+        og('reload thoi')
+        useCookie.cookies.set('last_submit','0')
+        location.reload();
+      }
+
+}
+
 
 
 const drawer = ref(false)
@@ -411,16 +446,25 @@ const openFullScreen2 = () => {
 
 
 function submitDk(){
+  clickSubmited.value=true
+  useCookie.cookies.set('last_submit','11')
   
+  lastTimeSubmit =11;
   dialogConfirmVisible.value = false
   openFullScreen2();
+  
+  
 }
 
 
 
 function clickDangKy() {
+
+  this.$refs.abc1.innerText ='sdsd'
+
+
   let msgErr=''
-  if(form.hovaten.indexOf(' ')==-1) msgErr+='* Vui lòng nhập đủ họ tên.<br>'
+  if(modelHovaten.value.indexOf(' ')==-1) msgErr+='* Vui lòng nhập đủ họ tên.<br>'
   if(form.sodienthoai.trim().length!=10) msgErr+='* Số điện thoại phải đủ 10 số.<br>'
   if(form.gioitinh.trim().length==0) msgErr+='* Vui lòng chọn giới tính.<br>'
   if(form.namsinh.trim().length!=4) msgErr+='* Năm sinh là 4 chữ số , ví dụ 1998.<br>'
@@ -432,7 +476,7 @@ function clickDangKy() {
     return ;
   }
 
-  form.hovaten= myUtils0.vietHoaHoTen(form.hovaten)
+  modelHovaten.value= myUtils0.vietHoaHoTen(modelHovaten.value)
 
   urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbxjTZIWY1jwUObSIqr3X8DIWhCLnLKUCZFMoMLw-fO9cElsFDuuPjLR8r2TlbiVBb0/exec?phone1='+form.sodienthoai
    //form.dauthoigian= now.daysInMonth()+"/"+(now.month()+1)+"/"+now.year()+" "+now.hour()+":"+now.minute()+":"+now.second();
@@ -656,6 +700,33 @@ function showError(str) {
 onMounted(() => {
   provincesSource.value = new exportedFile().loadAllProvince()
 })
+
+  watch(modelHovaten, async (newQuestion, oldQuestion) => {
+		
+    reloadCookie();
+
+		})
+
+
+
+if(isDevEnviroment){
+  modelHovaten.value='Quảng An test '+ Math.floor(Math.random() * 30);
+  form.gioitinh='Nam'
+  form.sodienthoai='0977310197'
+  form.sonhatt='so nha 2'
+  form.sonhatt11='so nha 3'
+  selectedP.value='Tỉnh Bắc Kạn'
+  selectedD.value='Huyện Tam Dương'
+  selectedW.value='Xã Đồng Tĩnh'
+
+  selectedP11.value='Tỉnh Lâm Đồng'
+  selectedD11.value='Huyện Đam Rông'
+  selectedW11.value='Xã Đạ Tông'
+
+
+  form.namsinh='2222'
+  
+}
 
 </script>
 
