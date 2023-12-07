@@ -1,7 +1,13 @@
 
 <template >
   
-  <el-button style="padding: 1em;" v-if="clickSubmited" @click="clickDangKyMoi" >Tiếp tục đăng ký</el-button>
+  <el-row  style=" margin-left: auto;
+  margin-right: auto;" v-if="clickSubmited" >
+    <el-col :span="12"></el-col>
+    <el-col>
+      <el-button style="padding: 1em;  margin: 14em;" @click="clickDangKyMoi" >Tiếp tục đăng ký</el-button>
+    </el-col>
+  </el-row>
   
     <div v-if="!clickSubmited"  class="wrap2">
 
@@ -398,7 +404,7 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-  webversion:'ver9.9',
+  webversion:'ver9.9.1',
   uuid:'',
   gioitinh: '',
   sodienthoai: '',
