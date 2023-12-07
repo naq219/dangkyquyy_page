@@ -4,6 +4,9 @@
 // used to use the class 
 
 import { onMounted, reactive, ref, watch } from 'vue'
+import  { randomUUID } from 'crypto'
+import {generate} from 'short-uuid'
+
 export class myUtils {
 
 
@@ -161,6 +164,10 @@ export class myUtils {
 		});
 		
 		return result.join(' ');
+	  }
+
+	  generateUUID(){
+		return generate()
 	  }
 
 } 

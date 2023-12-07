@@ -10,8 +10,22 @@ export class axiosUtils {
     postDbRegister(){
         let dauthoigian='dauttt123'
         let url ="http://connect.lemyde.com/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES ( 'dauthoigian666', 'que 2223', 'aa', 'ss', 'aa', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss');        "
-      
-        axios.get(url)
+        let url0 ="http://connect.lemyde.com/sql/statement       "
+        
+        let url1 ="INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES ( 'dauthoigian666', 'que 2223', 'aa', 'ss', 'aa', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss', 'ss');        "
+        
+        
+        axios.post('/user', {
+            firstName: 'Fred',
+            lastName: 'Flintstone'
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
     }
 	
 
