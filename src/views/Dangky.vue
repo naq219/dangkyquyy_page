@@ -1,290 +1,293 @@
 
 <template >
-  
-  <el-row  style=" margin-left: auto;
-  margin-right: auto;" v-if="clickSubmited" >
+  <el-row style=" margin-left: auto;
+  margin-right: auto;" v-if="clickSubmited">
     <el-col :span="12"></el-col>
     <el-col>
-      <el-button style="padding: 1em;  margin: 14em;" @click="clickDangKyMoi" >Tiếp tục đăng ký</el-button>
+      <el-button style="padding: 1em;  margin: 14em;" @click="clickDangKyMoi">Tiếp tục đăng ký</el-button>
     </el-col>
   </el-row>
-  
-    <div v-if="!clickSubmited"  class="wrap2">
 
-      
-      
-      <svg  id="radar-circle">
-        
-        <circle cx="50%" cy="30%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
-          <animate attributeName="r" from="300" to="915" dur="20s" repeatCount="indefinite" />
-          <animate attributeName="stroke-opacity" from="1" to="0" dur="30s" repeatCount="indefinite"></animate>
-        </circle>
-        
-        <circle cx="50%" cy="30%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
-          <animate attributeName="r" from="0" to="915" dur="13s" repeatCount="indefinite" begin="0.75s" />
-          <animate attributeName="stroke-opacity" from="1" to="0" dur="33s" repeatCount="indefinite" begin="0.75s"></animate>
-        </circle>
-        
-        <circle cx="50%" cy="45%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
-          <animate attributeName="r" from="0" to="915" dur="23s" repeatCount="indefinite" begin="1.5s" />
-          <animate attributeName="stroke-opacity" from="1" to="0" dur="23s" repeatCount="indefinite" begin="1.5s"></animate>
-        </circle>
-        
-        
-      </svg>
+  <div v-if="!clickSubmited" class="wrap2">
 
-        
-          <p
-            style="color:#ffffff; text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold ; margin: 2%; font-size: 2em;
+
+
+    <svg id="radar-circle">
+
+      <circle cx="50%" cy="30%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
+        <animate attributeName="r" from="300" to="915" dur="20s" repeatCount="indefinite" />
+        <animate attributeName="stroke-opacity" from="1" to="0" dur="30s" repeatCount="indefinite"></animate>
+      </circle>
+
+      <circle cx="50%" cy="30%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
+        <animate attributeName="r" from="0" to="915" dur="13s" repeatCount="indefinite" begin="0.75s" />
+        <animate attributeName="stroke-opacity" from="1" to="0" dur="33s" repeatCount="indefinite" begin="0.75s">
+        </animate>
+      </circle>
+
+      <circle cx="50%" cy="45%" r="0" fill-opacity="0" stroke="#ffffff51" stroke-width="2px" stroke-opacity="1">
+        <animate attributeName="r" from="0" to="915" dur="23s" repeatCount="indefinite" begin="1.5s" />
+        <animate attributeName="stroke-opacity" from="1" to="0" dur="23s" repeatCount="indefinite" begin="1.5s"></animate>
+      </circle>
+
+
+    </svg>
+
+
+    <p style="color:#ffffff; text-align: center; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold ; margin: 2%; font-size: 2em;
             text-shadow: 1px 1px 2px black, 0 0 25px rgb(255, 255, 255), 0 0 5px darkblue;
             ">
-            <strong>CHÙA VIÊN QUANG</strong>
-          </p>
-          <div class="form_in1">
-            <div class="form_wrapper">
+      <strong>CHÙA VIÊN QUANG</strong>
+    </p>
+    <div class="form_in1">
+      <div class="form_wrapper">
 
 
-              <div class="form_container">
-                <div class="title_container">
-                 
-                  <h2 style="color:#005c70; font-stretch: expanded; font-weight: 545  ; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
-                           </div>
-                <div class="row clearfix">
-                  <div class="parent d-flex justify-content-center">
-                    
-                    
+        <div class="form_container">
+          <div class="title_container">
 
-                    <el-form-item>
-                      <p>Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
-                        Phật,
-                        Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
-                        luôn nhận được sự gia hộ của Đức Phật, huynh đệ có thêm ý chí vượt qua mọi khó khăn trong cuộc
-                        sống,
-                        tinh tấn tu tập, siêng năng làm phước và sẽ gặp được nhiều may mắn, phúc lành trong cuộc sống.
-                        <br>
-                        "Quy Y Phật rồi không đọa địa ngục <br>
-                        Quy Y Pháp rồi không đọa ngạ quỷ <br>
-                        Quy Y Tăng rồi không đọa bàng sinh" <br>
-                      </p>
-                    </el-form-item>
-                    
-                    <div class="group1 ep-bg-purple-dark">
-                      <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự
-                        lễ
-                        Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
-                      <el-form-item>
-                        <el-radio-group  v-model="form.rdThamdu">
-                          <el-radio name="dongythamgia" label="Chắc chắn tham gia">Chắc chắn tham gia</el-radio>
-                          <el-radio name="dongythamgia" label="Không tham gia được">Không tham gia được</el-radio>
-                        </el-radio-group>
-
-                      </el-form-item>
-
-                    </div>
+            <h2
+              style="color:#005c70; font-stretch: expanded; font-weight: 545  ; font-style: inherit; text-align: center;">
+              ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
+          </div>
+          <div class="row clearfix">
+            <div class="parent d-flex justify-content-center">
 
 
 
-                    <el-form-item label="Họ và tên">
-                      <el-input name="hovaten" hin v-model="modelHovaten"
-                        placeholder="Vui lòng viết hoa chữ cái đầu tiên" />
-                    </el-form-item>
+              <el-form-item>
+                <p>Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
+                  Phật,
+                  Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
+                  luôn nhận được sự gia hộ của Đức Phật, huynh đệ có thêm ý chí vượt qua mọi khó khăn trong cuộc
+                  sống,
+                  tinh tấn tu tập, siêng năng làm phước và sẽ gặp được nhiều may mắn, phúc lành trong cuộc sống.
+                  <br>
+                  "Quy Y Phật rồi không đọa địa ngục <br>
+                  Quy Y Pháp rồi không đọa ngạ quỷ <br>
+                  Quy Y Tăng rồi không đọa bàng sinh" <br>
+                </p>
+              </el-form-item>
 
+              <div class="group1 ep-bg-purple-dark">
+                <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự
+                  lễ
+                  Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
+                <el-form-item>
+                  <el-radio-group v-model="form.rdThamdu">
+                    <el-radio name="dongythamgia" label="Chắc chắn tham gia">Chắc chắn tham gia</el-radio>
+                    <el-radio name="dongythamgia" label="Không tham gia được">Không tham gia được</el-radio>
+                  </el-radio-group>
 
-                    <el-form-item label="Năm Sinh">
-                      <el-input type="number" name="namsinh" hin v-model="form.namsinh" placeholder="Chỉ nhập năm sinh, ví dụ 2020" />
+                </el-form-item>
 
-                    </el-form-item>
-
-                    <el-form-item label="Giới tính">
-                      <el-radio-group v-model="form.gioitinh">
-                        <el-radio name="gioitinh" label="Nam" />
-                        <el-radio name="gioitinh" label="Nữ" />
-                      </el-radio-group>
-                    </el-form-item>
-
-                    <el-form-item label="Số điện thoại">
-                      <el-input name="sodienthoai" type="tel" hin v-model="form.sodienthoai" 
-                         />
-                    </el-form-item>
-
-                    <div class="group1">
-                      <p class="p_titlegroup">Địa chỉ thường trú*</p>
-                      <p>Là địa chỉ trong Căn cước công dân hoặc Chứng Minh Nhân Dân hoặc trên Giấy Khai sinh</p>
-                      <el-form-item label="Tỉnh/Thành Phố">
-                        <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelect">
-                        </el-autocomplete>
-                      </el-form-item>
-
-                      <el-form-item label="Quận / Huyện">
-                        <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
-                      </el-form-item>
-
-                      <el-form-item label="Phường/Xã/TT">
-                        <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
-                          @select="handleSelectW"> </el-autocomplete>
-                      </el-form-item>
-                      <el-text v-show="form.sonhatt.length > 0" class="ketqua">đc đầy đủ:</el-text>
-                      <el-text v-show="form.sonhatt.length > 0"
-                        v-text="form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince"
-                        class="ketqua"></el-text>
-                      <el-input @change="onChangeSonhaTT" hin v-model="form.sonhatt"
-                        placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
-
-                    </div>
-                    <!-- @@dctt -->
-
-
-                    <div class="group1 ">
-                      <p class="p_titlegroup">Nơi ở hiện tại*</p>
-
-                      <el-link @click="clickCopyDiaChi" style=" padding: 0.2em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
-                        border-style: solid;" class="mx-1" type="primary"> <el-icon>
-                          <Download />
-                        </el-icon> . Lấy từ địa chỉ thường trú</el-link>
-
-                      <el-form-item label="Tỉnh/Thành Phố">
-                        <el-autocomplete v-model="modelProvince11" :fetch-suggestions="querySearchP11" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelect11">
-                        </el-autocomplete>
-                      </el-form-item>
-
-                      <el-form-item label="Quận / Huyện">
-                        <el-autocomplete v-model="modelDistrict11" :fetch-suggestions="querySearchD11" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelectD11"> </el-autocomplete>
-                      </el-form-item>
-
-                      <el-form-item label="Phường/Xã/TT">
-                        <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width
-                          clearable @select="handleSelectW11"> </el-autocomplete>
-                      </el-form-item>
-                      <el-text v-show="form.sonhatt11.length > 0" class="ketqua">đc đầy đủ:</el-text>
-                      <el-text v-show="form.sonhatt11.length > 0"
-                        v-text="form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11"
-                        class="ketqua"></el-text>
-                      <el-input hin v-model="form.sonhatt11" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
-                    </div>
-
-                    <div class="group1 ">
-                      <p class="p_titlegroup">Quý Phật tử Đã tham gia sinh hoạt Đạo Tràng, Chúng Thanh Niên chưa ạ?</p>
-                      <el-radio-group v-model="form._rdDathamGiaDaoTrang">
-                        <el-radio label=0>Chưa Tham Gia</el-radio>
-                        <el-radio label=1>Đã tham gia</el-radio>
-                      </el-radio-group>
-                      <el-input v-show="form._rdDathamGiaDaoTrang == 1" class="margintop1em" name="email" hin
-                        v-model="form._tentochucdathamgia" placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
-
-                      <div v-if="form._rdDathamGiaDaoTrang == 0">
-                        <p class="p_titlegroup">Quý Phật tử có mong muốn tham gia sinh hoạt Đạo tràng/CTN không ạ?</p>
-                        <el-radio-group v-model="form._rdMongMuonThamGiaDT">
-                          <el-radio label='Có Muốn tham gia'>Có Muốn tham gia</el-radio>
-                          <el-radio label='Không muốn tham gia'>Không muốn tham gia</el-radio>
-                        </el-radio-group>
-                      </div>
-
-
-
-                    </div>
-
-                    <div class="group1 ">
-                      <p class="p_titlegroup ">Người giới thiệu - Tổ sinh hoạt - Số điện thoại?</p>
-                      <p class="ss">VD: Hòa Lý Anh - Tổ Vinh - CTN Nghệ An - 0338 699 484</p>
-                      <el-input class="margintop1em" hin v-model="form.nguoigioithieu" placeholder="" />
-                    </div>
-
-                    <div class="group1 ">
-                      <p class="p_titlegroup">Thắc mắc, ghi chú</p>
-                      <el-input class="margintop1em" hin v-model="form.ghichu" placeholder="" />
-                    </div>
-
-                    <div class="group1 ">
-                      <p class="p_titlegroup">Liên hệ nhận Lá Phái: <br>
-                        Tâm Huy Pháp: 0383 668 927<br>
-                      </p>
-                    </div>
-
-                    <div class="group1 ">
-                      <p class="p_titlegroup">TRƯỜNG HỢP PHẬT TỬ KHÔNG THAM DỰ ĐƯỢC LỄ:</p>
-                      <p class="">
-                        Thường mỗi tháng sẽ có 1 buổi lễ Quy Y ạ, Quý Phật tử vui lòng hoan hỷ đăng ký vào lễ sau nếu tham
-                        dự được nhé ạ.<br>
-
-                        Thông tin lễ Quy Y được đăng tải trên trang: Chúng Thanh Niên Phật Tử Phật Quang Nghệ An<br>
-                        <a href="https://www.facebook.com/ctnpqnghean">https://www.facebook.com/ctnpqnghean</a>
-                        <br>
-
-                        Mọi thắc mắc về Lễ Quy Y xin vui lòng liên hệ:<br>Tâm Huy Pháp: 0383 668 927
-                      </p>
-
-                    </div>
-
-                    <div class="group1 ">
-                      <p class="p_titlegroup ">QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI:</p>
-                      <p class=" smalltext">
-                        QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI<br>1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua
-                        link hoặc qua bàn Thư Ký tại Chùa Viên Quang vào hôm tổ chức lễ.<br>
-
-                        2. Xác nhận thông tin<br>Quý Phật tử đã đăng ký trên link trước đó sẽ được ban thư ký gọi điện xác
-                        nhận lại thông tin và phát số phiếu nhận lá phái khi về chùa ạ.<br>
-
-                        3. Tham dự lễ Quy Y<br>- Quý Phật tử cố gắng tham dự lễ theo thời gian, địa điểm ghi trên bài
-                        thông báo ạ.<br>
-
-                        4. Nhận Lá Phái<br>- Sau khi hết Lễ, Quý Phật tử vui lòng lắng nghe thông báo và nán lại nơi dự lễ
-                        để nhận lá phái quy y ạ<br>- Quý Phật tử kiểm tra lại thông tin khi nhận lá phái và báo lại ngay
-                        cho thư ký khi thông tin bị sai hoặc thiếu ạ.<br>
-
-                        5. Sau Lễ Quy Y<br>- Quý Phật tử đăng ký sát giờ hoặc đăng ký sau khi đã dự lễ mà chưa kịp có lá
-                        phái trước khi ra về sẽ được ban thư ký gọi thông báo về việc nhận lá phái.<br>- Đối với những
-                        trường hợp này ban thư ký sẽ gửi lá phái về phụ trách ĐT, CTN hoặc gửi về nhà nếu Quý Phật tử có
-                        yêu cầu ạ.<br>
-
-                        Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nhỡ hoặc tin nhắn xin xác nhận thông tin
-                        quy y của chúng con nhé ạ. Ngoài ra, Quý Phật tử cố gắng kiểm tra lại SĐT khi đăng ký, tránh tình
-                        trạng SĐT bị sai, thiếu/thừa số nhé ạ.
-
-
-                      </p>
-
-                    </div>
-                      
-                    <div v-if="false" class="group1">
-                      <el-form-item style=""><p style="color:#df1919 " class="credit ">Nếu web lỗi vui lòng liên hệ Tâm Huy Pháp:     <a style="color:#df1919 " href="tel:0383 668 927" target="_blank">0983838619</a></p></el-form-item>
-
-                    </div>
-
-                    <p v-if="isDevEnviroment">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{ selectedW }} -- </p>
-                    <p v-if="isDevEnviroment">ss {{ form }}</p>
-                    <div class="margintop1em">
-                      <el-text v-if="false"  style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
-                        border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
-                      <button class="el-button" @click="clickDangKy">Đăng Ký</button>
-                      <el-button>Hủy</el-button>
-                    </div>
-
-
-
-
-                  </div>
-                </div>
               </div>
+
+
+
+              <el-form-item label="Họ và tên">
+                <el-input name="hovaten" hin v-model="modelHovaten" placeholder="Vui lòng viết hoa chữ cái đầu tiên" />
+              </el-form-item>
+
+
+              <el-form-item label="Năm Sinh">
+                <el-input type="number" name="namsinh" hin v-model="form.namsinh"
+                  placeholder="Chỉ nhập năm sinh, ví dụ 2020" />
+
+              </el-form-item>
+
+              <el-form-item label="Giới tính">
+                <el-radio-group v-model="form.gioitinh">
+                  <el-radio name="gioitinh" label="Nam" />
+                  <el-radio name="gioitinh" label="Nữ" />
+                </el-radio-group>
+              </el-form-item>
+
+              <el-form-item label="Số điện thoại">
+                <el-input name="sodienthoai" type="tel" hin v-model="form.sodienthoai" />
+              </el-form-item>
+
+              <div class="group1">
+                <p class="p_titlegroup">Địa chỉ thường trú*</p>
+                <p>Là địa chỉ trong Căn cước công dân hoặc Chứng Minh Nhân Dân hoặc trên Giấy Khai sinh</p>
+                <el-form-item label="Tỉnh/Thành Phố">
+                  <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width clearable
+                    class="inline-input w-50" @select="handleSelect">
+                  </el-autocomplete>
+                </el-form-item>
+
+                <el-form-item label="Quận / Huyện">
+                  <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
+                    class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
+                </el-form-item>
+
+                <el-form-item label="Phường/Xã/TT">
+                  <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
+                    @select="handleSelectW"> </el-autocomplete>
+                </el-form-item>
+                <el-text v-show="form.sonhatt.length > 0" class="ketqua">đc đầy đủ:</el-text>
+                <el-text v-show="form.sonhatt.length > 0"
+                  v-text="form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince"
+                  class="ketqua"></el-text>
+                <el-input @change="onChangeSonhaTT" hin v-model="form.sonhatt"
+                  placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
+
+              </div>
+              <!-- @@dctt -->
+
+
+              <div class="group1 ">
+                <p class="p_titlegroup">Nơi ở hiện tại*</p>
+
+                <el-link @click="clickCopyDiaChi" style=" padding: 0.2em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
+                        border-style: solid;" class="mx-1" type="primary"> <el-icon>
+                    <Download />
+                  </el-icon> . Lấy từ địa chỉ thường trú</el-link>
+
+                <el-form-item label="Tỉnh/Thành Phố">
+                  <el-autocomplete v-model="modelProvince11" :fetch-suggestions="querySearchP11" fit-input-width clearable
+                    class="inline-input w-50" @select="handleSelect11">
+                  </el-autocomplete>
+                </el-form-item>
+
+                <el-form-item label="Quận / Huyện">
+                  <el-autocomplete v-model="modelDistrict11" :fetch-suggestions="querySearchD11" fit-input-width clearable
+                    class="inline-input w-50" @select="handleSelectD11"> </el-autocomplete>
+                </el-form-item>
+
+                <el-form-item label="Phường/Xã/TT">
+                  <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width clearable
+                    @select="handleSelectW11"> </el-autocomplete>
+                </el-form-item>
+                <el-text v-show="form.sonhatt11.length > 0" class="ketqua">đc đầy đủ:</el-text>
+                <el-text v-show="form.sonhatt11.length > 0"
+                  v-text="form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11"
+                  class="ketqua"></el-text>
+                <el-input hin v-model="form.sonhatt11" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
+              </div>
+
+              <div class="group1 ">
+                <p class="p_titlegroup">Quý Phật tử Đã tham gia sinh hoạt Đạo Tràng, Chúng Thanh Niên chưa ạ?</p>
+                <el-radio-group v-model="form._rdDathamGiaDaoTrang">
+                  <el-radio label=0>Chưa Tham Gia</el-radio>
+                  <el-radio label=1>Đã tham gia</el-radio>
+                </el-radio-group>
+                <el-input v-show="form._rdDathamGiaDaoTrang == 1" class="margintop1em" name="email" hin
+                  v-model="form._tentochucdathamgia" placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
+
+                <div v-if="form._rdDathamGiaDaoTrang == 0">
+                  <p class="p_titlegroup">Quý Phật tử có mong muốn tham gia sinh hoạt Đạo tràng/CTN không ạ?</p>
+                  <el-radio-group v-model="form._rdMongMuonThamGiaDT">
+                    <el-radio label='Có Muốn tham gia'>Có Muốn tham gia</el-radio>
+                    <el-radio label='Không muốn tham gia'>Không muốn tham gia</el-radio>
+                  </el-radio-group>
+                </div>
+
+
+
+              </div>
+
+              <div class="group1 ">
+                <p class="p_titlegroup ">Người giới thiệu - Tổ sinh hoạt - Số điện thoại?</p>
+                <p class="ss">VD: Hòa Lý Anh - Tổ Vinh - CTN Nghệ An - 0338 699 484</p>
+                <el-input class="margintop1em" hin v-model="form.nguoigioithieu" placeholder="" />
+              </div>
+
+              <div class="group1 ">
+                <p class="p_titlegroup">Thắc mắc, ghi chú</p>
+                <el-input class="margintop1em" hin v-model="form.ghichu" placeholder="" />
+              </div>
+
+              <div class="group1 ">
+                <p class="p_titlegroup">Liên hệ nhận Lá Phái: <br>
+                  Tâm Huy Pháp: 0383 668 927<br>
+                </p>
+              </div>
+
+              <div class="group1 ">
+                <p class="p_titlegroup">TRƯỜNG HỢP PHẬT TỬ KHÔNG THAM DỰ ĐƯỢC LỄ:</p>
+                <p class="">
+                  Thường mỗi tháng sẽ có 1 buổi lễ Quy Y ạ, Quý Phật tử vui lòng hoan hỷ đăng ký vào lễ sau nếu tham
+                  dự được nhé ạ.<br>
+
+                  Thông tin lễ Quy Y được đăng tải trên trang: Chúng Thanh Niên Phật Tử Phật Quang Nghệ An<br>
+                  <a href="https://www.facebook.com/ctnpqnghean">https://www.facebook.com/ctnpqnghean</a>
+                  <br>
+
+                  Mọi thắc mắc về Lễ Quy Y xin vui lòng liên hệ:<br>Tâm Huy Pháp: 0383 668 927
+                </p>
+
+              </div>
+
+              <div class="group1 ">
+                <p class="p_titlegroup ">QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI:</p>
+                <p class=" smalltext">
+                  QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI<br>1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua
+                  link hoặc qua bàn Thư Ký tại Chùa Viên Quang vào hôm tổ chức lễ.<br>
+
+                  2. Xác nhận thông tin<br>Quý Phật tử đã đăng ký trên link trước đó sẽ được ban thư ký gọi điện xác
+                  nhận lại thông tin và phát số phiếu nhận lá phái khi về chùa ạ.<br>
+
+                  3. Tham dự lễ Quy Y<br>- Quý Phật tử cố gắng tham dự lễ theo thời gian, địa điểm ghi trên bài
+                  thông báo ạ.<br>
+
+                  4. Nhận Lá Phái<br>- Sau khi hết Lễ, Quý Phật tử vui lòng lắng nghe thông báo và nán lại nơi dự lễ
+                  để nhận lá phái quy y ạ<br>- Quý Phật tử kiểm tra lại thông tin khi nhận lá phái và báo lại ngay
+                  cho thư ký khi thông tin bị sai hoặc thiếu ạ.<br>
+
+                  5. Sau Lễ Quy Y<br>- Quý Phật tử đăng ký sát giờ hoặc đăng ký sau khi đã dự lễ mà chưa kịp có lá
+                  phái trước khi ra về sẽ được ban thư ký gọi thông báo về việc nhận lá phái.<br>- Đối với những
+                  trường hợp này ban thư ký sẽ gửi lá phái về phụ trách ĐT, CTN hoặc gửi về nhà nếu Quý Phật tử có
+                  yêu cầu ạ.<br>
+
+                  Lưu ý: Quý Phật tử nhớ để ý điện thoại khi có cuộc gọi nhỡ hoặc tin nhắn xin xác nhận thông tin
+                  quy y của chúng con nhé ạ. Ngoài ra, Quý Phật tử cố gắng kiểm tra lại SĐT khi đăng ký, tránh tình
+                  trạng SĐT bị sai, thiếu/thừa số nhé ạ.
+
+
+                </p>
+
+              </div>
+
+              <div v-if="false" class="group1">
+                <el-form-item style="">
+                  <p style="color:#df1919 " class="credit ">Nếu web lỗi vui lòng liên hệ Tâm Huy Pháp: <a
+                      style="color:#df1919 " href="tel:0383 668 927" target="_blank">0983838619</a></p>
+                </el-form-item>
+
+              </div>
+
+              <p v-if="isDevEnviroment">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
+                selectedW }} -- </p>
+              <p v-if="isDevEnviroment">ss {{ form }}</p>
+              <div class="margintop1em">
+                <el-text v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
+                        border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
+                <button class="el-button" @click="clickDangKy">Đăng Ký</button>
+                <el-button>Hủy</el-button>
+              </div>
+
+
+
 
             </div>
           </div>
-          
-        
-      <p style="font-size: 0.7em; color: rgb(141, 175, 175); width: 100%; text-align: center; margin: 0.3em;"  >version {{ form.webversion }} - contact 0983838619</p>
+        </div>
+
+      </div>
     </div>
-   
-  
+
+
+    <p style="font-size: 0.7em; color: rgb(141, 175, 175); width: 100%; text-align: center; margin: 0.3em;">version {{
+      form.webversion }} - contact 0983838619</p>
+  </div>
+
+
 
 
   <el-dialog width="90%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
-    <form method="POST"
-      :action="urlScriptGoogle"
-      :model="form" label-width="120px">
-      <el-input  name="uuid" hin v-show="false" v-model="form.uuid" />
+    <form method="POST" :action="urlScriptGoogle" :model="form" label-width="120px">
+      <el-input name="uuid" hin v-show="false" v-model="form.uuid" />
       <el-input id="abc1" name="ghichu" hin v-show="false" v-model="form.ghichu" />
       <el-input name="dongythamgia" hin v-show="false" v-model="form.rdThamdu" />
       <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
@@ -341,14 +344,14 @@
       </table>
       <!-- <el-button type="primary" style="margin-top: 1em;">Xác nhận</el-button> -->
       <div style="margin-top: 1em;">
-        <button  class="el-button el-button--primary"  @click="submitDk()" type="submit">Xác nhận</button>
+        <button class="el-button el-button--primary" @click="submitDk()" type="submit">Xác nhận</button>
 
       </div>
     </form>
     <button style="margin-top: 1em;" class="el-button el-button--info" @click="dialogConfirmVisible = false">Hủy</button>
 
   </el-dialog>
-  
+
   <el-drawer v-model="drawer" :with-header="false" title="I am the title"><span>{{ messageDrawer }}</span></el-drawer>
 </template>
 //////////////////////////////////////////////////////////
@@ -364,10 +367,10 @@ import { axiosUtils } from "../utils/axiosUtils";
 import type { FormInstance, FormRules } from 'element-plus';
 import { useRoute } from "vue-router";
 import { h } from 'vue'
-import { ElMessage, ElMessageBox,ElLoading   } from 'element-plus'
+import { ElMessage, ElMessageBox, ElLoading } from 'element-plus'
 import type { Action } from 'element-plus'
 import { randomInt } from 'crypto';
-import axios  from 'axios' 
+import axios from 'axios'
 
 // import * as dayjs from 'dayjs'
 // dayjs().format()
@@ -376,22 +379,22 @@ import axios  from 'axios'
 // var now = dayjs()
 
 ///dev
-var lastTimeSubmit=0;
-var isDevEnviroment=false;
-if(window.location.href.indexOf('localhost')!=-1)
-isDevEnviroment=true;
+var lastTimeSubmit = 0;
+var isDevEnviroment = false;
+if (window.location.href.indexOf('localhost') != -1)
+  isDevEnviroment = true;
 
-if(window.location.href.indexOf('debug')!=-1)
-isDevEnviroment=true;
+if (window.location.href.indexOf('debug') != -1)
+  isDevEnviroment = true;
 
-og('url='+isDevEnviroment);
+og('url=' + isDevEnviroment);
 
 //cookie
 import { useCookies } from "vue3-cookies";
-let useCookie= useCookies();
+let useCookie = useCookies();
 //useCookie.cookies.set('last_submit','11');
 const clickSubmited = ref(false);
-og('cookie= '+useCookie.cookies.get('last_submit'))
+og('cookie= ' + useCookie.cookies.get('last_submit'))
 
 
 
@@ -404,15 +407,15 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-  webversion:'ver9.9.1',
-  uuid:'',
+  webversion: 'ver9.10',
+  uuid: '',
   gioitinh: '',
   sodienthoai: '',
   sonhatt: '',
   _tentochucdathamgia: '',
   nguoigioithieu: '',
   ghichu: '',
-  dauthoigian:'',
+  dauthoigian: '',
 
   sonhatt11: '',
   dasinhhoatdaotrang: '',
@@ -427,14 +430,14 @@ const form = reactive({
 })
 const modelHovaten = ref('')
 
-function reloadCookie(){
-  let cc1= useCookie.cookies.get('last_submit')
-  og('cookie last submit = '+cc1)
-			if(cc1==='11'){
-        og('reload thoi')
-        useCookie.cookies.set('last_submit','0')
-        location.reload();
-      }
+function reloadCookie() {
+  let cc1 = useCookie.cookies.get('last_submit')
+  og('cookie last submit = ' + cc1)
+  if (cc1 === '11') {
+    og('reload thoi')
+    useCookie.cookies.set('last_submit', '0')
+    location.reload();
+  }
 
 }
 reloadCookie()
@@ -444,7 +447,7 @@ reloadCookie()
 const drawer = ref(false)
 const messageDrawer = ref('')
 
-const urlScriptGoogle= ref('')
+const urlScriptGoogle = ref('')
 
 const openFullScreen2 = () => {
   const loading = ElLoading.service({
@@ -471,53 +474,54 @@ const openFullScreen3 = () => {
 }
 
 
-function submitDB(){
-  let url ="https://connecthtssl.vq.id.vn/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`,`uuid`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"','"+form.uuid+"');        "
-      
-      //     axios.get(url)
-    
-      let url0 ="http://connect.lemyde.com/sql/statement"
-      let sql ="INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`,`uuid`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"','"+form.uuid+"');        "
-             
-    
-      
-      axios.post(url0, {
-          sql: sql,
-          
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+function submitDB() {
+
+  let url0 = "https://sql.vq.id.vn/sql/statement/"
+  //let url0="https://connecthtssl.lemyde.com/sql/statement"
+  let sql = "INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`,`uuid`) VALUES (  '" + form.dauthoigian + "','" + modelHovaten.value + "','" + form.namsinh + "','" + form.gioitinh + "','" + form.sodienthoai + "','" + form_diachithuongtru.value + "','" + form_diachithuongtru_short.value + "','" + form_diachitamtru.value + "','" + modelProvince11.value + "','" + form.dasinhhoatdaotrang + "','" + form.nguoigioithieu + "','" + form.ghichu + "','" + form.webversion + "','" + form.uuid + "');        "
+  //sql =encodeURI(sql)
+  let url = url0+"?sql="+sql;
+
+  og(url)
+  axios.get(url)
+
+  // axios.post(url0, {
+  //   sql: sql,
+
+  // })
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
 }
 
-function submitDk(){
+function submitDk() {
 
-   
+
 
   // try {
-    
+
   //   const xhttpr = new XMLHttpRequest(); 
   //   xhttpr.open('GET', url, true); 
-      
+
   //   xhttpr.send(); 
   // } catch (error) {
   //   console.log(error)
   // }
 
 
-  
 
-  clickSubmited.value=true
-  useCookie.cookies.set('last_submit','11')
-  
-  lastTimeSubmit =11;
+
+  clickSubmited.value = true
+  useCookie.cookies.set('last_submit', '11')
+
+  lastTimeSubmit = 11;
   dialogConfirmVisible.value = false
   openFullScreen2();
-  
-  
+
+
 }
 
 
@@ -527,39 +531,39 @@ function clickDangKy() {
 
 
 
-  let msgErr=''
-  if(modelHovaten.value.indexOf(' ')==-1) msgErr+='* Vui lòng nhập đủ họ tên.<br>'
-  if(form.sodienthoai.trim().length!=10) msgErr+='* Số điện thoại phải đủ 10 số.<br>'
-  if(form.gioitinh.trim().length==0) msgErr+='* Vui lòng chọn giới tính.<br>'
-  if(form.namsinh.trim().length!=4) msgErr+='* Năm sinh là 4 chữ số , ví dụ 1998.<br>'
-  if(form.sonhatt.trim().length==0) msgErr+='* ĐC Thường trú: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
-  if(form.sonhatt11.trim().length==0) msgErr+='* Nơi ở hiện tại: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
+  let msgErr = ''
+  if (modelHovaten.value.indexOf(' ') == -1) msgErr += '* Vui lòng nhập đủ họ tên.<br>'
+  if (form.sodienthoai.trim().length != 10) msgErr += '* Số điện thoại phải đủ 10 số.<br>'
+  if (form.gioitinh.trim().length == 0) msgErr += '* Vui lòng chọn giới tính.<br>'
+  if (form.namsinh.trim().length != 4) msgErr += '* Năm sinh là 4 chữ số , ví dụ 1998.<br>'
+  if (form.sonhatt.trim().length == 0) msgErr += '* ĐC Thường trú: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
+  if (form.sonhatt11.trim().length == 0) msgErr += '* Nơi ở hiện tại: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
 
-  if(msgErr.length>0){
+  if (msgErr.length > 0) {
     showError(msgErr)
-    return ;
+    return;
   }
 
   form.uuid = myUtils0.generateUUID();
 
-  modelHovaten.value= myUtils0.vietHoaHoTen(modelHovaten.value)
+  modelHovaten.value = myUtils0.vietHoaHoTen(modelHovaten.value)
 
-  urlScriptGoogle.value='https://script.google.com/macros/s/AKfycbxjTZIWY1jwUObSIqr3X8DIWhCLnLKUCZFMoMLw-fO9cElsFDuuPjLR8r2TlbiVBb0/exec?phone1='+form.sodienthoai
-   //form.dauthoigian= now.daysInMonth()+"/"+(now.month()+1)+"/"+now.year()+" "+now.hour()+":"+now.minute()+":"+now.second();
- // form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
- const dateNow=new Date();
- form.dauthoigian = dateNow.getDate()+"/"+(dateNow.getMonth()+1)+"/"+dateNow.getFullYear() +" "+ dateNow.getHours()+":"+dateNow.getMinutes()+":"+dateNow.getSeconds(); 
+  urlScriptGoogle.value = 'https://script.google.com/macros/s/AKfycbxjTZIWY1jwUObSIqr3X8DIWhCLnLKUCZFMoMLw-fO9cElsFDuuPjLR8r2TlbiVBb0/exec?phone1=' + form.sodienthoai
+  //form.dauthoigian= now.daysInMonth()+"/"+(now.month()+1)+"/"+now.year()+" "+now.hour()+":"+now.minute()+":"+now.second();
+  // form_diachithuongtru.value = form.sonhatt + ', ' + modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
+  const dateNow = new Date();
+  form.dauthoigian = dateNow.getDate() + "/" + (dateNow.getMonth() + 1) + "/" + dateNow.getFullYear() + " " + dateNow.getHours() + ":" + dateNow.getMinutes() + ":" + dateNow.getSeconds();
 
   // if (form.rdThamdu == 1) form.dongythamgia = 'Chắc chắn tham gia'
   // else form.dongythamgia = 'Không tham gia được '
 
 
-  
+
   form_diachithuongtru_short.value = modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
-  form_diachithuongtru.value=form.sonhatt + ', ' + form_diachithuongtru_short.value  
+  form_diachithuongtru.value = form.sonhatt + ', ' + form_diachithuongtru_short.value
 
   form_diachitamtru.value = form.sonhatt11 + ', ' + modelWard11.value + ', ' + modelDistrict11.value + ', ' + modelProvince11.value;
-  
+
   if (form._rdDathamGiaDaoTrang == 0) {
     form.dasinhhoatdaotrang = 'Chưa tham gia - ' + form._rdMongMuonThamGiaDT
   }
@@ -746,7 +750,7 @@ function clickCopyDiaChi() {
 // })
 //showError('Hãy chọn Tỉnh, Huyện, xã trước')
 function onChangeSonhaTT(str) {
- 
+
 }
 
 function showError(str) {
@@ -769,40 +773,40 @@ onMounted(() => {
   provincesSource.value = new exportedFile().loadAllProvince()
 })
 
-  watch(modelHovaten, async (newQuestion, oldQuestion) => {
-		
-    reloadCookie();
+watch(modelHovaten, async (newQuestion, oldQuestion) => {
 
-		})
+  reloadCookie();
 
-
-
-if(isDevEnviroment){
-  modelHovaten.value='Quảng An test '+ Math.floor(Math.random() * 30000);
-  form.gioitinh='Nam'
-  form.sodienthoai='0977310197'
-  form.sonhatt='so nha 2'
-  form.sonhatt11='so nha 3'
-  selectedP.value='Tỉnh Bắc Kạn'
-  selectedD.value='Huyện Tam Dương'
-  selectedW.value='Xã Đồng Tĩnh'
-
-  selectedP11.value='Tỉnh Lâm Đồng'
-  selectedD11.value='Huyện Đam Rông'
-  selectedW11.value='Xã Đạ Tông'
+})
 
 
-  form.namsinh='2222'
-  
+
+if (isDevEnviroment) {
+  modelHovaten.value = 'Quảng An test ' + Math.floor(Math.random() * 30000);
+  form.gioitinh = 'Nam'
+  form.sodienthoai = '0977310197'
+  form.sonhatt = 'so nha 2'
+  form.sonhatt11 = 'so nha 3'
+  selectedP.value = 'Tỉnh Bắc Kạn'
+  selectedD.value = 'Huyện Tam Dương'
+  selectedW.value = 'Xã Đồng Tĩnh'
+
+  selectedP11.value = 'Tỉnh Lâm Đồng'
+  selectedD11.value = 'Huyện Đam Rông'
+  selectedW11.value = 'Xã Đạ Tông'
+
+
+  form.namsinh = '2222'
+
 }
 
-function clickDangKyMoi(){
+function clickDangKyMoi() {
   openFullScreen3();
-  setTimeout(()=> {
+  setTimeout(() => {
     location.reload()
-      }
-      ,3000);
-  
+  }
+    , 3000);
+
 }
 
 
@@ -836,12 +840,13 @@ function clickDangKyMoi(){
 
 
 svg {
-  
+
   position: absolute;
   width: 100%;
   height: 100%;
-  
-  top: 1000; bottom: 0;
+
+  top: 1000;
+  bottom: 0;
   left: 0;
   right: 0;
 }
@@ -849,11 +854,13 @@ svg {
 body {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 14px;
-    background-color: #25497e;
+  background-color: #25497e;
 }
 
 .wrap2 {
-  background-image: linear-gradient(#25497e, #25497e); margin-left: 0.7em; margin-right: 0.7em;
+  background-image: linear-gradient(#25497e, #25497e);
+  margin-left: 0.7em;
+  margin-right: 0.7em;
 }
 
 .form_in1 {
@@ -900,7 +907,7 @@ p {
 
 td {
   padding: 8px;
- 
+
   font-weight: bold;
 
 }
@@ -914,5 +921,4 @@ td {
 
 .dl_content {
   color: coral;
-}
-</style>
+}</style>
