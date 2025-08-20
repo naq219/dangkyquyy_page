@@ -42,13 +42,20 @@
                 <div class="title_container">
                  
                   <h2 style="color:#005c70; font-stretch: expanded; font-weight: 545  ; font-style: inherit; text-align: center;">ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
-                           </div>
+                  <div class="center-wrapper">
+<el-button @click="toggleGhichu" style="text-align: center; margin: 0 auto;" >
+
+                        {{ showGhichu ? 'Ẩn ghi chú' : 'Đăng ký nhanh (DKN)' }}
+                      </el-button> 
+                  </div>
+                  
+                </div>
                 <div class="row clearfix">
                   <div class="parent d-flex justify-content-center">
                     
                     
 
-                    <el-form-item>
+                    <el-form-item  v-show="showGhichu" >
                       <p>Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
                         Phật,
                         Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
@@ -62,7 +69,7 @@
                       </p>
                     </el-form-item>
                     
-                    <div class="group1 ep-bg-purple-dark">
+                    <div  v-show="showGhichu"  class="group1 ep-bg-purple-dark">
                       <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự
                         lễ
                         Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
@@ -104,19 +111,19 @@
                     <div class="group1">
                       <p class="p_titlegroup">Địa chỉ thường trú*</p>
                       <p>Là địa chỉ trong Căn cước công dân hoặc Chứng Minh Nhân Dân hoặc trên Giấy Khai sinh</p>
-                      <el-form-item label="Tỉnh/Thành Phố">
-                        <el-autocomplete v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelect">
+                      <el-form-item >
+                        <el-autocomplete  placeholder="Tỉnh/TP" v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width
+                          clearable class="inline-input auto1" @select="handleSelect">
                         </el-autocomplete>
                       </el-form-item>
 
-                      <el-form-item label="Quận / Huyện">
-                        <el-autocomplete v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width
-                          clearable class="inline-input w-50" @select="handleSelectD"> </el-autocomplete>
+                      <el-form-item label="">
+                        <el-autocomplete placeholder="Quận/Huyện" v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width
+                          clearable class="inline-input auto1" @select="handleSelectD"> </el-autocomplete>
                       </el-form-item>
 
-                      <el-form-item label="Phường/Xã/TT">
-                        <el-autocomplete v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
+                      <el-form-item label="">
+                        <el-autocomplete class="inline-input auto1" placeholder="Phường/Xã/TT" v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
                           @select="handleSelectW"> </el-autocomplete>
                       </el-form-item>
                       <el-text v-show="form.sonhatt.length > 0" class="ketqua">đc đầy đủ:</el-text>
@@ -184,21 +191,21 @@
                     <div class="group1 ">
                       <p class="p_titlegroup ">Người giới thiệu - Tổ sinh hoạt - Số điện thoại?</p>
                       <p class="ss">VD: Hòa Lý Anh - Tổ Vinh - CTN Nghệ An - 0338 699 484</p>
-                      <el-input class="margintop1em" hin v-model="form.nguoigioithieu" placeholder="" />
+                      <el-input class="margintop1em" hin v-model="form.nguoigioithieu" placeholder="Nên có SĐT để Chùa liên hệ gửi lại lá phái ạ" />
                     </div>
 
-                    <div class="group1 ">
+                    <div v-show="showGhichu" class="group1 ">
                       <p class="p_titlegroup">Thắc mắc, ghi chú</p>
                       <el-input class="margintop1em" hin v-model="form.ghichu" placeholder="" />
                     </div>
 
-                    <div class="group1 ">
+                    <div  v-show="showGhichu" class="group1 ">
                       <p class="p_titlegroup">Liên hệ nhận Lá Phái: <br>
                         Tâm Huy Pháp: 0383 668 927<br>
                       </p>
                     </div>
 
-                    <div class="group1 ">
+                    <div  v-show="showGhichu" class="group1 ">
                       <p class="p_titlegroup">TRƯỜNG HỢP PHẬT TỬ KHÔNG THAM DỰ ĐƯỢC LỄ:</p>
                       <p class="">
                         Thường mỗi tháng sẽ có 1 buổi lễ Quy Y ạ, Quý Phật tử vui lòng hoan hỷ đăng ký vào lễ sau nếu tham
@@ -213,7 +220,7 @@
 
                     </div>
 
-                    <div class="group1 ">
+                    <div  v-show="showGhichu" class="group1 ">
                       <p class="p_titlegroup ">QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI:</p>
                       <p class=" smalltext">
                         QUY TRÌNH TỪ LÚC ĐĂNG KÝ QUY Y TỚI NHẬN LÁ PHÁI<br>1. Đăng ký<br>- Quý Phật tử đăng ký Quy Y qua
@@ -255,6 +262,7 @@
                         border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
                       <button class="el-button" @click="clickDangKy">Đăng Ký</button>
                       <el-button>Hủy</el-button>
+                      
                     </div>
 
 
@@ -279,7 +287,7 @@
       :action="urlScriptGoogle"
       :model="form" label-width="120px">
 
-      <el-input id="abc1" name="ghichu" hin v-show="false" v-model="form.ghichu" />
+      <el-input id="abc1" name="ghichu" hin  v-model="form.ghichu" />
       <el-input name="dongythamgia" hin v-show="false" v-model="form.rdThamdu" />
       <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
       <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
@@ -381,6 +389,7 @@ import { useCookies } from "vue3-cookies";
 let useCookie= useCookies();
 //useCookie.cookies.set('last_submit','11');
 const clickSubmited = ref(false);
+const showGhichu = ref(false);
 og('cookie= '+useCookie.cookies.get('last_submit'))
 
 
@@ -420,12 +429,17 @@ const modelHovaten = ref('')
 function reloadCookie(){
   let cc1= useCookie.cookies.get('last_submit')
   og('cookie last submit = '+cc1)
-			if(cc1==='11'){
+		if(cc1==='11'){
         og('reload thoi')
         useCookie.cookies.set('last_submit','0')
         location.reload();
       }
-
+      
+  // Load ghichu visibility from cookie
+  const ghichuCookie = useCookie.cookies.get('show_ghichu');
+  if (ghichuCookie === 'true') {
+    showGhichu.value = true;
+  }
 }
 reloadCookie()
 
@@ -744,6 +758,11 @@ function clickDangKyMoi(){
   location.reload()
 }
 
+const toggleGhichu = () => {
+  showGhichu.value = !showGhichu.value;
+  useCookie.cookies.set('show_ghichu', showGhichu.value.toString());
+}
+
 
 </script>
 
@@ -822,7 +841,9 @@ p {
   font-size: 12px;
 }
 
-
+.auto1 {
+  width: 100%;
+}
 
 
 .form_wrapper {
