@@ -109,9 +109,21 @@
                     </el-form-item>
 
                     <div class="group1">
-                      <p class="p_titlegroup">Địa chỉ thường trú*</p>
-                      <p>Là địa chỉ trong Căn cước công dân hoặc Chứng Minh Nhân Dân hoặc trên Giấy Khai sinh</p>
-                      <el-form-item >
+                      <div style="display: flex;">
+                        <p class="p_titlegroup">Địa chỉ thường trú*</p>
+                      <p style="margin-left: 0.4em;"> (Theo CCCD)</p>
+                      </div>
+                      <div class="quick-provinces" style="margin: 4px 0 8px; display: flex; flex-wrap: wrap; align-items: center;">
+                         <div class="test1">
+                          <p @click="selectQuickProvince('Tỉnh Nghệ An')" >Nghệ An</p> 
+                          <p @click="selectQuickProvince('Tỉnh Hà Tĩnh')">Hà Tĩnh</p>
+                          <p @click="selectQuickProvince('Tỉnh Thanh Hóa')">Thanh Hoá</p>
+                          <p @click="selectQuickProvince('Thành phố Đà Nẵng')" >Đà Nẵng</p> 
+                          <p @click="selectQuickProvince('Tỉnh Thừa Thiên Huế')">Huế</p>
+                         
+                        </div>
+                      </div>
+                      <el-form-item style="margin-top: 0.1em;" >
                         <el-autocomplete  placeholder="Tỉnh/TP" v-model="modelProvince" :fetch-suggestions="querySearchP" fit-input-width
                           clearable class="inline-input auto1" @select="handleSelect">
                         </el-autocomplete>
@@ -536,9 +548,9 @@ const form_diachitamtru = ref('');
 
 interface provinceItem {
   value: string
-  code: string
-  districts: provinceItem
-  wards: provinceItem
+  code?: number
+  districts?: provinceItem[]
+  wards?: provinceItem[]
 }
 const modelProvince = ref('')
 const provincesSource = ref<provinceItem[]>([])
@@ -549,6 +561,22 @@ const querySearchP = (queryString: string, cb: any) => {
     : provincesSource.value
   // call callback function to return suggestions
   cb(results)
+}
+
+function selectQuickProvince(name: string) {
+  const province = provincesSource.value.find(p => p.value === name)
+  if (!province) return
+  // set province
+  modelProvince.value = province.value
+  selectedP.value = province.value
+  // load districts of selected province
+  districts.value = province.districts || []
+  // reset dependent selections
+  modelDistrict.value = ''
+  selectedD.value = ''
+  wards.value = []
+  modelWard.value = ''
+  selectedW.value = ''
 }
 
 
@@ -592,14 +620,14 @@ const createFilter = (queryString: string) => {
 const selectedP = ref('');
 const handleSelect = (item: provinceItem) => {
   selectedP.value = item.value
-  districts.value = item.districts
+  districts.value = item.districts || []
   og(item)
 }
 const selectedD = ref('');
 const handleSelectD = (item: provinceItem) => {
   og(item.wards)
   selectedD.value = item.value
-  wards.value = item.wards
+  wards.value = item.wards || []
 }
 
 const selectedW = ref('')
@@ -649,14 +677,14 @@ const querySearchW11 = (queryString: string, cb: any) => {
 const selectedP11 = ref('');
 const handleSelect11 = (item: provinceItem) => {
   selectedP11.value = item.value
-  districts11.value = item.districts
+  districts11.value = item.districts || []
   og(item)
 }
 const selectedD11 = ref('');
 const handleSelectD11 = (item: provinceItem) => {
   og(item.wards)
   selectedD11.value = item.value
-  wards11.value = item.wards
+  wards11.value = item.wards || []
 }
 
 const selectedW11 = ref('')
@@ -875,4 +903,20 @@ td {
 .dl_content {
   color: coral;
 }
+
+
+
+
+.test1 p {
+  color: brown;
+  display: inline-block;
+  gap: 4px;
+  padding: 0px 4px;
+  margin: 1px 1px;
+  flex-wrap: wrap;
+  border: 1px solid #999;   /* viền xung quanh */
+  border-radius: 6px;       /* bo góc (tùy chọn) */
+  background-color: #fff;   /* nền trắng (tùy chọn) */
+}
+
 </style>
