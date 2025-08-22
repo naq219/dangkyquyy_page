@@ -269,7 +269,7 @@
 
               <div v-if="false" class="group1">
                 <el-form-item style="">
-                  <p style="color:#df1919 " class="credit ">Nếu web lỗi vui lòng liên hệ Tâm Huy Pháp: <a
+                  <p style="color:#df1919 " class="credit ">Nếu web lỗi vui lòng liên hệ Thư ký chùa: <a
                       style="color:#df1919 " href="tel:0383 668 927" target="_blank">0983838619</a></p>
                 </el-form-item>
 
@@ -509,10 +509,10 @@ function submitDk() {
 
 
 // Validate form, chuẩn hóa dữ liệu và mở dialog xác nhận trước khi submit
-function clickDangKy() {
+function clickDangKy() {  
 
-
-
+  useCookie.cookies.set('show_ghichu', 'false');
+  showGhichu.value = false;
 
   let msgErr = ''
   if (modelHovaten.value.indexOf(' ') == -1) msgErr += '* Vui lòng nhập đủ họ tên.<br>'
