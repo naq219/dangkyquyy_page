@@ -128,18 +128,21 @@
                 </div>
                 <el-form-item style="margin-top: 0.1em;">
                   <el-autocomplete placeholder="Tỉnh/TP" v-model="modelProvince" :fetch-suggestions="querySearchP"
-                    fit-input-width clearable readonly class="inline-input auto1" @select="handleSelect" @focus="handleFocusInput">
+                    fit-input-width clearable readonly class="inline-input auto1" @select="handleSelect"
+                    @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
 
                 <el-form-item label="">
                   <el-autocomplete placeholder="Quận/Huyện" v-model="modelDistrict" :fetch-suggestions="querySearchD"
-                    fit-input-width clearable class="inline-input auto1" @select="handleSelectD" @focus="handleFocusInput"> </el-autocomplete>
+                    fit-input-width clearable class="inline-input auto1" @select="handleSelectD"
+                    @focus="handleFocusInput"> </el-autocomplete>
                 </el-form-item>
 
                 <el-form-item label="">
                   <el-autocomplete class="inline-input auto1" placeholder="Phường/Xã/TT" v-model="modelWard"
-                    :fetch-suggestions="querySearchW" fit-input-width clearable @select="handleSelectW" @focus="handleFocusInput">
+                    :fetch-suggestions="querySearchW" fit-input-width clearable @select="handleSelectW"
+                    @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
                 <el-text v-show="form.sonhatt.length > 0" class="ketqua">đc đầy đủ:</el-text>
@@ -159,22 +162,26 @@
                 <el-link @click="clickCopyDiaChi" style=" padding: 0.2em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
                         border-style: solid;" class="mx-1" type="primary"> <el-icon>
                     <Download />
-                  </el-icon> . Lấy từ địa chỉ thường trú</el-link>
+                  </el-icon> . Lấy từ địa chỉ thường trú
+                </el-link>
 
-                <el-form-item >
-                  <el-autocomplete placeholder="Tỉnh/Thành Phố" v-model="modelProvince11" :fetch-suggestions="querySearchP11" fit-input-width
-                    clearable class="inline-input auto1" @select="handleSelect11" @focus="handleFocusInput">
+                <el-form-item>
+                  <el-autocomplete placeholder="Tỉnh/Thành Phố" v-model="modelProvince11"
+                    :fetch-suggestions="querySearchP11" fit-input-width clearable class="inline-input auto1"
+                    @select="handleSelect11" @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
 
-                <el-form-item >
-                  <el-autocomplete placeholder="Quận / Huyện" v-model="modelDistrict11" :fetch-suggestions="querySearchD11" fit-input-width
-                    clearable class="inline-input w-50 auto1" @select="handleSelectD11" @focus="handleFocusInput"> </el-autocomplete>
+                <el-form-item>
+                  <el-autocomplete placeholder="Quận / Huyện" v-model="modelDistrict11"
+                    :fetch-suggestions="querySearchD11" fit-input-width clearable class="inline-input w-50 auto1"
+                    @select="handleSelectD11" @focus="handleFocusInput"> </el-autocomplete>
                 </el-form-item>
 
-                <el-form-item >
-                  <el-autocomplete placeholder="Phường/Xã/TT" v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width clearable
-                    @select="handleSelectW11" class="inline-input w-50 auto1" @focus="handleFocusInput"> </el-autocomplete>
+                <el-form-item>
+                  <el-autocomplete placeholder="Phường/Xã/TT" v-model="modelWard11" :fetch-suggestions="querySearchW11"
+                    fit-input-width clearable @select="handleSelectW11" class="inline-input w-50 auto1"
+                    @focus="handleFocusInput"> </el-autocomplete>
                 </el-form-item>
                 <el-text v-show="form.sonhatt11.length > 0" class="ketqua">đc đầy đủ:</el-text>
                 <el-text v-show="form.sonhatt11.length > 0"
@@ -205,10 +212,23 @@
               </div>
 
               <div class="group1 ">
-                <p class="p_titlegroup ">Người giới thiệu (nên có Số điện thoại)</p>
-                <p class="ss">VD: Hòa Lý Anh - 0338 699 484</p>
+                <p class="p_titlegroup ">Người giới thiệu (nên có SĐT)</p>
+                <p v-if="!savedNguoiGioiThieu" class="ss">VD: Hòa Lý Anh - 0338 699 484</p>
+
+                <el-link @click="useSavedNguoiGioiThieu" style=" max-width: 100% ; display: inline-block; text-overflow: ellipsis; overflow: hidden;  white-space: nowrap; padding: 0.2em; border-radius: 0.1em; border-color: #0087a5; border-width: 0em;
+                        border-style: solid;" class="mx-1" type="primary"> <el-icon>
+                    <Download />
+                  </el-icon> . {{ savedNguoiGioiThieu }}
+                </el-link>
+
+
+                <el-button plain type="primary"
+                  style="max-width: 100% ; display: inline-block; text-overflow: ellipsis; overflow: hidden;  white-space: nowrap;  "
+                  v-if="false" @click="useSavedNguoiGioiThieu">👇{{ savedNguoiGioiThieu }} </el-button>
+
+                  <el-text style="type" v-if="savedNguoiGioiThieu" class="ss">☝️Click phía trên để dùng lại</el-text>
                 <el-input class="margintop1em" hin v-model="form.nguoigioithieu"
-                  placeholder="Nên có SĐT để Chùa liên hệ gửi lại lá phái ạ" />
+                  placeholder="Hãy nhập người giới thiệu" />
               </div>
 
               <div v-show="showGhichu" class="group1 ">
@@ -267,17 +287,12 @@
 
               </div>
 
-              <div v-if="false" class="group1">
-                <el-form-item style="">
-                  <p style="color:#df1919 " class="credit ">Nếu web lỗi vui lòng liên hệ Thư ký chùa: <a
-                      style="color:#df1919 " href="tel:0383 668 927" target="_blank">0983838619</a></p>
-                </el-form-item>
+               
+              
 
-              </div>
-
-              <p v-if="isDevEnviroment">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
+              <p v-if="false">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
                 selectedW }} -- </p>
-              <p v-if="isDevEnviroment">ss {{ form }}</p>
+              <p v-if="false">ss {{ form }}</p>
               <div class="margintop1em">
                 <el-text v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
                         border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
@@ -285,6 +300,8 @@
                 <el-button>Hủy</el-button>
 
               </div>
+
+              <p style="height: 20em;">.</p>
 
 
 
@@ -313,6 +330,8 @@
       <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
       <el-input name="dauthoigian" hin v-show="false" v-model="form.dauthoigian" />
       <el-input name="web_version" hin v-show="false" v-model="form.webversion" />
+
+
 
       <table>
 
@@ -355,7 +374,7 @@
 
         <tr>
           <td>Nơi ở hiện tại: {{ form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11
-          }}
+            }}
             <el-input name="diachitamtru" hin v-show="false" v-model="form_diachitamtru"> </el-input>
             <el-input name="tinhtamtru" hin v-show="false" v-model="modelProvince11"> </el-input>
           </td>
@@ -419,6 +438,8 @@ og('cookie= ' + useCookie.cookies.get('last_submit'))
 
 const myUtils0 = new myUtils()
 const validateLevel = ref(1)
+const savedNguoiGioiThieu = ref('')
+const savedNguoiGioiThieuShort= ref('')
 if (useRoute().query.validate) validateLevel.value = useRoute().query.validate
 og('validate=' + validateLevel.value)
 ///////////////////// dialog ////////////
@@ -463,6 +484,13 @@ function reloadCookie() {
   const ghichuCookie = useCookie.cookies.get('show_ghichu');
   if (ghichuCookie === 'true') {
     showGhichu.value = true;
+  }
+
+  // Load người giới thiệu đã lưu (nếu có)
+  const gioiThieuCookie = useCookie.cookies.get('nguoigioithieu');
+  if (gioiThieuCookie && typeof gioiThieuCookie === 'string') {
+    savedNguoiGioiThieu.value = gioiThieuCookie;
+    savedNguoiGioiThieuShort.value = gioiThieuCookie.substring(0, 30);
   }
 }
 reloadCookie()
@@ -509,10 +537,18 @@ function submitDk() {
 
 
 // Validate form, chuẩn hóa dữ liệu và mở dialog xác nhận trước khi submit
-function clickDangKy() {  
+function clickDangKy() {
 
   useCookie.cookies.set('show_ghichu', 'false');
   showGhichu.value = false;
+
+  // Lưu người giới thiệu vào cookie (nếu có) khi bấm Đăng ký
+  if (form.nguoigioithieu && form.nguoigioithieu.trim().length > 0) {
+    try {
+      useCookie.cookies.set('nguoigioithieu', form.nguoigioithieu.trim());
+      savedNguoiGioiThieu.value = form.nguoigioithieu.trim();
+    } catch (e) { og(e) }
+  }
 
   let msgErr = ''
   if (modelHovaten.value.indexOf(' ') == -1) msgErr += '* Vui lòng nhập đủ họ tên.<br>'
@@ -746,6 +782,13 @@ function handleFocusInput(e: FocusEvent) {
       window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' })
     }
   }, 300)
+}
+
+// Điền lại người giới thiệu từ cookie vào form khi bấm vào nhắc nhở
+function useSavedNguoiGioiThieu() {
+  if (savedNguoiGioiThieu.value) {
+    form.nguoigioithieu = savedNguoiGioiThieu.value
+  }
 }
 
 myUtils0.watchLocation(modelProvince, modelDistrict, modelWard, districts, wards, selectedP, selectedD11, selectedW11, selectedP11, selectedD, selectedW, modelProvince11, modelDistrict11, modelWard11, districts11, wards11);
