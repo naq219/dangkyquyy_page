@@ -398,6 +398,7 @@ og('url='+isDevEnviroment);
 
 //cookie
 import { useCookies } from "vue3-cookies";
+import { delay } from 'rxjs';
 let useCookie= useCookies();
 //useCookie.cookies.set('last_submit','11');
 const clickSubmited = ref(false);
@@ -563,12 +564,14 @@ const querySearchP = (queryString: string, cb: any) => {
   cb(results)
 }
 
-function selectQuickProvince(name: string) {
+async function selectQuickProvince(name: string) {
   const province = provincesSource.value.find(p => p.value === name)
   if (!province) return
   // set province
-  modelProvince.value = province.value
+ 
   selectedP.value = province.value
+  modelProvince.value = province.value
+
   // load districts of selected province
   districts.value = province.districts || []
   // reset dependent selections
