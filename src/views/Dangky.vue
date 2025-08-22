@@ -128,18 +128,18 @@
                 </div>
                 <el-form-item style="margin-top: 0.1em;">
                   <el-autocomplete placeholder="Tỉnh/TP" v-model="modelProvince" :fetch-suggestions="querySearchP"
-                    fit-input-width clearable class="inline-input auto1" @select="handleSelect">
+                    fit-input-width clearable readonly class="inline-input auto1" @select="handleSelect" @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
 
                 <el-form-item label="">
                   <el-autocomplete placeholder="Quận/Huyện" v-model="modelDistrict" :fetch-suggestions="querySearchD"
-                    fit-input-width clearable class="inline-input auto1" @select="handleSelectD"> </el-autocomplete>
+                    fit-input-width clearable class="inline-input auto1" @select="handleSelectD" @focus="handleFocusInput"> </el-autocomplete>
                 </el-form-item>
 
                 <el-form-item label="">
                   <el-autocomplete class="inline-input auto1" placeholder="Phường/Xã/TT" v-model="modelWard"
-                    :fetch-suggestions="querySearchW" fit-input-width clearable @select="handleSelectW">
+                    :fetch-suggestions="querySearchW" fit-input-width clearable @select="handleSelectW" @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
                 <el-text v-show="form.sonhatt.length > 0" class="ketqua">đc đầy đủ:</el-text>
@@ -161,20 +161,20 @@
                     <Download />
                   </el-icon> . Lấy từ địa chỉ thường trú</el-link>
 
-                <el-form-item label="Tỉnh/Thành Phố">
-                  <el-autocomplete v-model="modelProvince11" :fetch-suggestions="querySearchP11" fit-input-width
-                    clearable class="inline-input w-50" @select="handleSelect11">
+                <el-form-item >
+                  <el-autocomplete placeholder="Tỉnh/Thành Phố" v-model="modelProvince11" :fetch-suggestions="querySearchP11" fit-input-width
+                    clearable class="inline-input auto1" @select="handleSelect11" @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
 
-                <el-form-item label="Quận / Huyện">
-                  <el-autocomplete v-model="modelDistrict11" :fetch-suggestions="querySearchD11" fit-input-width
-                    clearable class="inline-input w-50" @select="handleSelectD11"> </el-autocomplete>
+                <el-form-item >
+                  <el-autocomplete placeholder="Quận / Huyện" v-model="modelDistrict11" :fetch-suggestions="querySearchD11" fit-input-width
+                    clearable class="inline-input w-50 auto1" @select="handleSelectD11" @focus="handleFocusInput"> </el-autocomplete>
                 </el-form-item>
 
-                <el-form-item label="Phường/Xã/TT">
-                  <el-autocomplete v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width clearable
-                    @select="handleSelectW11"> </el-autocomplete>
+                <el-form-item >
+                  <el-autocomplete placeholder="Phường/Xã/TT" v-model="modelWard11" :fetch-suggestions="querySearchW11" fit-input-width clearable
+                    @select="handleSelectW11" class="inline-input w-50 auto1" @focus="handleFocusInput"> </el-autocomplete>
                 </el-form-item>
                 <el-text v-show="form.sonhatt11.length > 0" class="ketqua">đc đầy đủ:</el-text>
                 <el-text v-show="form.sonhatt11.length > 0"
@@ -733,7 +733,21 @@ function og(str: any) {
   console.log(str);
 }
 
-// Theo dõi và cập nhật vị trí địa lý
+// Khi input được focus, cuộn mục tiêu vào giữa màn hình (mô phỏng UX mobile khi bàn phím xuất hiện)
+function handleFocusInput(e: FocusEvent) {
+  const target = e.target as HTMLElement | null
+  if (!target) return
+  // Dùng setTimeout để đợi DOM/overlay của bàn phím (trên mobile) ổn định trước khi scroll
+  setTimeout(() => {
+    try {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
+    } catch (err) {
+      // fallback an toàn
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' })
+    }
+  }, 300)
+}
+
 myUtils0.watchLocation(modelProvince, modelDistrict, modelWard, districts, wards, selectedP, selectedD11, selectedW11, selectedP11, selectedD, selectedW, modelProvince11, modelDistrict11, modelWard11, districts11, wards11);
 
 // Sao chép toàn bộ địa chỉ thường trú sang địa chỉ tạm trú
