@@ -439,10 +439,11 @@ const form = reactive({
 })
 const modelHovaten = ref('')
 
+// Tải lại và đồng bộ trạng thái từ cookie (tránh submit liên tiếp, nhớ trạng thái hiển thị ghi chú)
 function reloadCookie(){
   let cc1= useCookie.cookies.get('last_submit')
   og('cookie last submit = '+cc1)
-		if(cc1==='11'){
+			if(cc1==='11'){
         og('reload thoi')
         useCookie.cookies.set('last_submit','0')
         location.reload();
@@ -461,13 +462,13 @@ reloadCookie()
 const drawer = ref(false)
 const messageDrawer = ref('')
 
-const urlScriptGoogle= ref('')
-
-const openFullScreen2 = () => {
-  const loading = ElLoading.service({
-    lock: true,
-    text: 'Quý PT vui lòng chờ để đăng ký ạ!',
-    background: 'rgba(0, 0, 0, 0.7)',
+  const urlScriptGoogle= ref('')
+  // Hiển thị overlay loading trong vài giây sau khi submit để báo đang xử lý
+  const openFullScreen2 = () => {
+    const loading = ElLoading.service({
+      lock: true,
+      text: 'Quý PT vui lòng chờ để đăng ký ạ!',
+      background: 'rgba(0, 0, 0, 0.7)',
   })
   setTimeout(() => {
     loading.close()
@@ -475,10 +476,10 @@ const openFullScreen2 = () => {
   }, 10000)
 }
 
+  // Gửi dữ liệu đăng ký lên server và cập nhật trạng thái UI/cookie
+  function submitDk(){
 
-function submitDk(){
-
-  let url ="https://connecthtssl.vq.id.vn/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"');        "
+    let url ="https://connecthtssl.vq.id.vn/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '"+form.dauthoigian+"','"+modelHovaten.value+"','"+form.namsinh+"','"+form.gioitinh+"','"+form.sodienthoai+"','"+form_diachithuongtru.value+"','"+form_diachithuongtru_short.value+"','"+form_diachitamtru.value+"','"+modelProvince11.value+"','"+form.dasinhhoatdaotrang+"','"+form.nguoigioithieu+"','"+form.ghichu+"','"+form.webversion+"');        "
       
       axios.get(url)
 
@@ -497,6 +498,7 @@ function submitDk(){
 
 
 
+// Validate form, chuẩn hóa dữ liệu và mở dialog xác nhận trước khi submit
 function clickDangKy() {
 
 
@@ -556,6 +558,7 @@ interface provinceItem {
 const modelProvince = ref('')
 const provincesSource = ref<provinceItem[]>([])
 
+// Gợi ý tỉnh/thành theo từ khóa cho autocomplete Tỉnh/TP (thường trú)
 const querySearchP = (queryString: string, cb: any) => {
   const results = queryString
     ? provincesSource.value.filter(createFilter(queryString))
@@ -564,6 +567,7 @@ const querySearchP = (queryString: string, cb: any) => {
   cb(results)
 }
 
+// Chọn nhanh một tỉnh/thành cố định và nạp danh sách quận/huyện liên quan
 async function selectQuickProvince(name: string) {
   const province = provincesSource.value.find(p => p.value === name)
   if (!province) return
@@ -591,6 +595,7 @@ async function selectQuickProvince(name: string) {
 
 const modelDistrict = ref('')
 const districts = ref<provinceItem[]>([])
+// Gợi ý quận/huyện theo từ khóa cho autocomplete Quận/Huyện (thường trú)
 const querySearchD = (queryString: string, cb: any) => {
   const results = queryString
     ? districts.value.filter(createFilter(queryString))
@@ -603,6 +608,7 @@ const querySearchD = (queryString: string, cb: any) => {
 
 const modelWard = ref('')
 const wards = ref<provinceItem[]>([])
+// Gợi ý phường/xã theo từ khóa cho autocomplete Phường/Xã (thường trú)
 const querySearchW = (queryString: string, cb: any) => {
   const results = queryString
     ? wards.value.filter(createFilter(queryString))
@@ -612,6 +618,7 @@ const querySearchW = (queryString: string, cb: any) => {
 }
 
 
+// Tạo hàm lọc không dấu cho tính năng tìm kiếm autocomplete
 const createFilter = (queryString: string) => {
   return (province: provinceItem) => {
     return (
@@ -621,12 +628,14 @@ const createFilter = (queryString: string) => {
 }
 
 const selectedP = ref('');
+// Khi chọn tỉnh từ autocomplete: lưu tỉnh đã chọn và nạp danh sách quận/huyện
 const handleSelect = (item: provinceItem) => {
   selectedP.value = item.value
   districts.value = item.districts || []
   og(item)
 }
 const selectedD = ref('');
+// Khi chọn quận/huyện: lưu huyện đã chọn và nạp danh sách phường/xã
 const handleSelectD = (item: provinceItem) => {
   og(item.wards)
   selectedD.value = item.value
@@ -634,6 +643,7 @@ const handleSelectD = (item: provinceItem) => {
 }
 
 const selectedW = ref('')
+// Khi chọn phường/xã: lưu xã đã chọn
 const handleSelectW = (item: provinceItem) => {
   //districts.value = item.districts
   selectedW.value = item.value
@@ -644,6 +654,7 @@ const handleSelectW = (item: provinceItem) => {
 ////////////////////////////// tinh tp thu 2////////////////
 
 const modelProvince11 = ref('')
+// Gợi ý tỉnh/thành cho autocomplete Tỉnh/TP (tạm trú)
 const querySearchP11 = (queryString: string, cb: any) => {
   const results = queryString
     ? provincesSource.value.filter(createFilter(queryString))
@@ -657,6 +668,7 @@ const querySearchP11 = (queryString: string, cb: any) => {
 
 const modelDistrict11 = ref('')
 const districts11 = ref<provinceItem[]>([])
+// Gợi ý quận/huyện cho autocomplete Quận/Huyện (tạm trú)
 const querySearchD11 = (queryString: string, cb: any) => {
   const results = queryString
     ? districts11.value.filter(createFilter(queryString))
@@ -668,6 +680,7 @@ const querySearchD11 = (queryString: string, cb: any) => {
 
 const modelWard11 = ref('')
 const wards11 = ref<provinceItem[]>([])
+// Gợi ý phường/xã cho autocomplete Phường/Xã (tạm trú)
 const querySearchW11 = (queryString: string, cb: any) => {
   const results = queryString
     ? wards11.value.filter(createFilter(queryString))
@@ -678,12 +691,14 @@ const querySearchW11 = (queryString: string, cb: any) => {
 
 
 const selectedP11 = ref('');
+// Xử lý chọn tỉnh (tạm trú)
 const handleSelect11 = (item: provinceItem) => {
   selectedP11.value = item.value
   districts11.value = item.districts || []
   og(item)
 }
 const selectedD11 = ref('');
+// Xử lý chọn quận/huyện (tạm trú)
 const handleSelectD11 = (item: provinceItem) => {
   og(item.wards)
   selectedD11.value = item.value
@@ -691,6 +706,7 @@ const handleSelectD11 = (item: provinceItem) => {
 }
 
 const selectedW11 = ref('')
+// Xử lý chọn phường/xã (tạm trú)
 const handleSelectW11 = (item: provinceItem) => {
   //districts.value = item.districts
   selectedW11.value = item.value
@@ -701,12 +717,16 @@ const handleSelectW11 = (item: provinceItem) => {
 
 
 
+
+// Log tiện ích ra console
 function og(str: any) {
   console.log(str);
 }
 
+// Theo dõi và cập nhật vị trí địa lý
 myUtils0.watchLocation(modelProvince, modelDistrict, modelWard, districts, wards, selectedP, selectedD11, selectedW11, selectedP11, selectedD, selectedW, modelProvince11, modelDistrict11, modelWard11, districts11, wards11);
 
+// Sao chép toàn bộ địa chỉ thường trú sang địa chỉ tạm trú
 function clickCopyDiaChi() {
 
   modelProvince11.value = modelProvince.value
@@ -724,20 +744,12 @@ function clickCopyDiaChi() {
 }
 
 
-// watch(form,async(new1,old1) =>{
-//   if(new1.sonhatt!==old1.sonhatt){
-
-//     if(selectedW.value.length==0){
-
-//         showError('Hãy chọn Tỉnh, Huyện, xã trước')
-//     }
-//   }
-// })
-//showError('Hãy chọn Tỉnh, Huyện, xã trước')
+// Sự kiện thay đổi số nhà (địa chỉ thường trú) - hiện chưa sử dụng
 function onChangeSonhaTT(str) {
  
 }
 
+// Hiển thị thông báo lỗi dạng HTML bằng ElMessageBox
 function showError(str) {
   ElMessageBox.alert(str,
     {
@@ -754,15 +766,17 @@ function showError(str) {
 }
 
 
+// Khởi tạo dữ liệu tỉnh/thành khi component mount
 onMounted(() => {
   provincesSource.value = new exportedFile().loadAllProvince()
 })
 
-  watch(modelHovaten, async (newQuestion, oldQuestion) => {
+// Theo dõi thay đổi họ tên để reload cookie (tránh kẹt trạng thái)
+watch(modelHovaten, async (newQuestion, oldQuestion) => {
 		
-    reloadCookie();
+  reloadCookie();
 
-		})
+})
 
 
 
@@ -785,10 +799,12 @@ if(isDevEnviroment){
   
 }
 
+// Làm mới form để đăng ký mới
 function clickDangKyMoi(){
   location.reload()
 }
 
+// Bật/tắt hiển thị phần ghi chú và lưu trạng thái vào cookie
 const toggleGhichu = () => {
   showGhichu.value = !showGhichu.value;
   useCookie.cookies.set('show_ghichu', showGhichu.value.toString());
