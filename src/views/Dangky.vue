@@ -2,7 +2,7 @@
 
   <el-button style="padding: 1em;" v-if="clickSubmited" @click="clickDangKyMoi"> ĐĂNG KÝ MỚI</el-button>
   <p style="padding: 1em; color: #df1919;" v-if="clickSubmited"> Quý PT vui lòng chờ để đăng ký ạ! </p>
-  <div v-if="!clickSubmited" class="wrap2">
+  <div v-if="!clickSubmited" class="wrap2" v-closable>
 
 
 
@@ -45,11 +45,7 @@
               style="color:#005c70; font-stretch: expanded; font-weight: 545  ; font-style: inherit; text-align: center;">
               ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
 
-            <div style="display: flex; justify-content: center; margin-top: 0.5em;">
-              <el-button @click="toggleGhichu" style="text-align: center; margin: 0 auto;">
-                {{ showGhichu ? 'Rút gọn nội dung (DK nhanh)' : 'Hiển thị đầy đủ' }}
-              </el-button>
-            </div>
+            
 
 
           </div>
@@ -58,7 +54,7 @@
 
 
 
-              <el-form-item v-show="showGhichu">
+              <el-form-item quyytambaolanuongtua v-show="showGhichu">
                 <p>Quy Y Tam Bảo là quay về nương tựa 3 ngôi báu
                   Phật,
                   Pháp, Tăng. Khi đã trở thành đệ tử Phật, huynh đệ
@@ -72,7 +68,7 @@
                 </p>
               </el-form-item>
 
-              <div v-show="false" class="group1 ep-bg-purple-dark">
+              <div noooo v-show="false" class="group1 ep-bg-purple-dark">
                 <p> Dạ kính thưa Quý Phật tử, để nhận Pháp Danh và Lá Phái thì Quý Phật tử sẽ cần CHẮC CHẮN tham dự
                   lễ
                   Quy Y ạ. Kính mong Quý Phật tử xác nhận lại giúp chúng con nhé ạ.</p>
@@ -128,7 +124,7 @@
                 </div>
                 <el-form-item style="margin-top: 0.1em;">
                   <el-autocomplete placeholder="Tỉnh/TP" v-model="modelProvince" :fetch-suggestions="querySearchP"
-                    fit-input-width clearable readonly class="inline-input auto1" @select="handleSelect"
+                    fit-input-width clearable class="inline-input auto1" @select="handleSelect"
                     @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
@@ -226,7 +222,7 @@
                   style="max-width: 100% ; display: inline-block; text-overflow: ellipsis; overflow: hidden;  white-space: nowrap;  "
                   v-if="false" @click="useSavedNguoiGioiThieu">👇{{ savedNguoiGioiThieu }} </el-button>
 
-                  <el-text style="type" v-if="savedNguoiGioiThieu" class="ss">☝️Click phía trên để dùng lại</el-text>
+                <el-text style="type" v-if="savedNguoiGioiThieu" class="ss">☝️Click phía trên để dùng lại</el-text>
                 <el-input class="margintop1em" hin v-model="form.nguoigioithieu"
                   placeholder="Hãy nhập người giới thiệu" />
               </div>
@@ -287,8 +283,8 @@
 
               </div>
 
-               
-              
+
+
 
               <p v-if="false">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
                 selectedW }} -- </p>
@@ -303,7 +299,11 @@
 
               <p style="height: 20em;">.</p>
 
-
+              <div style="display: flex; justify-content: center; margin-top: 0.5em;">
+              <el-button @click="toggleGhichu" style="text-align: center; margin: 0 auto;">
+                {{ showGhichu ? 'Rút gọn nội dung (DK nhanh)' : 'Hiển thị đầy đủ 2' }}
+              </el-button>
+            </div>
 
 
             </div>
@@ -440,7 +440,9 @@ const myUtils0 = new myUtils()
 const validateLevel = ref(1)
 const savedNguoiGioiThieu = ref('')
 const savedNguoiGioiThieuShort= ref('')
-if (useRoute().query.validate) validateLevel.value = useRoute().query.validate
+const route = useRoute()
+const vq = route.query.validate
+if (typeof vq === 'string') validateLevel.value = Number(vq) || 1
 og('validate=' + validateLevel.value)
 ///////////////////// dialog ////////////
 let dialogConfirmVisible = ref(false)
