@@ -45,7 +45,7 @@
               style="color:#005c70; font-stretch: expanded; font-weight: 545  ; font-style: inherit; text-align: center;">
               ĐĂNG KÝ QUY Y TAM BẢO<br><br></h2>
 
-            
+
 
 
           </div>
@@ -123,22 +123,22 @@
                   </div>
                 </div>
                 <el-form-item style="margin-top: 0.1em;">
-                  <el-autocomplete placeholder="Tỉnh/TP" v-model="modelProvince" :fetch-suggestions="querySearchP"
-                    fit-input-width clearable class="inline-input auto1" @select="handleSelect"
-                    @focus="handleFocusInput">
+                  <el-autocomplete id="province-input" ref="provinceRef" placeholder="Tỉnh/TP" v-model="modelProvince"
+                    :fetch-suggestions="querySearchP" fit-input-width clearable class="inline-input auto1"
+                    @select="handleSelect" @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
 
                 <el-form-item label="">
-                  <el-autocomplete placeholder="Quận/Huyện" v-model="modelDistrict" :fetch-suggestions="querySearchD"
-                    fit-input-width clearable class="inline-input auto1" @select="handleSelectD"
-                    @focus="handleFocusInput"> </el-autocomplete>
+                  <el-autocomplete id="district-input" ref="districtRef" placeholder="Quận/Huyện"
+                    v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
+                    class="inline-input auto1" @select="handleSelectD" @focus="handleFocusInput"> </el-autocomplete>
                 </el-form-item>
 
                 <el-form-item label="">
-                  <el-autocomplete class="inline-input auto1" placeholder="Phường/Xã/TT" v-model="modelWard"
-                    :fetch-suggestions="querySearchW" fit-input-width clearable @select="handleSelectW"
-                    @focus="handleFocusInput">
+                  <el-autocomplete id="ward-input" ref="wardRef" class="inline-input auto1" placeholder="Phường/Xã/TT"
+                    v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
+                    @select="handleSelectW" @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
                 <el-text v-show="form.sonhatt.length > 0" class="ketqua">đc đầy đủ:</el-text>
@@ -192,8 +192,8 @@
                   <el-radio label=0>Chưa Tham Gia</el-radio>
                   <el-radio label=1>Đã tham gia</el-radio>
                 </el-radio-group>
-                <el-input v-show="form._rdDathamGiaDaoTrang == 1" class="margintop1em" name="email" hin
-                  v-model="form._tentochucdathamgia" placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
+                <el-input v-show="false" class="margintop1em" name="email" hin v-model="form._tentochucdathamgia"
+                  placeholder="Nhập tên Đạo Tràng, CTN đã tham gia" />
 
                 <div v-if="form._rdDathamGiaDaoTrang == 0">
                   <p class="p_titlegroup">Quý Phật tử có mong muốn tham gia sinh hoạt Đạo tràng/CTN không ạ?</p>
@@ -217,12 +217,11 @@
                   </el-icon> . {{ savedNguoiGioiThieu }}
                 </el-link>
 
+              <br>
+                <el-text style="" v-if="savedNguoiGioiThieu" class="ss">
+                    ☝️Click phía trên để dùng lại
+                  </el-text>
 
-                <el-button plain type="primary"
-                  style="max-width: 100% ; display: inline-block; text-overflow: ellipsis; overflow: hidden;  white-space: nowrap;  "
-                  v-if="false" @click="useSavedNguoiGioiThieu">👇{{ savedNguoiGioiThieu }} </el-button>
-
-                <el-text style="type" v-if="savedNguoiGioiThieu" class="ss">☝️Click phía trên để dùng lại</el-text>
                 <el-input class="margintop1em" hin v-model="form.nguoigioithieu"
                   placeholder="Hãy nhập người giới thiệu" />
               </div>
@@ -286,9 +285,9 @@
 
 
 
-              <p v-if="false">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
+              <p v-if="true">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
                 selectedW }} -- </p>
-              <p v-if="false">ss {{ form }}</p>
+              <p v-if="true">ss {{ form }}</p>
               <div class="margintop1em">
                 <el-text v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
                         border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
@@ -300,10 +299,10 @@
               <p style="height: 20em;">.</p>
 
               <div style="display: flex; justify-content: center; margin-top: 0.5em;">
-              <el-button @click="toggleGhichu" style="text-align: center; margin: 0 auto;">
-                {{ showGhichu ? 'Rút gọn nội dung (DK nhanh)' : 'Hiển thị đầy đủ 2' }}
-              </el-button>
-            </div>
+                <el-button @click="toggleGhichu" style="text-align: center; margin: 0 auto;">
+                  {{ showGhichu ? 'Rút gọn nội dung (DK nhanh)' : 'Hiển thị đầy đủ 2' }}
+                </el-button>
+              </div>
 
 
             </div>
@@ -374,7 +373,7 @@
 
         <tr>
           <td>Nơi ở hiện tại: {{ form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11
-            }}
+          }}
             <el-input name="diachitamtru" hin v-show="false" v-model="form_diachitamtru"> </el-input>
             <el-input name="tinhtamtru" hin v-show="false" v-model="modelProvince11"> </el-input>
           </td>
@@ -400,7 +399,7 @@
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch, nextTick } from 'vue'
 import { exportedFile } from "../utils/exportedFile";
 import { myUtils } from "../utils/myUtils";
 import { axiosUtils } from "../utils/axiosUtils";
@@ -439,7 +438,7 @@ og('cookie= ' + useCookie.cookies.get('last_submit'))
 const myUtils0 = new myUtils()
 const validateLevel = ref(1)
 const savedNguoiGioiThieu = ref('')
-const savedNguoiGioiThieuShort= ref('')
+const savedNguoiGioiThieuShort = ref('')
 const route = useRoute()
 const vq = route.query.validate
 if (typeof vq === 'string') validateLevel.value = Number(vq) || 1
@@ -471,6 +470,12 @@ const form = reactive({
   diachithuongtru: ''
 })
 const modelHovaten = ref('')
+
+// Thêm ref để tham chiếu đến các autocomplete element
+const provinceRef = ref()
+const districtRef = ref()
+const wardRef = ref()
+
 
 // Tải lại và đồng bộ trạng thái từ cookie (tránh submit liên tiếp, nhớ trạng thái hiển thị ghi chú)
 function reloadCookie() {
@@ -520,7 +525,7 @@ const openFullScreen2 = () => {
 function submitDk() {
 
   let url = "https://connecthtssl.vq.id.vn/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '" + form.dauthoigian + "','" + modelHovaten.value + "','" + form.namsinh + "','" + form.gioitinh + "','" + form.sodienthoai + "','" + form_diachithuongtru.value + "','" + form_diachithuongtru_short.value + "','" + form_diachitamtru.value + "','" + modelProvince11.value + "','" + form.dasinhhoatdaotrang + "','" + form.nguoigioithieu + "','" + form.ghichu + "','" + form.webversion + "');        "
-
+  og(url)
   axios.get(url)
 
 
@@ -536,6 +541,26 @@ function submitDk() {
 
 }
 
+// Cách alternative: sử dụng template ref với id
+const focusNextInput = (nextInputId: string) => {
+  og(nextInputId)
+  nextTick(() => {
+    try {
+      const nbm1 = `#${nextInputId}`
+      og(nbm1)
+      const nextInput = document.querySelector(nbm1) as HTMLInputElement
+      if (nextInput) {
+        nextInput.focus()
+        // Trigger để mở dropdown
+        setTimeout(() => {
+          nextInput.click()
+        }, 100)
+      } else og('nextInput is null')
+    } catch (error) {
+      console.error('Lỗi khi focus:', error)
+    }
+  })
+}
 
 
 // Validate form, chuẩn hóa dữ liệu và mở dialog xác nhận trước khi submit
@@ -680,7 +705,12 @@ const selectedP = ref('');
 const handleSelect = (item: provinceItem) => {
   selectedP.value = item.value
   districts.value = item.districts || []
-  og(item)
+
+  // Auto focus vào quận/huyện sau khi chọn tỉnh
+  focusNextInput('district-input')
+
+
+
 }
 const selectedD = ref('');
 // Khi chọn quận/huyện: lưu huyện đã chọn và nạp danh sách phường/xã
@@ -688,6 +718,9 @@ const handleSelectD = (item: provinceItem) => {
   og(item.wards)
   selectedD.value = item.value
   wards.value = item.wards || []
+
+  focusNextInput('ward-input')
+
 }
 
 const selectedW = ref('')
@@ -775,15 +808,29 @@ function og(str: any) {
 function handleFocusInput(e: FocusEvent) {
   const target = e.target as HTMLElement | null
   if (!target) return
-  // Dùng setTimeout để đợi DOM/overlay của bàn phím (trên mobile) ổn định trước khi scroll
+
   setTimeout(() => {
+    const extraOffsetEm = 1.5 // Khoảng cách muốn cách từ top viewport (em)
+
     try {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
+      // Chuyển đổi em sang px dựa trên font-size của root element
+      const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
+      const extraOffset = extraOffsetEm * rootFontSize
+
+      // Sử dụng scrollIntoView với offset tùy chỉnh
+      const rect = target.getBoundingClientRect()
+      const targetTop = rect.top + window.scrollY - extraOffset
+
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'smooth'
+      })
     } catch (err) {
-      // fallback an toàn
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' })
+      // fallback với scrollIntoView
+      target.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
     }
   }, 300)
+
 }
 
 // Điền lại người giới thiệu từ cookie vào form khi bấm vào nhắc nhở
@@ -826,12 +873,7 @@ function showError(str) {
     }
   )
 
-  // ElMessage({
-  //   message: h('p', null, [
 
-  //     h('i', { style: 'color: teal' }, str),
-  //   ]),
-  // })
 }
 
 
