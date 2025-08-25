@@ -226,7 +226,7 @@
                   placeholder="Hãy nhập người giới thiệu" />
               </div>
 
-              <div v-show="showGhichu" class="group1 ">
+              <div  class="group1 ">
                 <p class="p_titlegroup">Thắc mắc, ghi chú</p>
                 <el-input class="margintop1em" hin v-model="form.ghichu" placeholder="" />
               </div>
@@ -285,9 +285,9 @@
 
 
 
-              <p v-if="true">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
+              <p v-if="false">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
                 selectedW }} -- </p>
-              <p v-if="true">ss {{ form }}</p>
+              <p v-if="false">ss {{ form }}</p>
               <div class="margintop1em">
                 <el-text v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
                         border-style: solid;" class="mx-1" @click="clickDangKy" type="primary">Đăng ký</el-text>
@@ -323,7 +323,7 @@
   <el-dialog width="90%" v-model="dialogConfirmVisible" title="Xác nhận đăng ký">
     <form method="POST" :action="urlScriptGoogle" :model="form" label-width="120px">
 
-      <el-input id="abc1" name="ghichu" hin v-model="form.ghichu" />
+      <el-input id="abc1" name="ghichu" hin v-show="false" v-model="form.ghichu" />
       <el-input name="dongythamgia" hin v-show="false" v-model="form.rdThamdu" />
       <el-input name="nguoigioithieu" hin v-show="false" v-model="form.nguoigioithieu" />
       <el-input name="dasinhhoatdaotrang" hin v-show="false" v-model="form.dasinhhoatdaotrang" />
@@ -410,6 +410,10 @@ import { ElMessage, ElMessageBox, ElLoading } from 'element-plus'
 import type { Action } from 'element-plus'
 import { randomInt } from 'crypto';
 import axios from 'axios'
+import { AnalyticsTracker } from '../utils/analytics';
+
+// Khởi tạo tracker
+const analytics = new AnalyticsTracker('G-D4RHEMDLJW'); // Thay GA_MEASUREMENT_ID bằng ID thực của bạn
 
 // import * as dayjs from 'dayjs'
 // dayjs().format()
@@ -448,7 +452,7 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-  webversion: 'ver9.6',
+  webversion: 'ver10.2',
 
   gioitinh: '',
   sodienthoai: '',
@@ -504,6 +508,23 @@ reloadCookie()
 
 
 
+// Đơn giản nhất - không bị lỗi TypeScript
+const scrollToProvince = () => {
+  const element = document.getElementById('district-input');
+  if (element) {
+    const rect = element.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const targetTop = scrollTop + rect.top - 80;
+    
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: 'smooth'
+    });
+    
+    setTimeout(() => element.focus(), 300);
+  }
+}
+
 const drawer = ref(false)
 const messageDrawer = ref('')
 
@@ -523,6 +544,18 @@ const openFullScreen2 = () => {
 
 // Gửi dữ liệu đăng ký lên server và cập nhật trạng thái UI/cookie
 function submitDk() {
+  analytics.trackButtonClick('xac_nhan_button', 'confirmation_dialog');
+  
+  // Track form submission attempt
+  const submissionData = {
+    province: modelProvince.value,
+    district: modelDistrict.value,
+    hasGuide: form.nguoigioithieu.length > 0,
+    participatedBefore: form._rdDathamGiaDaoTrang
+  };
+  
+  analytics.trackFormSubmission('quy_y_registration', true, submissionData);
+
 
   let url = "https://connecthtssl.vq.id.vn/sql/statement?sql=INSERT INTO `dangkyquyy`.`register` ( `dauthoigian`, `hovaten`, `namsinh`, `gioitinh`, `sodienthoai`, `diachithuongtru`, `diachithuongtru_short`, `diachitamtru`, `tinhtamtru`, `dasinhhoatdaotrang`, `nguoigioithieu`, `ghichu`, `web_version`) VALUES (  '" + form.dauthoigian + "','" + modelHovaten.value + "','" + form.namsinh + "','" + form.gioitinh + "','" + form.sodienthoai + "','" + form_diachithuongtru.value + "','" + form_diachithuongtru_short.value + "','" + form_diachitamtru.value + "','" + modelProvince11.value + "','" + form.dasinhhoatdaotrang + "','" + form.nguoigioithieu + "','" + form.ghichu + "','" + form.webversion + "');        "
   og(url)
@@ -583,12 +616,16 @@ function clickDangKy() {
   if (form.gioitinh.trim().length == 0) msgErr += '* Vui lòng chọn giới tính.<br>'
   if (form.namsinh.trim().length != 4) msgErr += '* Năm sinh là 4 chữ số , ví dụ 1998.<br>'
   if (form.sonhatt.trim().length == 0) msgErr += '* ĐC Thường trú: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
-  if (form.sonhatt11.trim().length == 0) msgErr += '* Nơi ở hiện tại: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
+  //if (form.sonhatt11.trim().length == 0) msgErr += '* Nơi ở hiện tại: Chưa nhập số nhà, tên đường hoặc thôn xóm.<br>'
 
   if (msgErr.length > 0) {
+    analytics.trackValidationError('form_validation', msgErr);
     showError(msgErr)
     return;
   }
+
+  analytics.trackFormInteraction('validation_passed', 'main_form');
+
 
   modelHovaten.value = myUtils0.vietHoaHoTen(modelHovaten.value)
 
@@ -614,6 +651,8 @@ function clickDangKy() {
   else form.dasinhhoatdaotrang = form._tentochucdathamgia;
 
   dialogConfirmVisible.value = true
+  analytics.trackEvent('confirmation_dialog_opened');
+
 }
 
 const form_diachithuongtru = ref('');
@@ -642,6 +681,8 @@ const querySearchP = (queryString: string, cb: any) => {
 
 // Chọn nhanh một tỉnh/thành cố định và nạp danh sách quận/huyện liên quan
 async function selectQuickProvince(name: string) {
+  analytics.trackButtonClick('quick_province_select', name);
+
   const province = provincesSource.value.find(p => p.value === name)
   if (!province) return
   // set province
@@ -657,6 +698,7 @@ async function selectQuickProvince(name: string) {
   wards.value = []
   modelWard.value = ''
   selectedW.value = ''
+  scrollToProvince()
 }
 
 
@@ -705,6 +747,7 @@ const selectedP = ref('');
 const handleSelect = (item: provinceItem) => {
   selectedP.value = item.value
   districts.value = item.districts || []
+  analytics.trackAutocompleteSelection('province', item.value);
 
   // Auto focus vào quận/huyện sau khi chọn tỉnh
   focusNextInput('district-input')
@@ -715,6 +758,8 @@ const handleSelect = (item: provinceItem) => {
 const selectedD = ref('');
 // Khi chọn quận/huyện: lưu huyện đã chọn và nạp danh sách phường/xã
 const handleSelectD = (item: provinceItem) => {
+  analytics.trackAutocompleteSelection('district', item.value);
+
   og(item.wards)
   selectedD.value = item.value
   wards.value = item.wards || []
@@ -728,6 +773,8 @@ const selectedW = ref('')
 const handleSelectW = (item: provinceItem) => {
   //districts.value = item.districts
   selectedW.value = item.value
+  analytics.trackAutocompleteSelection('ward', item.value);
+
 }
 
 
@@ -777,11 +824,12 @@ const handleSelect11 = (item: provinceItem) => {
   selectedP11.value = item.value
   districts11.value = item.districts || []
   og(item)
+  analytics.trackAutocompleteSelection('province1', item.value);
 }
 const selectedD11 = ref('');
 // Xử lý chọn quận/huyện (tạm trú)
 const handleSelectD11 = (item: provinceItem) => {
-  og(item.wards)
+  analytics.trackAutocompleteSelection('district1', item.value);
   selectedD11.value = item.value
   wards11.value = item.wards || []
 }
@@ -789,6 +837,7 @@ const handleSelectD11 = (item: provinceItem) => {
 const selectedW11 = ref('')
 // Xử lý chọn phường/xã (tạm trú)
 const handleSelectW11 = (item: provinceItem) => {
+  analytics.trackAutocompleteSelection('ward1', item.value);
   //districts.value = item.districts
   selectedW11.value = item.value
 }
@@ -829,12 +878,14 @@ function handleFocusInput(e: FocusEvent) {
       // fallback với scrollIntoView
       target.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' })
     }
-  }, 300)
+  }, 1500)
 
 }
 
 // Điền lại người giới thiệu từ cookie vào form khi bấm vào nhắc nhở
 function useSavedNguoiGioiThieu() {
+  analytics.trackButtonClick('use_saved_nguoigioithieu', 'nguoigioithieu_section');
+
   if (savedNguoiGioiThieu.value) {
     form.nguoigioithieu = savedNguoiGioiThieu.value
   }
@@ -844,6 +895,7 @@ myUtils0.watchLocation(modelProvince, modelDistrict, modelWard, districts, wards
 
 // Sao chép toàn bộ địa chỉ thường trú sang địa chỉ tạm trú
 function clickCopyDiaChi() {
+  analytics.trackButtonClick('copy_address', 'address_section');
 
   modelProvince11.value = modelProvince.value
   modelDistrict11.value = modelDistrict.value
@@ -879,6 +931,9 @@ function showError(str) {
 
 // Khởi tạo dữ liệu tỉnh/thành khi component mount
 onMounted(() => {
+  analytics.trackPageView('/quy-y-registration', 'Đăng Ký Quy Y Tam Bảo');
+
+
   provincesSource.value = new exportedFile().loadAllProvince()
 })
 
