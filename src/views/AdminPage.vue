@@ -109,19 +109,20 @@ async function loadData() {
 // ====== Excel Export ======
 function exportExcel() {
   const exportData = rows.value.map((r: any) => ({
-    'ID': r.id,
-    'Họ tên': r.hovaten,
-    'Năm sinh': r.namsinh,
-    'Giới tính': r.gioitinh,
-    'SĐT': r.sodienthoai,
-    'ĐC thường trú': r.diachithuongtru,
-    'ĐC tạm trú': r.diachitamtru,
-    'Tỉnh tạm trú': r.tinhtamtru,
-    'Sinh hoạt đạo tràng': r.dasinhhoatdaotrang,
-    'Người giới thiệu': r.nguoigioithieu,
-    'Ghi chú': r.ghichu,
-    'Phiên bản': r.web_version,
-    'Thời gian': r.created_at
+    'dauthoigian': r.dauthoigian || r.created_at,
+    'phapdanh': '',
+    'hovaten': r.hovaten,
+    'namsinh': r.namsinh,
+    'gioitinh': r.gioitinh,
+    'sodienthoai': r.sodienthoai,
+    'diachithuongtru': r.diachithuongtru,
+    'diachithuongtru_short': r.diachithuongtru_short,
+    'diachitamtru': r.diachitamtru,
+    'tinhtamtru': r.tinhtamtru,
+    'dasinhhoatdaotrang': r.dasinhhoatdaotrang,
+    'nguoigioithieu': r.nguoigioithieu,
+    'ghichu': r.ghichu,
+    'web_version': r.web_version
   }))
 
   const ws = XLSX.utils.json_to_sheet(exportData)
