@@ -60,10 +60,63 @@ export async function insertRegistration(data: RegistrationData) {
     }
 }
 
-// Lấy tất cả đăng ký, sắp xếp mới nhất trước
+// Lấy đăng ký có status = 'new', sắp xếp mới nhất trước
 export async function getAllRegistrations() {
-    const result = await client.execute('SELECT * FROM register ORDER BY id DESC')
+    const result = await client.execute({
+        sql: "SELECT * FROM register WHERE status = ? ORDER BY id DESC",
+        args: ['new']
+    })
     return result.rows
+}
+
+// Cập nhật status cho nhiều rows (soft delete hoặc đánh dấu đã gửi)
+export async function updateRegistrationStatus(ids: number[], status: 'deleted' | 'sended') {
+    const placeholders = ids.map(() => '?').join(',')
+    await client.execute({
+        sql: `UPDATE register SET status = ? WHERE id IN (${placeholders})`,
+        args: [status, ...ids.map(id => id as unknown as string)]
+    })
+}
+
+// Gửi xin pháp danh: copy rows sang phapdanh_tbl + đổi status sang sended
+export async function sendToPhapdanh(ids: number[]) {
+    // Lấy data các rows được chọn
+    const placeholders = ids.map(() => '?').join(',')
+    const result = await client.execute({
+        sql: `SELECT * FROM register WHERE id IN (${placeholders})`,
+        args: ids.map(id => id as unknown as string)
+    })
+
+    // Insert từng row vào phapdanh_tbl
+    for (const row of result.rows) {
+        await client.execute({
+            sql: `INSERT INTO phapdanh_tbl 
+                (register_id, dauthoigian, hovaten, namsinh, gioitinh, sodienthoai, 
+                 diachithuongtru, diachithuongtru_short, diachitamtru, tinhtamtru, 
+                 dasinhhoatdaotrang, nguoigioithieu, ghichu, web_version) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            args: [
+                row.id as unknown as string,
+                (row.dauthoigian || '') as string,
+                (row.hovaten || '') as string,
+                (row.namsinh || '') as string,
+                (row.gioitinh || '') as string,
+                (row.sodienthoai || '') as string,
+                (row.diachithuongtru || '') as string,
+                (row.diachithuongtru_short || '') as string,
+                (row.diachitamtru || '') as string,
+                (row.tinhtamtru || '') as string,
+                (row.dasinhhoatdaotrang || '') as string,
+                (row.nguoigioithieu || '') as string,
+                (row.ghichu || '') as string,
+                (row.web_version || '') as string
+            ]
+        })
+    }
+
+    // Đổi status sang sended
+    await updateRegistrationStatus(ids, 'sended')
+    return result.rows.length
 }
 
 // Kiểm tra kết nối Turso

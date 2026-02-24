@@ -33,11 +33,29 @@
     </div>
 
     <p v-if="loadError" style="color: #dc3545;">{{ loadError }}</p>
-    <p style="color: #999; margin: 0.5em 0;">Tổng: <strong>{{ rows.length }}</strong> đăng ký</p>
+
+    <!-- Thanh hành động khi chọn row -->
+    <div class="selection-bar" v-if="selectedRows.length > 0">
+      <span>Đã chọn <strong>{{ selectedRows.length }}</strong> đăng ký</span>
+      <el-button type="danger" size="small" @click="handleDelete" :loading="actionLoading">
+        🗑️ Xóa ({{ selectedRows.length }})
+      </el-button>
+      <el-button type="warning" size="small" @click="handleSendPhapdanh" :loading="actionLoading">
+        📤 Gửi xin pháp danh ({{ selectedRows.length }})
+      </el-button>
+    </div>
+
+    <p style="color: #999; margin: 0.5em 0;">Tổng: <strong>{{ rows.length }}</strong> đăng ký mới</p>
 
     <el-table :data="rows" v-loading="loading" stripe border style="width: 100%; margin-top: 1em;"
-      :default-sort="{ prop: 'id', order: 'descending' }" max-height="70vh">
-      <el-table-column prop="id" label="ID" width="60" sortable />
+      :default-sort="{ prop: 'id', order: 'descending' }" max-height="70vh"
+      @selection-change="onSelectionChange">
+      <el-table-column type="selection" width="45" />
+      <el-table-column label="Cách đây" width="150" sortable prop="created_at">
+        <template #default="{ row }">
+          {{ formatRelative(row.created_at) }}
+        </template>
+      </el-table-column>
       <el-table-column prop="hovaten" label="Họ tên" min-width="150" sortable />
       <el-table-column prop="namsinh" label="Năm sinh" width="100" sortable />
       <el-table-column prop="gioitinh" label="Giới tính" width="90" />
@@ -46,15 +64,42 @@
       <el-table-column prop="diachitamtru" label="Nơi ở hiện tại" min-width="200" show-overflow-tooltip />
       <el-table-column prop="nguoigioithieu" label="Người giới thiệu" min-width="150" show-overflow-tooltip />
       <el-table-column prop="ghichu" label="Ghi chú" min-width="120" show-overflow-tooltip />
-      <el-table-column prop="created_at" label="Thời gian" width="170" sortable />
+      <el-table-column label="Thời gian" width="160" sortable prop="created_at">
+        <template #default="{ row }">
+          {{ formatDateTime(row.created_at) }}
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { getAllRegistrations } from '../composables/useTursoDb'
+import { getAllRegistrations, updateRegistrationStatus, sendToPhapdanh } from '../composables/useTursoDb'
 import * as XLSX from 'xlsx'
+import { ElMessageBox, ElMessage } from 'element-plus'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
+import 'dayjs/locale/vi'
+
+dayjs.extend(relativeTime)
+dayjs.extend(utc)
+dayjs.locale('vi')
+
+function formatRelative(dateStr: string) {
+  if (!dateStr) return '—'
+  const d = dayjs.utc(dateStr).local()
+  if (!d.isValid()) return '—'
+  return d.fromNow()
+}
+
+function formatDateTime(dateStr: string) {
+  if (!dateStr) return '—'
+  const d = dayjs.utc(dateStr).local()
+  if (!d.isValid()) return dateStr
+  return d.format('HH:mm DD/MM/YYYY')
+}
 
 // ====== Login ======
 const ADMIN_USER = 'admin'
@@ -65,7 +110,6 @@ const loginUser = ref('')
 const loginPass = ref('')
 const loginError = ref('')
 
-// Check session
 if (sessionStorage.getItem('admin_logged_in') === 'true') {
   isLoggedIn.value = true
 }
@@ -92,10 +136,13 @@ function doLogout() {
 const rows = ref<any[]>([])
 const loading = ref(false)
 const loadError = ref('')
+const selectedRows = ref<any[]>([])
+const actionLoading = ref(false)
 
 async function loadData() {
   loading.value = true
   loadError.value = ''
+  selectedRows.value = []
   try {
     rows.value = await getAllRegistrations() as any[]
   } catch (e: any) {
@@ -103,6 +150,56 @@ async function loadData() {
     console.error(e)
   } finally {
     loading.value = false
+  }
+}
+
+function onSelectionChange(selection: any[]) {
+  selectedRows.value = selection
+}
+
+// ====== Actions ======
+async function handleDelete() {
+  const ids = selectedRows.value.map((r: any) => Number(r.id))
+  try {
+    await ElMessageBox.confirm(
+      `Xác nhận xóa ${ids.length} đăng ký?`,
+      'Xóa đăng ký',
+      { confirmButtonText: 'Xóa', cancelButtonText: 'Hủy', type: 'warning' }
+    )
+  } catch { return }
+
+  actionLoading.value = true
+  try {
+    await updateRegistrationStatus(ids, 'deleted')
+    ElMessage.success(`Đã xóa ${ids.length} đăng ký`)
+    await loadData()
+  } catch (e: any) {
+    ElMessage.error('Lỗi: ' + (e.message || e))
+  } finally {
+    actionLoading.value = false
+  }
+}
+
+async function handleSendPhapdanh() {
+  const ids = selectedRows.value.map((r: any) => Number(r.id))
+  const names = selectedRows.value.map((r: any) => r.hovaten).join(', ')
+  try {
+    await ElMessageBox.confirm(
+      `Gửi xin pháp danh cho ${ids.length} người?\n${names}`,
+      'Gửi xin pháp danh',
+      { confirmButtonText: 'Gửi', cancelButtonText: 'Hủy', type: 'info' }
+    )
+  } catch { return }
+
+  actionLoading.value = true
+  try {
+    const count = await sendToPhapdanh(ids)
+    ElMessage.success(`Đã gửi ${count} đăng ký xin pháp danh`)
+    await loadData()
+  } catch (e: any) {
+    ElMessage.error('Lỗi: ' + (e.message || e))
+  } finally {
+    actionLoading.value = false
   }
 }
 
@@ -129,7 +226,6 @@ function exportExcel() {
   const wb = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(wb, ws, 'Đăng ký Quy Y')
 
-  // Auto column width
   const colWidths = Object.keys(exportData[0] || {}).map(key => ({
     wch: Math.max(key.length, ...exportData.map((r: any) => String(r[key] || '').length))
   }))
@@ -186,5 +282,16 @@ onMounted(() => {
   display: flex;
   gap: 0.5em;
   flex-wrap: wrap;
+}
+
+.selection-bar {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.75em 1em;
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 8px;
+  margin-top: 0.5em;
 }
 </style>
