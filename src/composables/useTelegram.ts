@@ -1,8 +1,10 @@
 const BOT_TOKEN = '8127474115:AAGnZbsZYFthaMSVDeq57YIjdVY0svzMQQk'
 const CHAT_ID = '-1003814704484'
+const WORKER_URL = 'https://naq-send-telegram.naq219.workers.dev'
 
 /**
  * Gửi thông báo đăng ký mới qua Telegram Bot
+ * Gọi qua Cloudflare Worker proxy (tránh CORS)
  * Fire-and-forget: nếu lỗi thì log ra console, không ảnh hưởng flow đăng ký
  */
 export async function sendTelegramNotification(data: {
@@ -27,18 +29,14 @@ Giới thiệu: ${data.nguoigioithieu || '—'}
 Ghi chú: ${data.ghichu || '—'}`
 
     try {
-        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`
-        const res = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: CHAT_ID,
-                text: message,
-                parse_mode: 'Markdown'
-            })
+        const params = new URLSearchParams({
+            message: message,
+            chat_id: CHAT_ID,
+            bot_token: BOT_TOKEN
         })
+        const res = await fetch(`${WORKER_URL}?${params.toString()}`)
         const result = await res.json()
-        if (!result.ok) {
+        if (!result.success) {
             console.warn('Telegram notification failed:', result)
         }
         return result
