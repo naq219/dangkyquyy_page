@@ -1,0 +1,144 @@
+// Original code from https://github.com/jamiewilson/form-to-google-sheets
+// Updated for 2021 and ES6 standards
+
+const sheetName = 'Sheet1'
+const scriptProp = PropertiesService.getScriptProperties()
+
+function initialSetup () {
+  const activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+  scriptProp.setProperty('key', activeSpreadsheet.getId())
+}
+
+function doPost (e) {
+  const lock = LockService.getScriptLock()
+  const phone1= e.parameter.phone1
+  
+  lock.tryLock(10000)
+
+  
+  try {
+    const doc = SpreadsheetApp.openById(scriptProp.getProperty('key'))
+    const sheet = doc.getSheetByName(sheetName)
+    
+    
+    
+    const htmlOut=`<html>
+<head>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}
+</style>
+</head>
+<body>
+
+<h2>Thông tin bạn vừa đăng ký </h2>
+<p style="color:#df1919 "  >Nếu không có dữ liệu hoặc dữ liệu nhập vào không đúng vui lòng liên hệ Thư Ký 0383 668 927 </p>
+
+<table>
+  <tr>
+  <th>Thông tin </th>
+  
+  </tr>
+  <tr>
+  <td>Họ tên: #hovaten#</td>
+  </tr>
+
+  <tr>
+  <td>SĐT: #sodienthoai#</td>
+  </tr>
+
+  <tr>
+  <td>Năm Sinh: #namsinh#</td>
+  </tr>
+
+  <tr>
+  <td>Giới Tính: #gioitinh#</td>
+  </tr>
+
+    <tr>
+  <td>ĐC Thường Trú: #diachithuongtru#</td>
+  </tr>
+
+    <tr>
+  <td>Nơi ở hiện tại: #diachitamtru#</td>
+  </tr>
+
+
+
+
+</table>
+
+</body>
+</html>
+`
+
+
+
+
+
+
+  //   var out = new Array()
+  // var sheets = SpreadsheetApp.getActiveSpreadsheet().getSheets();
+  // for (var i=0 ; i<sheets.length ; i++){
+  //   out.push( [ sheets[i].getName() ] );
+  //   console.log(i+sheets[i].getName());
+  // } 
+
+  //   const sheet = sheets[0];
+    //const sheetName1= sheets[i].getName();
+
+   
+
+
+    const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
+    const nextRow = sheet.getLastRow() + 1
+
+    const newRow = headers.map(function(header) {
+      return header === 'Date' ? new Date() : e.parameter[header]
+    })
+
+    sheet.getRange(nextRow, 1, 1, newRow.length).setValues([newRow])
+
+
+    var dataInsert = sheet.getRange(sheet.getLastRow(), 1, 1, sheet.getLastColumn()).getValues(); 
+    var dataInsert0=dataInsert[0];
+
+    // if(phone1!==dataInsert0[7]){
+     
+    //   return HtmlService.createHtmlOutput(phone1+' Đăng Ký chưa thành công, vui lòng liên hệ SĐT 0983838619 ');
+    // }
+
+       var htmlOut1= htmlOut.replace('#hovaten#',dataInsert0[4]).replace('#namsinh#',dataInsert0[5])
+    .replace('#gioitinh#',dataInsert0[6]).replace('#sodienthoai#',dataInsert0[7])
+    .replace('#diachithuongtru#',dataInsert0[8]).replace('#diachitamtru#',dataInsert0[10]).replace('#phone1#',phone1);
+    return HtmlService.createHtmlOutput(htmlOut1);
+
+
+
+
+    //return ContentService.createTextOutput('ok he').setMimeType(ContentService.MimeType.TEXT)
+
+
+  }
+
+  catch (e) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ 'result': 'error2', 'error': e }))
+      .setMimeType(ContentService.MimeType.JSON)
+  }
+
+  finally {
+    lock.releaseLock()
+  }
+}

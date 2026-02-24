@@ -111,6 +111,11 @@
                   <p class="p_titlegroup">Địa chỉ thường trú*</p>
                   <p style="margin-left: 0.4em;"> (Theo CCCD)</p>
                 </div>
+
+                <el-link v-if="savedAddress" @click="useSavedAddress" class="saved-address-link">
+                  <el-icon><Download /></el-icon> . Dùng lại: {{ savedAddressDisplay }}
+                </el-link>
+
                 <div class="quick-provinces"
                   style="margin: 4px 0 8px; display: flex; flex-wrap: wrap; align-items: center;">
                   <div class="test1">
@@ -273,8 +278,7 @@
 
 
 
-              <p v-if="false">223selectedP:{{ selectedP }} -- selectedD:{{ selectedD }} -- selectedW:{{
-                selectedW }} -- </p>
+
               <p v-if="false">ss {{ form }}</p>
               <div class="margintop1em">
                 <el-text v-if="false" style=" padding: 0.5em; border-radius: 0.1em; border-color: #0087a5; border-width: 0.1em;
@@ -431,6 +435,8 @@ const myUtils0 = new myUtils()
 const validateLevel = ref(1)
 const savedNguoiGioiThieu = ref('')
 const savedNguoiGioiThieuShort = ref('')
+const savedAddress = ref<any>(null)
+const savedAddressDisplay = ref('')
 const route = useRoute()
 const vq = route.query.validate
 if (typeof vq === 'string') validateLevel.value = Number(vq) || 1
@@ -490,6 +496,18 @@ function reloadCookie() {
     savedNguoiGioiThieu.value = gioiThieuCookie;
     savedNguoiGioiThieuShort.value = gioiThieuCookie.substring(0, 30);
   }
+
+  // Load địa chỉ thường trú đã lưu (nếu có)
+  try {
+    const addrCookie = useCookie.cookies.get('saved_address');
+    if (addrCookie) {
+      const addr = typeof addrCookie === 'string' ? JSON.parse(addrCookie) : addrCookie;
+      if (addr && addr.province && addr.ward && addr.sonha) {
+        savedAddress.value = addr;
+        savedAddressDisplay.value = addr.sonha + ', ' + addr.ward + ', ' + addr.province;
+      }
+    }
+  } catch (e) { og('Error loading saved address: ' + e) }
 }
 reloadCookie()
 
@@ -595,6 +613,17 @@ function clickDangKy() {
       savedNguoiGioiThieu.value = form.nguoigioithieu.trim();
     } catch (e) { og(e) }
   }
+
+  // Lưu địa chỉ thường trú vào cookie
+  if (selectedP.value && selectedW.value && form.sonhatt.trim().length > 0) {
+    try {
+      const addrData = JSON.stringify({ province: selectedP.value, ward: selectedW.value, sonha: form.sonhatt.trim() });
+      useCookie.cookies.set('saved_address', addrData);
+      savedAddress.value = { province: selectedP.value, ward: selectedW.value, sonha: form.sonhatt.trim() };
+      savedAddressDisplay.value = form.sonhatt.trim() + ', ' + selectedW.value + ', ' + selectedP.value;
+    } catch (e) { og(e) }
+  }
+
 
   let msgErr = ''
   if (modelHovaten.value.indexOf(' ') == -1) msgErr += '* Vui lòng nhập đủ họ tên.<br>'
@@ -827,6 +856,31 @@ function useSavedNguoiGioiThieu() {
   }
 }
 
+// Điền lại địa chỉ thường trú đã lưu từ cookie
+function useSavedAddress() {
+  analytics.trackButtonClick('use_saved_address', 'address_section');
+  if (!savedAddress.value) return
+
+  const addr = savedAddress.value
+  // Tìm tỉnh trong danh sách và load wards
+  const province = provincesSource.value.find(p => p.value === addr.province)
+  if (province) {
+    selectedP.value = province.value
+    modelProvince.value = province.value
+    wards.value = province.wards || []
+
+    // Set ward
+    selectedW.value = addr.ward
+    modelWard.value = addr.ward
+  } else {
+    // Nếu không tìm thấy tỉnh, vẫn set text
+    modelProvince.value = addr.province
+    modelWard.value = addr.ward
+  }
+  form.sonhatt = addr.sonha
+}
+
+
 myUtils0.watchLocationV2(modelProvince, modelWard, wards, selectedP, selectedW11, selectedP11, selectedW, modelProvince11, modelWard11, wards11);
 
 // Sao chép toàn bộ địa chỉ thường trú sang địa chỉ tạm trú
@@ -1039,5 +1093,25 @@ td {
   /* bo góc (tùy chọn) */
   background-color: #fff;
   /* nền trắng (tùy chọn) */
+}
+
+.saved-address-link {
+  display: inline-block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0.3em 0.5em;
+  margin: 4px 0;
+  border-radius: 6px;
+  border: 1px solid #28a745;
+  background-color: #f0fff4;
+  color: #28a745 !important;
+  font-size: 0.85em;
+  cursor: pointer;
+}
+
+.saved-address-link:hover {
+  background-color: #d4edda;
 }
 </style>

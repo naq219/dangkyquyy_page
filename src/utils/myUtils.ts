@@ -3,139 +3,32 @@
 // Export keyword or form should be 
 // used to use the class 
 
-import { onMounted, reactive, ref, watch } from 'vue'
+import { watch } from 'vue'
 export class myUtils {
 
-
-	watchLocation(modelProvince, modelDistrict, modelWard, districts, wards, selectedP, selectedD11, selectedW11, selectedP11, selectedD, selectedW, modelProvince11, modelDistrict11, modelWard11, districts11, wards11) {
-		watch(modelProvince, async (newQuestion, oldQuestion) => {
-			if (oldQuestion.indexOf(selectedP.value) > -1 && newQuestion.indexOf(selectedP.value) == -1) {
-				modelDistrict.value = ''
-				modelWard.value = ''
-				districts.value = ref('')
-				wards.value = ref('')
-				this.og('clear for province')
-				selectedP.value = ref('')
-			}
-
-		})
-
-
-
-		watch(selectedD11, async (newQuestion, oldQuestion) => {
-			if (selectedD11.value.length < 2) {
-				selectedW11.value = ref('')
-			}
-
-		})
-		watch(selectedP11, async (newQuestion, oldQuestion) => {
-			if (selectedP11.value.length == 0) {
-
-				selectedD11.value = ref('')
-				selectedW11.value = ref('')
-			}
-
-		})
-
-		watch(modelDistrict, async (newQuestion, oldQuestion) => {
-			if (oldQuestion.indexOf(selectedD.value) > -1 && newQuestion.indexOf(selectedD.value) == -1) {
-				modelWard.value = ''
-				wards.value = ref('')
-
-				selectedD.value = ref('')
-			}
-
-		})
-
-
-		watch(modelWard, async (newQuestion, oldQuestion) => {
-			if (oldQuestion.indexOf(selectedD.value) > -1 && newQuestion.indexOf(selectedD.value) == -1) {
-				modelWard.value = ''
-				wards.value = ref('')
-
-				selectedW.value = ref('')
-			}
-
-		})
-
-
-		watch(selectedD, async (newQuestion, oldQuestion) => {
-			if (selectedD.value.length < 2) {
-				selectedW.value = ref('')
-			}
-
-		})
-		watch(selectedP, async (newQuestion, oldQuestion) => {
-			if (selectedP.value.length == 0) {
-
-				selectedD.value = ref('')
-				selectedW.value = ref('')
-			}
-
-		})
-
-
-
-		watch(modelProvince11, async (newQuestion, oldQuestion) => {
-			if (oldQuestion.indexOf(selectedP11.value) > -1 && newQuestion.indexOf(selectedP11.value) == -1) {
-				modelDistrict11.value = ''
-				modelWard11.value = ''
-				districts11.value = ref('')
-				wards11.value = ref('')
-
-				selectedP11.value = ref('')
-			}
-
-		})
-
-		watch(modelDistrict11, async (newQuestion, oldQuestion) => {
-			if (oldQuestion.indexOf(selectedD11.value) > -1 && newQuestion.indexOf(selectedD11.value) == -1) {
-				modelWard11.value = ''
-				wards11.value = ref('')
-
-				selectedD11.value = ref('')
-			}
-
-		})
-
-		watch(modelWard11, async (newQuestion, oldQuestion) => {
-			if (oldQuestion.indexOf(selectedD11.value) > -1 && newQuestion.indexOf(selectedD11.value) == -1) {
-				modelWard11.value = ''
-				wards11.value = ref('')
-
-				selectedW11.value = ref('')
-			}
-
-		})
-
-
-
-
-
-	}
 
 	// Version 2: No district level, only Province -> Ward
 	watchLocationV2(modelProvince, modelWard, wards, selectedP, selectedW11, selectedP11, selectedW, modelProvince11, modelWard11, wards11) {
 		watch(modelProvince, async (newQuestion, oldQuestion) => {
 			if (oldQuestion.indexOf(selectedP.value) > -1 && newQuestion.indexOf(selectedP.value) == -1) {
 				modelWard.value = ''
-				wards.value = ref('')
+				wards.value = []
 				this.og('clear for province')
-				selectedP.value = ref('')
+				selectedP.value = ''
 			}
 		})
 
 		watch(selectedP, async (newQuestion, oldQuestion) => {
 			if (selectedP.value.length == 0) {
-				selectedW.value = ref('')
+				selectedW.value = ''
 			}
 		})
 
 		watch(modelWard, async (newQuestion, oldQuestion) => {
 			if (oldQuestion.indexOf(selectedW.value) > -1 && newQuestion.indexOf(selectedW.value) == -1) {
 				modelWard.value = ''
-				wards.value = ref('')
-				selectedW.value = ref('')
+				wards.value = []
+				selectedW.value = ''
 			}
 		})
 
@@ -143,22 +36,22 @@ export class myUtils {
 		watch(modelProvince11, async (newQuestion, oldQuestion) => {
 			if (oldQuestion.indexOf(selectedP11.value) > -1 && newQuestion.indexOf(selectedP11.value) == -1) {
 				modelWard11.value = ''
-				wards11.value = ref('')
-				selectedP11.value = ref('')
+				wards11.value = []
+				selectedP11.value = ''
 			}
 		})
 
 		watch(selectedP11, async (newQuestion, oldQuestion) => {
 			if (selectedP11.value.length == 0) {
-				selectedW11.value = ref('')
+				selectedW11.value = ''
 			}
 		})
 
 		watch(modelWard11, async (newQuestion, oldQuestion) => {
 			if (oldQuestion.indexOf(selectedW11.value) > -1 && newQuestion.indexOf(selectedW11.value) == -1) {
 				modelWard11.value = ''
-				wards11.value = ref('')
-				selectedW11.value = ref('')
+				wards11.value = []
+				selectedW11.value = ''
 			}
 		})
 	}
