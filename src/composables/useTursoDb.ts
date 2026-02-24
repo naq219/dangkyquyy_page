@@ -60,6 +60,12 @@ export async function insertRegistration(data: RegistrationData) {
     }
 }
 
+// Lấy tất cả đăng ký, sắp xếp mới nhất trước
+export async function getAllRegistrations() {
+    const result = await client.execute('SELECT * FROM register ORDER BY id DESC')
+    return result.rows
+}
+
 // Kiểm tra kết nối Turso
 export async function testConnection() {
     try {
