@@ -28,14 +28,17 @@
         <el-button @click="exportExcel" type="success" :disabled="rows.length === 0">
           📥 Xuất Excel ({{ rows.length }})
         </el-button>
+        <el-button @click="toggleViewAll" :type="viewAll ? 'warning' : 'default'">
+          {{ viewAll ? '📋 Chỉ hiện mới' : '📊 Tất cả (60 ngày)' }}
+        </el-button>
         <el-button @click="doLogout" type="info" plain>Đăng xuất</el-button>
       </div>
     </div>
 
     <p v-if="loadError" style="color: #dc3545;">{{ loadError }}</p>
 
-    <!-- Thanh hành động khi chọn row -->
-    <div class="selection-bar" v-if="selectedRows.length > 0">
+    <!-- Thanh hành động khi chọn row (chỉ khi xem 'new') -->
+    <div class="selection-bar" v-if="selectedRows.length > 0 && !viewAll">
       <span>Đã chọn <strong>{{ selectedRows.length }}</strong> đăng ký</span>
       <el-button type="danger" size="small" @click="handleDelete" :loading="actionLoading">
         🗑️ Xóa ({{ selectedRows.length }})
@@ -45,12 +48,14 @@
       </el-button>
     </div>
 
-    <p style="color: #999; margin: 0.5em 0;">Tổng: <strong>{{ rows.length }}</strong> đăng ký mới</p>
+    <p style="color: #999; margin: 0.5em 0;">
+      Tổng: <strong>{{ rows.length }}</strong> đăng ký {{ viewAll ? '(60 ngày qua)' : 'mới' }}
+    </p>
 
     <el-table :data="rows" v-loading="loading" stripe border style="width: 100%; margin-top: 1em;"
       :default-sort="{ prop: 'id', order: 'descending' }" max-height="70vh"
       @selection-change="onSelectionChange">
-      <el-table-column type="selection" width="45" />
+      <el-table-column v-if="!viewAll" type="selection" width="45" />
       <el-table-column label="Cách đây" width="150" sortable prop="created_at">
         <template #default="{ row }">
           {{ formatRelative(row.created_at) }}
@@ -69,13 +74,18 @@
           {{ formatDateTime(row.created_at) }}
         </template>
       </el-table-column>
+      <el-table-column v-if="viewAll" label="Trạng thái" width="120" prop="status">
+        <template #default="{ row }">
+          <el-tag :type="statusTagType(row.status)" size="small">{{ statusLabel(row.status) }}</el-tag>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { getAllRegistrations, updateRegistrationStatus, sendToPhapdanh } from '../composables/useTursoDb'
+import { getAllRegistrations, getAllRegistrations60Days, updateRegistrationStatus, sendToPhapdanh } from '../composables/useTursoDb'
 import * as XLSX from 'xlsx'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import dayjs from 'dayjs'
@@ -138,18 +148,44 @@ const loading = ref(false)
 const loadError = ref('')
 const selectedRows = ref<any[]>([])
 const actionLoading = ref(false)
+const viewAll = ref(false)
 
 async function loadData() {
   loading.value = true
   loadError.value = ''
   selectedRows.value = []
   try {
-    rows.value = await getAllRegistrations() as any[]
+    rows.value = viewAll.value
+      ? await getAllRegistrations60Days() as any[]
+      : await getAllRegistrations() as any[]
   } catch (e: any) {
     loadError.value = 'Lỗi tải dữ liệu: ' + (e.message || e)
     console.error(e)
   } finally {
     loading.value = false
+  }
+}
+
+function toggleViewAll() {
+  viewAll.value = !viewAll.value
+  loadData()
+}
+
+function statusLabel(status: string) {
+  switch (status) {
+    case 'new': return 'Mới'
+    case 'sended': return 'Đã gửi'
+    case 'deleted': return 'Đã xóa'
+    default: return status || 'Mới'
+  }
+}
+
+function statusTagType(status: string) {
+  switch (status) {
+    case 'new': return 'success'
+    case 'sended': return 'warning'
+    case 'deleted': return 'danger'
+    default: return 'info'
   }
 }
 

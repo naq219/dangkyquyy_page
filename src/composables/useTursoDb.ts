@@ -69,6 +69,14 @@ export async function getAllRegistrations() {
     return result.rows
 }
 
+// Lấy tất cả đăng ký trong 60 ngày qua (mọi status)
+export async function getAllRegistrations60Days() {
+    const result = await client.execute(
+        "SELECT * FROM register WHERE created_at >= datetime('now', '-60 days') ORDER BY id DESC"
+    )
+    return result.rows
+}
+
 // Cập nhật status cho nhiều rows (soft delete hoặc đánh dấu đã gửi)
 export async function updateRegistrationStatus(ids: number[], status: 'deleted' | 'sended') {
     const placeholders = ids.map(() => '?').join(',')
