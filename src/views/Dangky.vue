@@ -130,20 +130,14 @@
                 </el-form-item>
 
                 <el-form-item label="">
-                  <el-autocomplete id="district-input" ref="districtRef" placeholder="Quận/Huyện"
-                    v-model="modelDistrict" :fetch-suggestions="querySearchD" fit-input-width clearable
-                    class="inline-input auto1" @select="handleSelectD" @focus="handleFocusInput"> </el-autocomplete>
-                </el-form-item>
-
-                <el-form-item label="">
-                  <el-autocomplete id="ward-input" ref="wardRef" class="inline-input auto1" placeholder="Phường/Xã/TT"
+                  <el-autocomplete id="ward-input" ref="wardRef" class="inline-input auto1" placeholder="Phường/Xã"
                     v-model="modelWard" :fetch-suggestions="querySearchW" fit-input-width clearable
                     @select="handleSelectW" @focus="handleFocusInput">
                   </el-autocomplete>
                 </el-form-item>
                 <el-text v-show="form.sonhatt.length > 0" class="ketqua">đc đầy đủ:</el-text>
                 <el-text v-show="form.sonhatt.length > 0"
-                  v-text="form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince"
+                  v-text="form.sonhatt + ', ' + modelWard + ', ' + modelProvince"
                   class="ketqua"></el-text>
                 <el-input @change="onChangeSonhaTT" hin v-model="form.sonhatt"
                   placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
@@ -169,19 +163,13 @@
                 </el-form-item>
 
                 <el-form-item>
-                  <el-autocomplete placeholder="Quận / Huyện" v-model="modelDistrict11"
-                    :fetch-suggestions="querySearchD11" fit-input-width clearable class="inline-input w-50 auto1"
-                    @select="handleSelectD11" @focus="handleFocusInput"> </el-autocomplete>
-                </el-form-item>
-
-                <el-form-item>
-                  <el-autocomplete placeholder="Phường/Xã/TT" v-model="modelWard11" :fetch-suggestions="querySearchW11"
+                  <el-autocomplete placeholder="Phường/Xã" v-model="modelWard11" :fetch-suggestions="querySearchW11"
                     fit-input-width clearable @select="handleSelectW11" class="inline-input w-50 auto1"
                     @focus="handleFocusInput"> </el-autocomplete>
                 </el-form-item>
                 <el-text v-show="form.sonhatt11.length > 0" class="ketqua">đc đầy đủ:</el-text>
                 <el-text v-show="form.sonhatt11.length > 0"
-                  v-text="form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11"
+                  v-text="form.sonhatt11 + ', ' + modelWard11 + ', ' + modelProvince11"
                   class="ketqua"></el-text>
                 <el-input hin v-model="form.sonhatt11" placeholder="Nhập Số nhà, Ngõ, tên đường, thôn xóm..." />
               </div>
@@ -358,7 +346,7 @@
         </tr>
 
         <tr>
-          <td>ĐC Thường Trú: {{ form.sonhatt + ', ' + modelWard + ', ' + modelDistrict + ', ' + modelProvince }}
+          <td>ĐC Thường Trú: {{ form.sonhatt + ', ' + modelWard + ', ' + modelProvince }}
             <el-input name="diachithuongtru" hin v-show="false" v-model="form_diachithuongtru"> </el-input>
           </td>
         </tr>
@@ -372,7 +360,7 @@
 
 
         <tr>
-          <td>Nơi ở hiện tại: {{ form.sonhatt11 + ', ' + modelWard11 + ', ' + modelDistrict11 + ', ' + modelProvince11
+          <td>Nơi ở hiện tại: {{ form.sonhatt11 + ', ' + modelWard11 + ', ' + modelProvince11
           }}
             <el-input name="diachitamtru" hin v-show="false" v-model="form_diachitamtru"> </el-input>
             <el-input name="tinhtamtru" hin v-show="false" v-model="modelProvince11"> </el-input>
@@ -400,7 +388,7 @@
 //////////////////////////////////////////////////////////
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch, nextTick } from 'vue'
-import { exportedFile } from "../utils/exportedFile";
+import { exportedFilev2 } from "../utils/exportedFilev2";
 import { myUtils } from "../utils/myUtils";
 import { axiosUtils } from "../utils/axiosUtils";
 import type { FormInstance, FormRules } from 'element-plus';
@@ -452,7 +440,7 @@ let dialogConfirmVisible = ref(false)
 // do not use same name with ref
 const form = reactive({
 
-  webversion: 'ver10.2',
+  webversion: 'ver11.0',
 
   gioitinh: '',
   sodienthoai: '',
@@ -477,7 +465,6 @@ const modelHovaten = ref('')
 
 // Thêm ref để tham chiếu đến các autocomplete element
 const provinceRef = ref()
-const districtRef = ref()
 const wardRef = ref()
 
 
@@ -509,8 +496,8 @@ reloadCookie()
 
 
 // Đơn giản nhất - không bị lỗi TypeScript
-const scrollToProvince = () => {
-  const element = document.getElementById('district-input');
+const scrollToWard = () => {
+  const element = document.getElementById('ward-input');
   if (element) {
     const rect = element.getBoundingClientRect();
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -549,7 +536,6 @@ function submitDk() {
   // Track form submission attempt
   const submissionData = {
     province: modelProvince.value,
-    district: modelDistrict.value,
     hasGuide: form.nguoigioithieu.length > 0,
     participatedBefore: form._rdDathamGiaDaoTrang
   };
@@ -640,10 +626,10 @@ function clickDangKy() {
 
 
 
-  form_diachithuongtru_short.value = modelWard.value + ', ' + modelDistrict.value + ', ' + modelProvince.value;
+  form_diachithuongtru_short.value = modelWard.value + ', ' + modelProvince.value;
   form_diachithuongtru.value = form.sonhatt + ', ' + form_diachithuongtru_short.value
 
-  form_diachitamtru.value = form.sonhatt11 + ', ' + modelWard11.value + ', ' + modelDistrict11.value + ', ' + modelProvince11.value;
+  form_diachitamtru.value = form.sonhatt11 + ', ' + modelWard11.value + ', ' + modelProvince11.value;
 
   if (form._rdDathamGiaDaoTrang == 0) {
     form.dasinhhoatdaotrang = 'Chưa tham gia - ' + form._rdMongMuonThamGiaDT
@@ -664,7 +650,6 @@ const form_diachitamtru = ref('');
 interface provinceItem {
   value: string
   code?: number
-  districts?: provinceItem[]
   wards?: provinceItem[]
 }
 const modelProvince = ref('')
@@ -679,7 +664,7 @@ const querySearchP = (queryString: string, cb: any) => {
   cb(results)
 }
 
-// Chọn nhanh một tỉnh/thành cố định và nạp danh sách quận/huyện liên quan
+// Chọn nhanh một tỉnh/thành cố định và nạp danh sách xã/phường liên quan
 async function selectQuickProvince(name: string) {
   analytics.trackButtonClick('quick_province_select', name);
 
@@ -690,15 +675,12 @@ async function selectQuickProvince(name: string) {
   selectedP.value = province.value
   modelProvince.value = province.value
 
-  // load districts of selected province
-  districts.value = province.districts || []
+  // load wards of selected province directly (no district level)
+  wards.value = province.wards || []
   // reset dependent selections
-  modelDistrict.value = ''
-  selectedD.value = ''
-  wards.value = []
   modelWard.value = ''
   selectedW.value = ''
-  scrollToProvince()
+  scrollToWard()
 }
 
 
@@ -708,16 +690,7 @@ async function selectQuickProvince(name: string) {
 // }
 
 
-const modelDistrict = ref('')
-const districts = ref<provinceItem[]>([])
-// Gợi ý quận/huyện theo từ khóa cho autocomplete Quận/Huyện (thường trú)
-const querySearchD = (queryString: string, cb: any) => {
-  const results = queryString
-    ? districts.value.filter(createFilter(queryString))
-    : districts.value
-  // call callback function to return suggestions
-  cb(results)
-}
+
 
 
 
@@ -743,29 +716,14 @@ const createFilter = (queryString: string) => {
 }
 
 const selectedP = ref('');
-// Khi chọn tỉnh từ autocomplete: lưu tỉnh đã chọn và nạp danh sách quận/huyện
+// Khi chọn tỉnh từ autocomplete: lưu tỉnh đã chọn và nạp danh sách xã/phường trực tiếp
 const handleSelect = (item: provinceItem) => {
   selectedP.value = item.value
-  districts.value = item.districts || []
+  wards.value = item.wards || []
   analytics.trackAutocompleteSelection('province', item.value);
 
-  // Auto focus vào quận/huyện sau khi chọn tỉnh
-  focusNextInput('district-input')
-
-
-
-}
-const selectedD = ref('');
-// Khi chọn quận/huyện: lưu huyện đã chọn và nạp danh sách phường/xã
-const handleSelectD = (item: provinceItem) => {
-  analytics.trackAutocompleteSelection('district', item.value);
-
-  og(item.wards)
-  selectedD.value = item.value
-  wards.value = item.wards || []
-
+  // Auto focus vào phường/xã sau khi chọn tỉnh
   focusNextInput('ward-input')
-
 }
 
 const selectedW = ref('')
@@ -792,20 +750,6 @@ const querySearchP11 = (queryString: string, cb: any) => {
 }
 
 
-
-
-const modelDistrict11 = ref('')
-const districts11 = ref<provinceItem[]>([])
-// Gợi ý quận/huyện cho autocomplete Quận/Huyện (tạm trú)
-const querySearchD11 = (queryString: string, cb: any) => {
-  const results = queryString
-    ? districts11.value.filter(createFilter(queryString))
-    : districts11.value
-  // call callback function to return suggestions
-  cb(results)
-}
-
-
 const modelWard11 = ref('')
 const wards11 = ref<provinceItem[]>([])
 // Gợi ý phường/xã cho autocomplete Phường/Xã (tạm trú)
@@ -819,26 +763,18 @@ const querySearchW11 = (queryString: string, cb: any) => {
 
 
 const selectedP11 = ref('');
-// Xử lý chọn tỉnh (tạm trú)
+// Xử lý chọn tỉnh (tạm trú) - load wards trực tiếp
 const handleSelect11 = (item: provinceItem) => {
   selectedP11.value = item.value
-  districts11.value = item.districts || []
+  wards11.value = item.wards || []
   og(item)
   analytics.trackAutocompleteSelection('province1', item.value);
-}
-const selectedD11 = ref('');
-// Xử lý chọn quận/huyện (tạm trú)
-const handleSelectD11 = (item: provinceItem) => {
-  analytics.trackAutocompleteSelection('district1', item.value);
-  selectedD11.value = item.value
-  wards11.value = item.wards || []
 }
 
 const selectedW11 = ref('')
 // Xử lý chọn phường/xã (tạm trú)
 const handleSelectW11 = (item: provinceItem) => {
   analytics.trackAutocompleteSelection('ward1', item.value);
-  //districts.value = item.districts
   selectedW11.value = item.value
 }
 
@@ -891,22 +827,19 @@ function useSavedNguoiGioiThieu() {
   }
 }
 
-myUtils0.watchLocation(modelProvince, modelDistrict, modelWard, districts, wards, selectedP, selectedD11, selectedW11, selectedP11, selectedD, selectedW, modelProvince11, modelDistrict11, modelWard11, districts11, wards11);
+myUtils0.watchLocationV2(modelProvince, modelWard, wards, selectedP, selectedW11, selectedP11, selectedW, modelProvince11, modelWard11, wards11);
 
 // Sao chép toàn bộ địa chỉ thường trú sang địa chỉ tạm trú
 function clickCopyDiaChi() {
   analytics.trackButtonClick('copy_address', 'address_section');
 
   modelProvince11.value = modelProvince.value
-  modelDistrict11.value = modelDistrict.value
   modelWard11.value = modelWard.value
 
   selectedP11.value = selectedP.value
-  selectedD11.value = selectedD.value
   selectedW11.value = selectedW.value
 
   wards11.value = wards.value
-  districts11.value = districts.value
   form.sonhatt11 = form.sonhatt
 
 }
@@ -934,7 +867,7 @@ onMounted(() => {
   analytics.trackPageView('/quy-y-registration', 'Đăng Ký Quy Y Tam Bảo');
 
 
-  provincesSource.value = new exportedFile().loadAllProvince()
+  provincesSource.value = new exportedFilev2().loadAllProvince()
 })
 
 // Theo dõi thay đổi họ tên để reload cookie (tránh kẹt trạng thái)
@@ -952,13 +885,11 @@ if (isDevEnviroment) {
   form.sodienthoai = '0977310197'
   form.sonhatt = 'so nha 2'
   form.sonhatt11 = 'so nha 3'
-  selectedP.value = 'Tỉnh Bắc Kạn'
-  selectedD.value = 'Huyện Tam Dương'
-  selectedW.value = 'Xã Đồng Tĩnh'
+  selectedP.value = 'Tỉnh Nghệ An'
+  selectedW.value = 'Xã Nghi Phú'
 
-  selectedP11.value = 'Tỉnh Lâm Đồng'
-  selectedD11.value = 'Huyện Đam Rông'
-  selectedW11.value = 'Xã Đạ Tông'
+  selectedP11.value = 'Tỉnh Nghệ An'
+  selectedW11.value = 'Xã Nghi Phú'
 
 
   form.namsinh = '2222'

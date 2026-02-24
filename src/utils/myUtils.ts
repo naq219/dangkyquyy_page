@@ -114,6 +114,55 @@ export class myUtils {
 
 	}
 
+	// Version 2: No district level, only Province -> Ward
+	watchLocationV2(modelProvince, modelWard, wards, selectedP, selectedW11, selectedP11, selectedW, modelProvince11, modelWard11, wards11) {
+		watch(modelProvince, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedP.value) > -1 && newQuestion.indexOf(selectedP.value) == -1) {
+				modelWard.value = ''
+				wards.value = ref('')
+				this.og('clear for province')
+				selectedP.value = ref('')
+			}
+		})
+
+		watch(selectedP, async (newQuestion, oldQuestion) => {
+			if (selectedP.value.length == 0) {
+				selectedW.value = ref('')
+			}
+		})
+
+		watch(modelWard, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedW.value) > -1 && newQuestion.indexOf(selectedW.value) == -1) {
+				modelWard.value = ''
+				wards.value = ref('')
+				selectedW.value = ref('')
+			}
+		})
+
+		// Tạm trú (address 2)
+		watch(modelProvince11, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedP11.value) > -1 && newQuestion.indexOf(selectedP11.value) == -1) {
+				modelWard11.value = ''
+				wards11.value = ref('')
+				selectedP11.value = ref('')
+			}
+		})
+
+		watch(selectedP11, async (newQuestion, oldQuestion) => {
+			if (selectedP11.value.length == 0) {
+				selectedW11.value = ref('')
+			}
+		})
+
+		watch(modelWard11, async (newQuestion, oldQuestion) => {
+			if (oldQuestion.indexOf(selectedW11.value) > -1 && newQuestion.indexOf(selectedW11.value) == -1) {
+				modelWard11.value = ''
+				wards11.value = ref('')
+				selectedW11.value = ref('')
+			}
+		})
+	}
+
 
 	og(str: any) {
 		console.log(str);
@@ -156,11 +205,11 @@ export class myUtils {
 
 	vietHoaHoTen(str) {
 		var convertToArray = str.toLowerCase().split(' ');
-		var result = convertToArray.map(function(val) {
-		  return val.replace(val.charAt(0), val.charAt(0).toUpperCase());
+		var result = convertToArray.map(function (val) {
+			return val.replace(val.charAt(0), val.charAt(0).toUpperCase());
 		});
-		
+
 		return result.join(' ');
-	  }
+	}
 
 } 
