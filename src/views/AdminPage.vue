@@ -25,9 +25,7 @@
         <el-button @click="loadData" :loading="loading" type="primary">
           🔄 Tải lại
         </el-button>
-        <el-button @click="exportExcel" type="success" :disabled="rows.length === 0">
-          📥 Xuất Excel ({{ rows.length }})
-        </el-button>
+
         <el-button @click="toggleViewAll" :type="viewAll ? 'warning' : 'default'">
           {{ viewAll ? '📋 Chỉ hiện mới' : '📊 Tất cả (60 ngày)' }}
         </el-button>
@@ -37,13 +35,19 @@
 
     <p v-if="loadError" style="color: #dc3545;">{{ loadError }}</p>
 
-    <!-- Thanh hành động khi chọn row (chỉ khi xem 'new') -->
-    <div class="selection-bar" v-if="selectedRows.length > 0 && !viewAll">
+    <!-- Thanh hành động khi chọn row — luôn chiếm chỗ để tránh nhảy layout -->
+    <div class="selection-bar" :style="{ visibility: selectedRows.length > 0 ? 'visible' : 'hidden' }">
       <span>Đã chọn <strong>{{ selectedRows.length }}</strong> đăng ký</span>
-      <el-button type="danger" size="small" @click="handleDelete" :loading="actionLoading">
+      <el-button type="success" size="small" @click="exportExcel">
+        📥 Xuất Excel ({{ selectedRows.length }})
+      </el-button>
+      <el-button type="primary" size="small" @click="copySelected">
+        📋 Copy ({{ selectedRows.length }})
+      </el-button>
+      <el-button v-if="!viewAll" type="danger" size="small" @click="handleDelete" :loading="actionLoading">
         🗑️ Xóa ({{ selectedRows.length }})
       </el-button>
-      <el-button type="warning" size="small" @click="handleSendPhapdanh" :loading="actionLoading">
+      <el-button v-if="!viewAll" type="warning" size="small" @click="handleSendPhapdanh" :loading="actionLoading">
         📤 Gửi xin pháp danh ({{ selectedRows.length }})
       </el-button>
     </div>
@@ -53,9 +57,10 @@
     </p>
 
     <el-table :data="rows" v-loading="loading" stripe border style="width: 100%; margin-top: 1em;"
-      :default-sort="{ prop: 'id', order: 'descending' }" max-height="70vh"
+      :default-sort="{ prop: 'id', order: 'ascending' }" max-height="70vh"
       @selection-change="onSelectionChange">
-      <el-table-column v-if="!viewAll" type="selection" width="45" />
+      <el-table-column type="selection" width="45" />
+      <el-table-column prop="id" label="ID" width="60" sortable />
       <el-table-column label="Cách đây" width="150" sortable prop="created_at">
         <template #default="{ row }">
           {{ formatRelative(row.created_at) }}
@@ -239,9 +244,11 @@ async function handleSendPhapdanh() {
   }
 }
 
-// ====== Excel Export ======
-function exportExcel() {
-  const exportData = rows.value.map((r: any) => ({
+// ====== Tạo data export từ danh sách đã chọn ======
+function buildExportData(source: any[]) {
+  // Sắp xếp theo id tăng dần
+  const sorted = [...source].sort((a, b) => Number(a.id) - Number(b.id))
+  return sorted.map((r: any) => ({
     'dauthoigian': r.dauthoigian || r.created_at,
     'phapdanh': '',
     'hovaten': r.hovaten,
@@ -257,6 +264,12 @@ function exportExcel() {
     'ghichu': r.ghichu,
     'web_version': r.web_version
   }))
+}
+
+// ====== Excel Export (chỉ selected rows) ======
+function exportExcel() {
+  if (selectedRows.value.length === 0) return
+  const exportData = buildExportData(selectedRows.value)
 
   const ws = XLSX.utils.json_to_sheet(exportData)
   const wb = XLSX.utils.book_new()
@@ -270,6 +283,22 @@ function exportExcel() {
   const now = new Date()
   const filename = `DangKy_QuyY_${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}.xlsx`
   XLSX.writeFile(wb, filename)
+}
+
+// ====== Copy (tab-separated, paste được vào Excel/Google Sheets) ======
+function copySelected() {
+  if (selectedRows.value.length === 0) return
+  const exportData = buildExportData(selectedRows.value)
+  const headers = Object.keys(exportData[0])
+  const headerLine = headers.join('\t')
+  const dataLines = exportData.map((r: any) => headers.map(h => r[h] || '').join('\t'))
+  const text = headerLine + '\n' + dataLines.join('\n')
+
+  navigator.clipboard.writeText(text).then(() => {
+    ElMessage.success(`Đã copy ${exportData.length} dòng — paste vào Excel/Google Sheets`)
+  }).catch(() => {
+    ElMessage.error('Không thể copy, vui lòng cho phép clipboard')
+  })
 }
 
 // ====== Lifecycle ======

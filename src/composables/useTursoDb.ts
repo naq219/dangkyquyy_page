@@ -63,7 +63,7 @@ export async function insertRegistration(data: RegistrationData) {
 // Lấy đăng ký có status = 'new', sắp xếp mới nhất trước
 export async function getAllRegistrations() {
     const result = await client.execute({
-        sql: "SELECT * FROM register WHERE status = ? ORDER BY id DESC",
+        sql: "SELECT * FROM register WHERE status = ? ORDER BY id ASC",
         args: ['new']
     })
     return result.rows
@@ -72,9 +72,34 @@ export async function getAllRegistrations() {
 // Lấy tất cả đăng ký trong 60 ngày qua (mọi status)
 export async function getAllRegistrations60Days() {
     const result = await client.execute(
-        "SELECT * FROM register WHERE created_at >= datetime('now', '-60 days') ORDER BY id DESC"
+        "SELECT * FROM register WHERE created_at >= datetime('now', '-60 days') ORDER BY id ASC"
     )
     return result.rows
+}
+
+// ====== Pháp danh ======
+// Lấy danh sách phapdanh_tbl
+export async function getPhapdanhList() {
+    const result = await client.execute('SELECT * FROM phapdanh_tbl ORDER BY id DESC')
+    return result.rows
+}
+
+// Cập nhật pháp danh cho 1 row
+export async function updatePhapdanh(id: number, phapdanh: string) {
+    await client.execute({
+        sql: 'UPDATE phapdanh_tbl SET phapdanh = ? WHERE id = ?',
+        args: [phapdanh, id as unknown as string]
+    })
+}
+
+// Cập nhật pháp danh hàng loạt
+export async function updatePhapdanhBatch(items: { id: number, phapdanh: string }[]) {
+    for (const item of items) {
+        await client.execute({
+            sql: 'UPDATE phapdanh_tbl SET phapdanh = ? WHERE id = ?',
+            args: [item.phapdanh, item.id as unknown as string]
+        })
+    }
 }
 
 // Cập nhật status cho nhiều rows (soft delete hoặc đánh dấu đã gửi)
