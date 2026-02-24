@@ -240,6 +240,7 @@ import { myUtils } from '../utils/myUtils'
 import { useAddressForm } from '../composables/useAddressForm'
 import { insertRegistration, type RegistrationData } from '../composables/useTursoDb'
 import DkConfirmDialog from '../components/DkConfirmDialog.vue'
+import { sendTelegramNotification } from '../composables/useTelegram'
 import { Download } from '@element-plus/icons-vue'
 
 // ====== Composables ======
@@ -417,6 +418,19 @@ async function submitDk() {
 
     clickSubmited.value = true
     useCookie.cookies.set('last_submit', '11')
+
+    // Gửi thông báo Telegram (fire-and-forget, không ảnh hưởng flow chính)
+    sendTelegramNotification({
+      id: result.insertedId?.toString() || '?',
+      hovaten: data.hovaten,
+      sodienthoai: data.sodienthoai,
+      namsinh: data.namsinh,
+      gioitinh: data.gioitinh,
+      diachithuongtru: data.diachithuongtru,
+      diachitamtru: data.diachitamtru,
+      nguoigioithieu: data.nguoigioithieu,
+      ghichu: data.ghichu
+    })
 
   } catch (e: any) {
     // Thất bại → đóng dialog xác nhận, mở dialog lỗi
