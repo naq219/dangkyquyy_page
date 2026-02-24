@@ -232,7 +232,7 @@ describe('RegistrationData structure', () => {
             dasinhhoatdaotrang: 'Chưa tham gia - Có Muốn tham gia',
             nguoigioithieu: 'Hòa Lý Anh - 0338 699 484',
             ghichu: '',
-            web_version: 'ver12.0-turso'
+            web_version: 'ver12.1-turso'
         }
 
         expect(data.hovaten).toBe('Nguyễn Văn An')

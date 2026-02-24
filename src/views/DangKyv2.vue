@@ -34,7 +34,7 @@
           <div class="title_container">
             <h2
               style="color:#005c70; font-stretch: expanded; font-weight: 545; font-style: inherit; text-align: center;">
-              ĐĂNG KÝ QUY Y TAM BẢO (v2 - Turso)<br><br>
+              ĐĂNG KÝ QUY Y TAM BẢO<br><br>
             </h2>
           </div>
           <div class="row clearfix">
@@ -263,7 +263,7 @@ const savedAddressDisplay = ref('')
 
 // ====== Form ======
 const form = reactive({
-  webversion: 'ver12.0-turso',
+  webversion: 'ver12.1-turso',
   gioitinh: '',
   sodienthoai: '',
   sonhatt: '',
